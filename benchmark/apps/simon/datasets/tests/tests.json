@@ -1,0 +1,83 @@
+[
+  {
+    "name": "SIMON paper test vector",
+    "data_file": "simon_simon_paper_test_vector.bsdata",
+    "bitlength": 1
+  },
+  {
+    "name": "Zero key and plaintext",
+    "data_file": "simon_zero_key_and_plaintext.bsdata",
+    "bitlength": 1
+  },
+  {
+    "name": "All-ones key and plaintext",
+    "data_file": "simon_all_ones_key_and_plaintext.bsdata",
+    "bitlength": 1
+  },
+  {
+    "name": "Random 8-block batch",
+    "data_file": "simon_random_8_block_batch.bsdata",
+    "bitlength": 8
+  },
+  {
+    "name": "Random 16-block x50",
+    "data_file": "simon_random_16block_50.bsdata",
+    "bitlength": 800
+  },
+  {
+    "name": "Random 64-block x20",
+    "data_file": "simon_random_64block_20.bsdata",
+    "bitlength": 1280
+  },
+  {
+    "name": "Large 1M blocks",
+    "category": "generated",
+    "generate": {
+      "W": 1000000,
+      "seed": 42
+    },
+    "bitlength": 1000000
+  },
+  {
+    "name": "Small 6.25M blocks",
+    "bitlength": 6250000,
+    "data_file": "simon_small.bsdata",
+    "size_bytes": 50001518,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1000,
+      "description": "32 random plaintext streams via getrandbits(6250000), key=SIMON paper key [0x0100,0x0908,0x1110,0x1918]; expected via Python interpreter; spot-checked 500 positions (seed=6000)",
+      "generated_by": "generate_tests.py --tier",
+      "sha256": "0c250809b44d5cc3a2416991b9340e0ee54696235a67a9034657261b9c9465c9",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Medium 62.5M blocks",
+    "bitlength": 62500000,
+    "data_file": "simon_medium.bsdata",
+    "size_bytes": 500001526,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1001,
+      "description": "32 random plaintext streams via getrandbits(62500000), key=SIMON paper key [0x0100,0x0908,0x1110,0x1918]; expected via Python interpreter; spot-checked 500 positions (seed=6001)",
+      "generated_by": "generate_tests.py --tier",
+      "sha256": "b34729a9255069ab730e72ccdcf5a5810777ee19ac69b503f6e3148acd9a1017",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Large 625M blocks",
+    "bitlength": 625000000,
+    "data_file": "simon_large.bsdata",
+    "size_bytes": 5000001534,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1002,
+      "description": "32 random plaintext streams via getrandbits(625000000), key=SIMON paper key [0x0100,0x0908,0x1110,0x1918]; expected via Python interpreter; spot-checked 500 positions (seed=6002)",
+      "generated_by": "generate_tests.py --tier",
+      "sha256": "5684d9b6c70ecfa3cb6642ae66047528028a7664fa7850e0a579894b672943da",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  }
+]

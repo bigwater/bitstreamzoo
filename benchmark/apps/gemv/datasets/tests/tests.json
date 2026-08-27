@@ -1,0 +1,183 @@
+[
+  {
+    "name": "L=1 N=1 K=2 zero",
+    "bitlength": 1,
+    "data_file": "gemv_l1_n1_k2_zero.bsdata"
+  },
+  {
+    "name": "L=1 N=1 K=2 one",
+    "bitlength": 1,
+    "data_file": "gemv_l1_n1_k2_one.bsdata"
+  },
+  {
+    "name": "L=1 N=1 K=2 max",
+    "bitlength": 1,
+    "data_file": "gemv_l1_n1_k2_max.bsdata"
+  },
+  {
+    "name": "L=2 N=2 K=2",
+    "bitlength": 2,
+    "data_file": "gemv_l2_n2_k2.bsdata"
+  },
+  {
+    "name": "Random L=4 N=4 K=2 M=8",
+    "bitlength": 8,
+    "data_file": "gemv_random_l4_n4_k2_m8.bsdata"
+  },
+  {
+    "name": "L=4 N=8 K=4 M=16",
+    "bitlength": 16,
+    "data_file": "gemv_l4_n8_k4_m16.bsdata"
+  },
+  {
+    "name": "Hidden layer L=16 N=16 K=4",
+    "bitlength": 32,
+    "data_file": "gemv_hidden_layer_l16_n16_k4.bsdata"
+  },
+  {
+    "name": "Hidden layer L=8 N=16 K=8",
+    "bitlength": 16,
+    "data_file": "gemv_hidden_layer_l8_n16_k8.bsdata"
+  },
+  {
+    "name": "Large 1M items L=4 N=8 K=4",
+    "category": "generated",
+    "bitlength": 1000000,
+    "generate": {
+      "type": "wide",
+      "L": 4,
+      "N": 8,
+      "K": 4,
+      "PK": 8,
+      "B": 11,
+      "W": 1000000,
+      "seed": 42
+    }
+  },
+  {
+    "name": "GEMV small_k2 tier small (L=16 N=16 K=2, 2,500,000 vectors)",
+    "data_file": "gemv_small_k2_tier_small.bsdata",
+    "size_bytes": 50001481,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 3000,
+      "description": "Random 2-bit input vectors and weight matrix. Architecture: L=16, N=16, K=2, PK=4, B=8. Input x: 32 random bitstreams (2,500,000 bits each). Weights: 16x16 random 2-bit. 2,500,000 vectors.",
+      "generated_by": "generate_tests.py --tier small",
+      "sha256": "aa4cebf44d619fe122e5697bdc46cc1951bdb6612c6c63969d6e568eb04c3c04",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    },
+    "bitlength": 2500000
+  },
+  {
+    "name": "GEMV medium_k4 tier small (L=64 N=64 K=4, 347,222 vectors)",
+    "data_file": "gemv_medium_k4_tier_small.bsdata",
+    "size_bytes": 50041442,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 3100,
+      "description": "Random 4-bit input vectors and weight matrix. Architecture: L=64, N=64, K=4, PK=8, B=14. Input x: 256 random bitstreams (347,222 bits each). Weights: 64x64 random 4-bit. 347,222 vectors.",
+      "generated_by": "generate_tests.py --tier small",
+      "sha256": "27926be53a29dfe20577fcd102b92a046c7f91f6429401a80820452bd33edad6",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    },
+    "bitlength": 347222
+  },
+  {
+    "name": "GEMV large_k8 tier small (L=64 N=128 K=8, 160,256 vectors)",
+    "data_file": "gemv_large_k8_tier_small.bsdata",
+    "size_bytes": 50163856,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 3200,
+      "description": "Random 8-bit input vectors and weight matrix. Architecture: L=64, N=128, K=8, PK=16, B=23. Input x: 1024 random bitstreams (160,256 bits each). Weights: 64x128 random 8-bit. 160,256 vectors.",
+      "generated_by": "generate_tests.py --tier small",
+      "sha256": "eeb20da9eae19a0a453d197f5d882949dcaa2b22ca546b0e349c3a88b363f595",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    },
+    "bitlength": 160256
+  },
+  {
+    "name": "GEMV small_k2 tier medium (L=16 N=16 K=2, 25,000,000 vectors)",
+    "bitlength": 25000000,
+    "data_file": "gemv_small_k2_tier_medium.bsdata",
+    "size_bytes": 500001490,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 3001,
+      "description": "Random 2-bit input vectors and weight matrix. Architecture: L=16, N=16, K=2, PK=4, B=8. Input x: 32 random bitstreams (25,000,000 bits each). Weights: 16x16 random 2-bit. 25,000,000 vectors.",
+      "generated_by": "generate_tests.py --tier medium",
+      "sha256": "8eb3840f4fecf7e71fff37136092ddccaad5ebf65209e89596a1aedc0956e7ef",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "GEMV medium_k4 tier medium (L=64 N=64 K=4, 3,472,222 vectors)",
+    "bitlength": 3472222,
+    "data_file": "gemv_medium_k4_tier_medium.bsdata",
+    "size_bytes": 500002554,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 3101,
+      "description": "Random 4-bit input vectors and weight matrix. Architecture: L=64, N=64, K=4, PK=8, B=14. Input x: 256 random bitstreams (3,472,222 bits each). Weights: 64x64 random 4-bit. 3,472,222 vectors.",
+      "generated_by": "generate_tests.py --tier medium",
+      "sha256": "fb50e5d89086e432afaf75716a0a14bdee0e482dd7f4650e5152c03d4b8e51c1",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "GEMV large_k8 tier medium (L=64 N=128 K=8, 1,602,564 vectors)",
+    "bitlength": 1602564,
+    "data_file": "gemv_large_k8_tier_medium.bsdata",
+    "size_bytes": 500009662,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 3201,
+      "description": "Random 8-bit input vectors and weight matrix. Architecture: L=64, N=128, K=8, PK=16, B=23. Input x: 1024 random bitstreams (1,602,564 bits each). Weights: 64x128 random 8-bit. 1,602,564 vectors.",
+      "generated_by": "generate_tests.py --tier medium",
+      "sha256": "725d502c0b89cd129055d12ac536beda2880720a590231edcfab425a776e4efb",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "GEMV small_k2 tier large (L=16 N=16 K=2, 250,000,000 vectors)",
+    "bitlength": 250000000,
+    "data_file": "gemv_small_k2_tier_large.bsdata",
+    "size_bytes": 5000001493,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 3002,
+      "description": "Random 2-bit input vectors and weight matrix. Architecture: L=16, N=16, K=2, PK=4, B=8. Input x: 32 random bitstreams (250,000,000 bits each). Weights: 16x16 random 2-bit. 250,000,000 vectors.",
+      "generated_by": "generate_tests.py --tier large",
+      "sha256": "45c34578873dea5351d99a3a3ab41240d40645500a4792a1c2ddbce71b1ad047",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "GEMV medium_k4 tier large (L=64 N=64 K=4, 34,722,222 vectors)",
+    "bitlength": 34722222,
+    "data_file": "gemv_medium_k4_tier_large.bsdata",
+    "size_bytes": 5000002559,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 3102,
+      "description": "Random 4-bit input vectors and weight matrix. Architecture: L=64, N=64, K=4, PK=8, B=14. Input x: 256 random bitstreams (34,722,222 bits each). Weights: 64x64 random 4-bit. 34,722,222 vectors.",
+      "generated_by": "generate_tests.py --tier large",
+      "sha256": "fdd1fcef3b72134bb39c7712678d1c6672e6965fa1fd137ffbfd966fcccb7c47",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "GEMV large_k8 tier large (L=64 N=128 K=8, 16,025,641 vectors)",
+    "bitlength": 16025641,
+    "data_file": "gemv_large_k8_tier_large.bsdata",
+    "size_bytes": 5000010627,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 3202,
+      "description": "Random 8-bit input vectors and weight matrix. Architecture: L=64, N=128, K=8, PK=16, B=23. Input x: 1024 random bitstreams (16,025,641 bits each). Weights: 64x128 random 8-bit. 16,025,641 vectors.",
+      "generated_by": "generate_tests.py --tier large",
+      "sha256": "8f12113503c5c9a8a0c2971d41eb97dee2a9cb6f2163ba5abbeea2f7d6334146",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  }
+]

@@ -1,0 +1,77 @@
+// Gate-decomposed Matrix-Vector Multiply (GEMV)
+//
+// Computes y = W * x, where W is L x N and x is N x 1,
+// with K-bit precision per element:
+//   y[l] = sum_{f=0}^{N-1} (w[l][f] * x[f])   for l = 0..L-1
+//
+// The entire computation — multiply and accumulate — is decomposed
+// into AND/XOR/OR gates.  This is the form required by PIM substrates
+// (CHOPPER/Ambit/SIMDRAM) that have no hardware adders.
+//
+// M independent GEMV instances are processed in parallel,
+// one per bit position in each stream.
+//
+// Total ops: L * N * (6*K^2 + 5*PK + 2*(B-PK))
+
+param int L    // output dimension (rows of W)
+param int N    // input dimension (columns of W)
+param int K    // bits per element
+param int PK   // product bits (= 2*K)
+param int B    // accumulator bits (>= 2*K + ceil(log2(N)))
+
+input stream x[N * K]          // input vector: x[f] bit b = x[f*K + b]
+input stream w[L * N * K]      // weight matrix: w[l][f] bit b = w[l*N*K + f*K + b]
+output stream y[L * B]         // output vector: y[l] bit b = y[l*B + b]
+
+// Temporaries
+stream prod[PK]
+stream pp
+stream t1
+stream t2
+stream t3
+stream carry
+stream acc_carry
+
+for l in 0..L {
+    // Initialize accumulator for output l
+    for b in 0..B {
+        y[l * B + b] = ZERO
+    }
+
+    // Dot product: y[l] = sum_f (x[f] * w[l][f])
+    for f in 0..N {
+        // Clear product
+        for p in 0..PK {
+            prod[p] = ZERO
+        }
+
+        // Bit-serial multiply: prod = x[f] * w[l][f]
+        for j in 0..K {
+            carry = ZERO
+            for i in 0..K {
+                pp = x[f * K + i] & w[l * N * K + f * K + j]
+                t1 = prod[i + j] ^ pp
+                t2 = prod[i + j] & pp
+                t3 = t1 & carry
+                prod[i + j] = t1 ^ carry
+                carry = t2 | t3
+            }
+            prod[K + j] = carry
+        }
+
+        // Accumulate: y[l] += prod
+        acc_carry = ZERO
+        for b in 0..PK {
+            t1 = y[l * B + b] ^ prod[b]
+            t2 = y[l * B + b] & prod[b]
+            t3 = t1 & acc_carry
+            y[l * B + b] = t1 ^ acc_carry
+            acc_carry = t2 | t3
+        }
+        for b in PK..B {
+            t1 = y[l * B + b] ^ acc_carry
+            acc_carry = y[l * B + b] & acc_carry
+            y[l * B + b] = t1
+        }
+    }
+}

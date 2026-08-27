@@ -1,0 +1,56 @@
+// DNA Shift-And exact string matching (Baeza-Yates & Gonnet, 1992)
+//
+// Each bit position is one character position in a DNA text.
+// Matches a pattern of length M against the text in parallel.
+//
+// Input basis streams: is_A, is_C, is_G, is_T — bit k is 1 if text[k]
+// equals that nucleotide.
+//
+// Pattern masks: mask_X[j] = ONES if pattern[j] == X, else ZERO.
+// These select which basis stream to use at each pattern position.
+//
+// After execution, matches[k] = 1 if text[k-M+1..k] matches the pattern.
+//
+// Reference: Baeza-Yates & Gonnet, "A New Approach to Text Searching",
+//   Communications of the ACM 35(10), 1992.
+// Bitstream formulation follows Parabix (Cameron et al., 2014).
+
+param int M
+
+input stream is_A
+input stream is_C
+input stream is_G
+input stream is_T
+
+input stream mask_A[M]
+input stream mask_C[M]
+input stream mask_G[M]
+input stream mask_T[M]
+
+output stream matches
+
+// Character match for position 0: OR-reduce the 4 masked basis streams
+stream _cA0 = is_A & mask_A[0]
+stream _cC0 = is_C & mask_C[0]
+stream _cG0 = is_G & mask_G[0]
+stream _cT0 = is_T & mask_T[0]
+stream _or0 = _cA0 | _cC0
+stream _or1 = _or0 | _cG0
+stream R = _or1 | _cT0
+
+// Process remaining pattern positions: shift-and accumulation
+for j in 1..M {
+    // Character match at pattern position j
+    stream _cA = is_A & mask_A[j]
+    stream _cC = is_C & mask_C[j]
+    stream _cG = is_G & mask_G[j]
+    stream _cT = is_T & mask_T[j]
+    stream _or2 = _cA | _cC
+    stream _or3 = _or2 | _cG
+    stream cm = _or3 | _cT
+    // Shift previous match set and intersect with current character match
+    stream _shifted = R << 1
+    R = _shifted & cm
+}
+
+matches = R

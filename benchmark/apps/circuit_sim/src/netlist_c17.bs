@@ -1,0 +1,23 @@
+// Auto-generated from .bench netlist
+
+input stream G1
+input stream G2
+input stream G3
+input stream G4
+input stream G5
+
+output stream G16
+output stream G17
+
+stream _t_G8 = G1 & G3
+stream G8 = ~_t_G8
+stream _t_G9 = G3 & G4
+stream G9 = ~_t_G9
+stream _t_G12 = G2 & G9
+stream G12 = ~_t_G12
+stream _t_G15 = G9 & G5
+stream G15 = ~_t_G15
+stream _t_G16 = G8 & G12
+G16 = ~_t_G16
+stream _t_G17 = G12 & G15
+G17 = ~_t_G17

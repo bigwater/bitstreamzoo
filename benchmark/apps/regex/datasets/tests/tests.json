@@ -1,0 +1,197 @@
+{
+  "regex_small": [
+    {
+      "name": "Hand-crafted mixed payload",
+      "bitlength": 209,
+      "data_file": "regex_small_hand_crafted_mixed_payload.bsdata"
+    },
+    {
+      "name": "All-zero payload",
+      "bitlength": 64,
+      "data_file": "regex_small_all_zero_payload.bsdata"
+    },
+    {
+      "name": "Random 64-byte x50",
+      "bitlength": 50,
+      "data_file": "regex_small_random_64bit_50.bsdata"
+    },
+    {
+      "name": "WRCCDC 2012 pcap (10K bytes)",
+      "category": "generated",
+      "optional": true,
+      "bitlength": 10000,
+      "generate": {
+        "type": "file",
+        "dataset": "wrccdc2012_10k"
+      }
+    },
+    {
+      "name": "WRCCDC 2012 pcap (1M bytes)",
+      "category": "generated",
+      "optional": true,
+      "bitlength": 1000000,
+      "generate": {
+        "type": "file",
+        "dataset": "wrccdc2012_1m"
+      }
+    },
+    {
+      "name": "Tier small (44,444,444 bytes)",
+      "bitlength": 44444444,
+      "data_file": "regex_small_small.bsdata",
+      "size_bytes": 50000160,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1000,
+        "description": "Random byte payload as 8 basis bit-planes. 50 Snort IDS regex patterns, single any_match output. 44,444,444 bytes.",
+        "generated_by": "generate_tests.py --tier small",
+        "bsim_md5": "41473dbf17ed84d4f504c9fb1c0b220e",
+        "sha256": "251751894c56a5d223dcbfac114089b8f935a64e63525a11a3e76d64e4414d00"
+      }
+    },
+    {
+      "name": "Tier medium (444,444,444 bytes)",
+      "bitlength": 444444444,
+      "data_file": "regex_small_medium.bsdata",
+      "size_bytes": 500000164,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1001,
+        "description": "Random byte payload as 8 basis bit-planes. 50 Snort IDS regex patterns, single any_match output. 444,444,444 bytes.",
+        "generated_by": "generate_tests.py --tier medium",
+        "bsim_md5": "41473dbf17ed84d4f504c9fb1c0b220e",
+        "sha256": "0eea8efc1ae7ca996d9e41f7eb3a9e83a803e5b715682e2111f6f1e766a287e8"
+      }
+    },
+    {
+      "name": "Tier large (4,444,444,444 bytes)",
+      "bitlength": 4444444444,
+      "data_file": "regex_small_large.bsdata",
+      "size_bytes": 5000000168,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1002,
+        "description": "Random byte payload as 8 basis bit-planes. 50 Snort IDS regex patterns, single any_match output. 4,444,444,444 bytes.",
+        "generated_by": "generate_tests.py --tier large",
+        "bsim_md5": "41473dbf17ed84d4f504c9fb1c0b220e",
+        "sha256": "b2e0830d27eb8c029a8539278862e4f2139fdcba2db536b6199489b9767e3a3c"
+      }
+    }
+  ],
+  "regex_medium": [
+    {
+      "name": "Hand-crafted mixed payload",
+      "bitlength": 209,
+      "data_file": "regex_medium_hand_crafted_mixed_payload.bsdata"
+    },
+    {
+      "name": "All-zero payload",
+      "bitlength": 64,
+      "data_file": "regex_medium_all_zero_payload.bsdata"
+    },
+    {
+      "name": "Random 64-byte x50",
+      "bitlength": 50,
+      "data_file": "regex_medium_random_64bit_50.bsdata"
+    },
+    {
+      "name": "WRCCDC 2012 pcap (10K bytes)",
+      "category": "generated",
+      "optional": true,
+      "bitlength": 10000,
+      "generate": {
+        "type": "file",
+        "dataset": "wrccdc2012_10k"
+      }
+    },
+    {
+      "name": "WRCCDC 2012 pcap (1M bytes)",
+      "category": "generated",
+      "optional": true,
+      "bitlength": 1000000,
+      "generate": {
+        "type": "file",
+        "dataset": "wrccdc2012_1m"
+      }
+    },
+    {
+      "name": "Tier small (44,444,444 bytes)",
+      "bitlength": 44444444,
+      "data_file": "regex_medium_small.bsdata",
+      "size_bytes": 50000160,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1000,
+        "description": "Random byte payload as 8 basis bit-planes. 500 Snort IDS regex patterns, single any_match output. 44,444,444 bytes.",
+        "generated_by": "generate_tests.py --tier small",
+        "bsim_md5": "41473dbf17ed84d4f504c9fb1c0b220e",
+        "sha256": "d8030423d316c683d16c9c1ece9833bc60b31696727bf7b0a3689c2aef0be6fd"
+      }
+    },
+    {
+      "name": "Tier medium (444,444,444 bytes)",
+      "bitlength": 444444444,
+      "data_file": "regex_medium_medium.bsdata",
+      "size_bytes": 500000164,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1001,
+        "description": "Random byte payload as 8 basis bit-planes. 500 Snort IDS regex patterns, single any_match output. 444,444,444 bytes.",
+        "generated_by": "generate_tests.py --tier medium",
+        "bsim_md5": "41473dbf17ed84d4f504c9fb1c0b220e",
+        "sha256": "9d0917022be52536b203cdc340ff6ae67b59842bd59f3a5ecf013cf06bdf8dd1"
+      }
+    }
+  ],
+  "regex_large": [
+    {
+      "name": "Hand-crafted mixed payload",
+      "bitlength": 209,
+      "data_file": "regex_large_hand_crafted_mixed_payload.bsdata"
+    },
+    {
+      "name": "All-zero payload",
+      "bitlength": 64,
+      "data_file": "regex_large_all_zero_payload.bsdata"
+    },
+    {
+      "name": "Random 64-byte x10",
+      "bitlength": 10,
+      "data_file": "regex_large_random_64bit_10.bsdata"
+    },
+    {
+      "name": "WRCCDC 2012 pcap (10K bytes)",
+      "category": "generated",
+      "optional": true,
+      "bitlength": 10000,
+      "generate": {
+        "type": "file",
+        "dataset": "wrccdc2012_10k"
+      }
+    },
+    {
+      "name": "WRCCDC 2012 pcap (1M bytes)",
+      "category": "generated",
+      "optional": true,
+      "bitlength": 1000000,
+      "generate": {
+        "type": "file",
+        "dataset": "wrccdc2012_1m"
+      }
+    },
+    {
+      "name": "Tier small (44,444,444 bytes)",
+      "bitlength": 44444444,
+      "data_file": "regex_large_small.bsdata",
+      "size_bytes": 50000160,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1000,
+        "description": "Random byte payload as 8 basis bit-planes. 2312 Snort IDS regex patterns, single any_match output. 44,444,444 bytes.",
+        "generated_by": "generate_tests.py --tier small",
+        "bsim_md5": "41473dbf17ed84d4f504c9fb1c0b220e",
+        "sha256": "d8030423d316c683d16c9c1ece9833bc60b31696727bf7b0a3689c2aef0be6fd"
+      }
+    }
+  ]
+}

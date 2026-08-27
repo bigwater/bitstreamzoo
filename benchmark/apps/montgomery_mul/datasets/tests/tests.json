@@ -1,0 +1,86 @@
+[
+  {
+    "name": "q=3329 zero (R=2^12)",
+    "bitlength": 1,
+    "data_file": "montgomery_kyber_zero.bsdata"
+  },
+  {
+    "name": "q=3329 a=1 b=1 (R=2^12)",
+    "bitlength": 1,
+    "data_file": "montgomery_kyber_a1_b1.bsdata"
+  },
+  {
+    "name": "q=3329 Montgomery form of 1 squared (R=2^12)",
+    "bitlength": 1,
+    "data_file": "montgomery_kyber_mont_form_of_1_squared.bsdata"
+  },
+  {
+    "name": "q=3329 max inputs (R=2^12)",
+    "bitlength": 1,
+    "data_file": "montgomery_kyber_max_inputs.bsdata"
+  },
+  {
+    "name": "q=3329 random M=16 (R=2^12)",
+    "bitlength": 16,
+    "data_file": "montgomery_kyber_random_m16.bsdata"
+  },
+  {
+    "name": "K=16 n=65521 random M=32",
+    "bitlength": 32,
+    "data_file": "montgomery_k16_n65521_random_m32.bsdata"
+  },
+  {
+    "name": "q=3329 1M items K=12",
+    "category": "generated",
+    "bitlength": 1000000,
+    "generate": {
+      "type": "montgomery_mul",
+      "K": 12,
+      "n": 3329,
+      "np": 3327,
+      "seed": 4444
+    }
+  },
+  {
+    "name": "Tier small (6,666,667 items)",
+    "bitlength": 6666667,
+    "data_file": "montgomery_mul_tier_small.bsdata",
+    "size_bytes": 30000320,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 5000,
+      "description": "Random Montgomery reduction over q=3329 with R=2^12. Operands are unconstrained 12-bit streams, not canonical Kyber-range inputs. 6,666,667 independent multiply-mod instances.",
+      "generated_by": "generate_tests.py --tier small",
+      "sha256": "fe73c56396c8fbc9059b177872c6c35f2ab8beb6d1acce62cb82221639ed9be9",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier medium (66,666,667 items)",
+    "bitlength": 66666667,
+    "data_file": "montgomery_mul_tier_medium.bsdata",
+    "size_bytes": 300000326,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 5001,
+      "description": "Random Montgomery reduction over q=3329 with R=2^12. Operands are unconstrained 12-bit streams, not canonical Kyber-range inputs. 66,666,667 independent multiply-mod instances.",
+      "generated_by": "generate_tests.py --tier medium",
+      "sha256": "6bd536d7f8e304c095babb0c0821d064c90d2fe925695faf0bfab8b9a73360e7",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier large (666,666,667 items)",
+    "bitlength": 666666667,
+    "data_file": "montgomery_mul_tier_large.bsdata",
+    "size_bytes": 3000000332,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 5002,
+      "description": "Random Montgomery reduction over q=3329 with R=2^12. Operands are unconstrained 12-bit streams, not canonical Kyber-range inputs. 666,666,667 independent multiply-mod instances.",
+      "generated_by": "generate_tests.py --tier large",
+      "bsim_md5": "6972b0d360dfb7d5fe03fcfdd17836eb",
+      "sha256": "53ec60f1517efaf7e774661e8e6b5519de51747d82d615e9a1a99ea177d40f8f"
+    }
+  }
+]

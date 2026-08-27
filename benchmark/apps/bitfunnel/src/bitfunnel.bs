@@ -1,0 +1,77 @@
+// ================================================================
+// BitFunnel — Bit-Sliced Signature Row Intersection
+// ================================================================
+//
+// Identifies candidate matching documents for a conjunctive query
+// using a bit-sliced Bloom filter index.
+//
+// Each document is represented as a Bloom filter signature stored
+// in a bit-sliced layout: row[i] is a bitvector where bit k = 1
+// iff document k has bit i set in its signature.  A query hashes
+// each of its terms to a set of rows; the candidate match set is
+// their AND-intersection.
+//
+// Higher Rank Rows (§4.1): a rank-r row has blocking factor 2^r,
+// meaning each bit covers 2^r documents.  Its rank-0 equivalent is
+// formed by concatenating 2^r copies, enabling shorter rows to be
+// scanned faster while introducing bounded correlated noise.
+//
+//   rank-1 equivalent: row | (row << HALF)           HALF = N/2
+//   rank-2 equivalent: (row | row<<Q) | ((row | row<<Q) << HALF)
+//                                                      Q = N/4
+//
+// Operation count: K0 + 3*K1 + 5*K2 + 1 popcount
+//   K0=3, K1=3, K2=1 (illustrative profile): 18 ops
+//   K0=3, K1=3, K2=2 (tier profile):         23 ops, depth 7
+//
+// Data: synthetic bit-sliced rows. The original BitFunnel paper
+//   evaluates on the TREC Gov2 corpus, shard D (d = 0.15); Gov2
+//   is access-restricted, so test/tier inputs here are uniform
+//   random rows (rank-r rows occupy the lower 1/2^r of the stream).
+//
+// References:
+//   Goodwin et al., "BitFunnel: Revisiting Signatures for Search",
+//     SIGIR 2017.  §2.3 (bit-sliced), §4.1 (higher rank rows).
+//   BitFunnel/BitFunnel — src/Plan/src/RankDownCompiler.cpp
+// ================================================================
+
+param int K0       // rank-0 query rows  (blocking factor 1)
+param int K1       // rank-1 query rows  (blocking factor 2)
+param int K2       // rank-2 query rows  (blocking factor 4)
+param int HALF     // N/2 — expansion shift for rank-1 rows
+param int QUARTER  // N/4 — expansion shift for rank-2 rows
+
+input stream rows_r0[K0]   // rank-0 rows selected by query terms
+input stream rows_r1[K1]   // rank-1 rows selected by query terms
+input stream rows_r2[K2]   // rank-2 rows selected by query terms
+
+output stream matches       // candidate documents (may include false positives)
+output int count            // number of candidates
+
+stream acc = ONES
+
+// Rank-0: direct AND
+for i in 0..K0 {
+    acc = acc & rows_r0[i]
+}
+
+// Rank-1: expand to rank-0 equivalent, then AND
+// Bit j covers documents {j, j + N/2}; shift broadcasts to upper half.
+for i in 0..K1 {
+    stream shifted1 = rows_r1[i] << HALF
+    stream expanded1 = rows_r1[i] | shifted1
+    acc = acc & expanded1
+}
+
+// Rank-2: expand to rank-0 equivalent, then AND
+// stage1 covers {j, j+Q}; shifting by HALF broadcasts to {j+2Q, j+3Q}.
+for i in 0..K2 {
+    stream s1 = rows_r2[i] << QUARTER
+    stream stage1 = rows_r2[i] | s1
+    stream s2 = stage1 << HALF
+    stream expanded2 = stage1 | s2
+    acc = acc & expanded2
+}
+
+matches = acc
+count = popcount(matches)

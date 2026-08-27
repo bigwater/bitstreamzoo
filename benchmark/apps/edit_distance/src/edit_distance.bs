@@ -1,0 +1,155 @@
+// Myers' Bit-Parallel Edit Distance (1999)
+// DNA alphabet (A, C, G, T)
+//
+// Each bit position = a different text being compared against
+// the same pattern. Computes Levenshtein distance in O(N*M) bitwise ops
+// where N = text length, M = pattern length.
+//
+// References:
+//   Myers, "A Fast Bit-Vector Algorithm for Approximate String Matching
+//   Based on Dynamic Programming", JACM 1999
+//
+// Inputs:
+//   pos_A[N], pos_C[N], pos_G[N], pos_T[N] — text character indicators
+//     pos_X[j] has bit i set iff text i has character X at position j
+//   eq_A[M], eq_C[M], eq_G[M], eq_T[M] — pattern equality masks
+//     eq_X[k] has all bits set iff pattern[k] == X (broadcast)
+//   dist_init[B] — initial distance M in binary (broadcast)
+//
+// Outputs:
+//   dist[B] — final edit distance in bitsliced binary
+//
+// Per text position:
+//   Eq: 7M, Xv: M, T1: M, T2(add): 5M, Xh: 2M, Ph: 3M, Mh: M,
+//   score update: 5B, shift: 0, Pv/Mv update: 4M
+//   Total per position: 24M + 5B ops
+
+param int N
+param int M
+param int B
+
+input stream pos_A[N]
+input stream pos_C[N]
+input stream pos_G[N]
+input stream pos_T[N]
+
+input stream eq_A[M]
+input stream eq_C[M]
+input stream eq_G[M]
+input stream eq_T[M]
+
+input stream dist_init[B]
+
+output stream dist[B]
+
+// Initialize positive/negative vertical delta vectors
+// Pv = all 1s (distance starts at M), Mv = all 0s
+stream Pv[M]
+stream Mv[M]
+for k in 0..M {
+    Pv[k] = ONES
+    Mv[k] = ZERO
+}
+
+// Initialize distance counter from dist_init
+for b in 0..B {
+    dist[b] = dist_init[b]
+}
+
+// Main loop: process each text position
+for j in 0..N {
+    // Step 1: Compute Eq[k] for this text position (7M ops)
+    stream Eq[M]
+    for k in 0..M {
+        stream _ma = pos_A[j] & eq_A[k]
+        stream _mc = pos_C[j] & eq_C[k]
+        stream _mg = pos_G[j] & eq_G[k]
+        stream _mt = pos_T[j] & eq_T[k]
+        stream _ac = _ma | _mc
+        stream _gt = _mg | _mt
+        Eq[k] = _ac | _gt
+    }
+
+    // Step 2: Xv = Eq | Mv (M ops)
+    stream Xv[M]
+    for k in 0..M {
+        Xv[k] = Eq[k] | Mv[k]
+    }
+
+    // Step 3: T1 = Eq & Pv (M ops)
+    // (equivalent to Xv & Pv since Pv & Mv == 0 invariant)
+    stream T1[M]
+    for k in 0..M {
+        T1[k] = Eq[k] & Pv[k]
+    }
+
+    // Step 4: Ripple-carry addition: T2 = T1 + Pv (5M ops)
+    stream T2[M]
+    stream add_carry = ZERO
+    for k in 0..M {
+        stream _xor_tp = T1[k] ^ Pv[k]
+        T2[k] = _xor_tp ^ add_carry
+        stream _and_tp = T1[k] & Pv[k]
+        stream _and_cx = add_carry & _xor_tp
+        add_carry = _and_tp | _and_cx
+    }
+
+    // Step 5: Xh = (T2 ^ Pv) | Eq (2M ops)
+    stream Xh[M]
+    for k in 0..M {
+        stream _t2xp = T2[k] ^ Pv[k]
+        Xh[k] = _t2xp | Eq[k]
+    }
+
+    // Step 6: Ph = Mv | ~(Xh | Pv) (3M ops)
+    stream Ph[M]
+    for k in 0..M {
+        stream _xhpv = Xh[k] | Pv[k]
+        stream _not_xhpv = ~_xhpv
+        Ph[k] = Mv[k] | _not_xhpv
+    }
+
+    // Step 7: Mh = Pv & Xh (M ops)
+    stream Mh[M]
+    for k in 0..M {
+        Mh[k] = Pv[k] & Xh[k]
+    }
+
+    // Step 8: Update distance by MSB of Ph and Mh (5B ops)
+    // if Ph[M-1]: dist += 1 (half-adder chain, 2B ops)
+    stream inc_carry = Ph[M - 1]
+    for b in 0..B {
+        stream _inc_sum = dist[b] ^ inc_carry
+        inc_carry = dist[b] & inc_carry
+        dist[b] = _inc_sum
+    }
+
+    // if Mh[M-1]: dist -= 1 (half-subtractor chain, 3B ops)
+    stream dec_borrow = Mh[M - 1]
+    for b in 0..B {
+        stream _dec_diff = dist[b] ^ dec_borrow
+        stream _not_db = ~dist[b]
+        dec_borrow = _not_db & dec_borrow
+        dist[b] = _dec_diff
+    }
+
+    // Step 9: Shift Ph left by 1 (LSB=1), Mh left by 1 (LSB=0)
+    stream Ph_shifted[M]
+    stream Mh_shifted[M]
+    Ph_shifted[0] = ONES
+    Mh_shifted[0] = ZERO
+    for k in 1..M {
+        Ph_shifted[k] = Ph[k - 1]
+        Mh_shifted[k] = Mh[k - 1]
+    }
+
+    // Step 10: Update Pv, Mv (4M ops)
+    // Pv = Mh_shifted | ~(Xv | Ph_shifted)
+    // Mv = Ph_shifted & Xv
+    for k in 0..M {
+        stream _xv_phs = Xv[k] | Ph_shifted[k]
+        stream _not_xvphs = ~_xv_phs
+        Pv[k] = Mh_shifted[k] | _not_xvphs
+        Mv[k] = Ph_shifted[k] & Xv[k]
+    }
+}

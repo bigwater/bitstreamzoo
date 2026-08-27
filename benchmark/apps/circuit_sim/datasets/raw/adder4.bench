@@ -1,0 +1,47 @@
+# 4-bit ripple-carry adder
+# 9 inputs (a0-a3, b0-b3, cin), 5 outputs (s0-s3, cout), 20 gates
+# Each full-adder: 2 XOR + 2 AND + 1 OR = 5 gates
+
+INPUT(a0)
+INPUT(a1)
+INPUT(a2)
+INPUT(a3)
+INPUT(b0)
+INPUT(b1)
+INPUT(b2)
+INPUT(b3)
+INPUT(cin)
+
+OUTPUT(s0)
+OUTPUT(s1)
+OUTPUT(s2)
+OUTPUT(s3)
+OUTPUT(cout)
+
+# Bit 0: full adder (cin -> c0)
+p0 = XOR(a0, b0)
+s0 = XOR(p0, cin)
+g0 = AND(a0, b0)
+pc0 = AND(p0, cin)
+c0 = OR(g0, pc0)
+
+# Bit 1: full adder (c0 -> c1)
+p1 = XOR(a1, b1)
+s1 = XOR(p1, c0)
+g1 = AND(a1, b1)
+pc1 = AND(p1, c0)
+c1 = OR(g1, pc1)
+
+# Bit 2: full adder (c1 -> c2)
+p2 = XOR(a2, b2)
+s2 = XOR(p2, c1)
+g2 = AND(a2, b2)
+pc2 = AND(p2, c1)
+c2 = OR(g2, pc2)
+
+# Bit 3: full adder (c2 -> cout)
+p3 = XOR(a3, b3)
+s3 = XOR(p3, c2)
+g3 = AND(a3, b3)
+pc3 = AND(p3, c2)
+cout = OR(g3, pc3)

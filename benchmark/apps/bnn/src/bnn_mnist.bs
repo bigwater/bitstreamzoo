@@ -1,0 +1,516 @@
+// 3-layer Binary Neural Network (BNN) fully-connected inference
+// BitstreamZoo's gate-level realization of FINN's operation-level
+// XNOR-popcount-threshold pipeline.
+//
+// Sources:
+//   Hubara et al., "Binarized Neural Networks", NeurIPS 2016
+//     ("Running a BNN" is Algorithm 4 in the NeurIPS version;
+//      Algorithm 5 in the arXiv preprint arXiv:1602.02830)
+//   Rastegari et al., "XNOR-Net", ECCV 2016
+//   Umuroglu et al., "FINN: Fast, Scalable BNN Inference", FPGA 2017
+//     (§4.2.1 popcount for accumulation, §4.2.2 batchnorm-as-threshold)
+//
+// Algorithm per neuron (FINN §4.2.1, §4.2.2):
+//   dot = popcount( XNOR(input_vector, weight_vector) )
+//   activation = (dot >= threshold)
+// where the threshold is precomputed by folding the BatchNorm parameters
+// (FINN §4.2.2: tau+ = (tau + S)/2, S = fan-in).
+//
+// The popcount is implemented as a gate-level tree of half-adders and
+// full-adders, processing the N inputs in chunks of CHUNK_SIZE = 16.
+// Per chunk: 16 XNORs -> 4-layer binary tree (8 HA + 4 FA-pair + 2
+// FA-pair + 1 FA-pair = 85 ops) -> 5-bit chunk popcount -> ripple-add
+// into the running B-bit counter.
+//
+// FINN §4.2.1 reports the operation-level popcount-accumulate LUT/FF
+// cost (376 LUTs / 128-bit at 200 MHz) but leaves the internal adder
+// topology to Vivado HLS; the specific 16-input half/full-adder tree
+// here is BitstreamZoo's choice. On commodity AVX-512 with hardware
+// vpopcntq, the gate-level tree form lower-bounds the cost of emulating
+// the hardware popcount with bit-plane operations.
+//
+// Architecture: 3 fully-connected layers
+//   Layer 1: N1 inputs  -> K1 neurons (B1 counter bits)
+//   Layer 2: N2 = K1 inputs -> K2 neurons (B2 counter bits)
+//   Layer 3: N3 = K2 inputs -> K3 neurons (B3 counter bits)
+//
+// MNIST configuration: 784 -> 1024 -> 1024 -> 1024 (3 binary FC layers).
+// The external 1024 -> 10 argmax classifier layer is computed only during
+// test data generation (train_mnist.py) and is not part of this program.
+// (CHUNK_SIZE=16 divides 784, 1024, 1024 evenly: 49, 64, 64 chunks.)
+//
+// Note on N*_CHUNKS params: the .bs DSL int_expr grammar does not support
+// integer division, so the chunk counts (N*_CHUNKS = N* / 16) are passed
+// as runtime params rather than being computed inside the program.
+
+param int N1
+param int K1
+param int B1
+param int N1_CHUNKS    // = N1 / 16
+param int N2
+param int K2
+param int B2
+param int N2_CHUNKS    // = N2 / 16
+param int N3
+param int K3
+param int B3
+param int N3_CHUNKS    // = N3 / 16
+
+input stream x[N1]
+input stream w1[N1 * K1]
+input stream t1[B1 * K1]
+input stream w2[N2 * K2]
+input stream t2[B2 * K2]
+input stream w3[N3 * K3]
+input stream t3[B3 * K3]
+
+output stream act[K3]
+
+// =====================================================================
+// Layer 1: x -> h1   (N1 inputs, K1 neurons)
+// =====================================================================
+stream h1[K1]
+for k in 0..K1 {
+    // Running B1-bit popcount counter (per task instance, bit-plane)
+    stream count[B1]
+    for b in 0..B1 {
+        count[b] = ZERO
+    }
+
+    // Process N1 inputs in CHUNK_SIZE=16 chunks
+    for c in 0..N1_CHUNKS {
+        int base = c * 16
+
+        // ---- Step 1: 16 XNOR matches m[0..15] = ~(x[i] ^ w1[k][i]) ----
+        stream m[16]
+        for i in 0..16 {
+            stream xor_xw = x[base + i] ^ w1[k * N1 + base + i]
+            m[i] = ~xor_xw
+        }
+
+        // ---- Step 2: gate-level tree-reduction popcount of 16 bits ----
+        // Layer 0: 16 -> 8 (sum, carry) pairs via half-adders. 16 ops.
+        stream s_l0[8]
+        stream c_l0[8]
+        for j in 0..8 {
+            s_l0[j] = m[2 * j] ^ m[2 * j + 1]
+            c_l0[j] = m[2 * j] & m[2 * j + 1]
+        }
+
+        // Layer 1: 8 2-bit values -> 4 3-bit values. 4 * 7 = 28 ops.
+        stream r_b0[4]
+        stream r_b1[4]
+        stream r_b2[4]
+        for j in 0..4 {
+            r_b0[j] = s_l0[2 * j] ^ s_l0[2 * j + 1]
+            stream c01 = s_l0[2 * j] & s_l0[2 * j + 1]
+            stream t1a = c_l0[2 * j] ^ c_l0[2 * j + 1]
+            r_b1[j] = t1a ^ c01
+            stream t2a = c_l0[2 * j] & c_l0[2 * j + 1]
+            stream t3a = t1a & c01
+            r_b2[j] = t2a | t3a
+        }
+
+        // Layer 2: 4 3-bit values -> 2 4-bit values. 2 * 12 = 24 ops.
+        stream p_b0[2]
+        stream p_b1[2]
+        stream p_b2[2]
+        stream p_b3[2]
+        for j in 0..2 {
+            p_b0[j] = r_b0[2 * j] ^ r_b0[2 * j + 1]
+            stream pc01 = r_b0[2 * j] & r_b0[2 * j + 1]
+            stream pt1 = r_b1[2 * j] ^ r_b1[2 * j + 1]
+            p_b1[j] = pt1 ^ pc01
+            stream pt2 = r_b1[2 * j] & r_b1[2 * j + 1]
+            stream pt3 = pt1 & pc01
+            stream pc12 = pt2 | pt3
+            stream pt4 = r_b2[2 * j] ^ r_b2[2 * j + 1]
+            p_b2[j] = pt4 ^ pc12
+            stream pt5 = r_b2[2 * j] & r_b2[2 * j + 1]
+            stream pt6 = pt4 & pc12
+            p_b3[j] = pt5 | pt6
+        }
+
+        // Layer 3: 2 4-bit values -> 1 5-bit value (q0..q4). 17 ops.
+        stream q0 = p_b0[0] ^ p_b0[1]
+        stream qc01 = p_b0[0] & p_b0[1]
+        stream qt1 = p_b1[0] ^ p_b1[1]
+        stream q1 = qt1 ^ qc01
+        stream qt2 = p_b1[0] & p_b1[1]
+        stream qt3 = qt1 & qc01
+        stream qc12 = qt2 | qt3
+        stream qt4 = p_b2[0] ^ p_b2[1]
+        stream q2 = qt4 ^ qc12
+        stream qt5 = p_b2[0] & p_b2[1]
+        stream qt6 = qt4 & qc12
+        stream qc23 = qt5 | qt6
+        stream qt7 = p_b3[0] ^ p_b3[1]
+        stream q3 = qt7 ^ qc23
+        stream qt8 = p_b3[0] & p_b3[1]
+        stream qt9 = qt7 & qc23
+        stream q4 = qt8 | qt9
+
+        // ---- Step 3: ripple-add 5-bit chunk count (q0..q4) into B1-bit counter ----
+        // bit 0: HA(count[0], q0)
+        stream r0_sum = count[0] ^ q0
+        stream r_carry = count[0] & q0
+        count[0] = r0_sum
+        // bit 1: FA(count[1], q1, r_carry)
+        stream r1a = count[1] ^ q1
+        stream r1b = count[1] & q1
+        stream r1_sum = r1a ^ r_carry
+        stream r1c = r1a & r_carry
+        r_carry = r1b | r1c
+        count[1] = r1_sum
+        // bit 2: FA(count[2], q2, r_carry)
+        stream r2a = count[2] ^ q2
+        stream r2b = count[2] & q2
+        stream r2_sum = r2a ^ r_carry
+        stream r2c = r2a & r_carry
+        r_carry = r2b | r2c
+        count[2] = r2_sum
+        // bit 3: FA(count[3], q3, r_carry)
+        stream r3a = count[3] ^ q3
+        stream r3b = count[3] & q3
+        stream r3_sum = r3a ^ r_carry
+        stream r3c = r3a & r_carry
+        r_carry = r3b | r3c
+        count[3] = r3_sum
+        // bit 4: FA(count[4], q4, r_carry)
+        stream r4a = count[4] ^ q4
+        stream r4b = count[4] & q4
+        stream r4_sum = r4a ^ r_carry
+        stream r4c = r4a & r_carry
+        r_carry = r4b | r4c
+        count[4] = r4_sum
+        // bits 5..B1-1: HA propagation (carry only, no chunk bits)
+        for b in 5..B1 {
+            stream prop_sum = count[b] ^ r_carry
+            r_carry = count[b] & r_carry
+            count[b] = prop_sum
+        }
+    }
+
+    // ---- Remainder loop: handle (N1 - 16*N1_CHUNKS) leftover inputs ----
+    // For N1 a multiple of 16 this loop runs 0 times. For unit tests with
+    // N1 < 16 (e.g., N1=8) this handles all inputs via per-input ripple.
+    for rem in 0..(N1 - 16 * N1_CHUNKS) {
+        int idx = N1_CHUNKS * 16 + rem
+        stream rem_xor = x[idx] ^ w1[k * N1 + idx]
+        stream rem_match = ~rem_xor
+        stream rem_carry = rem_match
+        for b in 0..B1 {
+            stream rem_sum = count[b] ^ rem_carry
+            rem_carry = count[b] & rem_carry
+            count[b] = rem_sum
+        }
+    }
+
+    // ---- Threshold compare (FINN §4.2.2 BatchNorm-as-threshold) ----
+    // Stream-level "count >= threshold" via MSB-to-LSB scan (BitWeaving form).
+    stream gt = ZERO
+    stream eq = ONES
+    for j in 0..B1 {
+        stream a = count[B1 - 1 - j]
+        stream tb = t1[k * B1 + B1 - 1 - j]
+        stream not_tb = ~tb
+        stream a_gt = a & not_tb
+        stream xor_ab = a ^ tb
+        stream a_eq = ~xor_ab
+        stream eq_and_gt = eq & a_gt
+        gt = gt | eq_and_gt
+        eq = eq & a_eq
+    }
+    h1[k] = gt | eq
+}
+
+// =====================================================================
+// Layer 2: h1 -> h2   (N2 = K1 inputs, K2 neurons)
+// =====================================================================
+stream h2[K2]
+for k in 0..K2 {
+    stream count[B2]
+    for b in 0..B2 {
+        count[b] = ZERO
+    }
+
+    for c in 0..N2_CHUNKS {
+        int base = c * 16
+
+        // 16 XNORs
+        stream m[16]
+        for i in 0..16 {
+            stream xor_xw = h1[base + i] ^ w2[k * N2 + base + i]
+            m[i] = ~xor_xw
+        }
+
+        // Layer 0: 16 -> 8 pairs
+        stream s_l0[8]
+        stream c_l0[8]
+        for j in 0..8 {
+            s_l0[j] = m[2 * j] ^ m[2 * j + 1]
+            c_l0[j] = m[2 * j] & m[2 * j + 1]
+        }
+
+        // Layer 1: 8 -> 4 3-bit
+        stream r_b0[4]
+        stream r_b1[4]
+        stream r_b2[4]
+        for j in 0..4 {
+            r_b0[j] = s_l0[2 * j] ^ s_l0[2 * j + 1]
+            stream c01 = s_l0[2 * j] & s_l0[2 * j + 1]
+            stream t1a = c_l0[2 * j] ^ c_l0[2 * j + 1]
+            r_b1[j] = t1a ^ c01
+            stream t2a = c_l0[2 * j] & c_l0[2 * j + 1]
+            stream t3a = t1a & c01
+            r_b2[j] = t2a | t3a
+        }
+
+        // Layer 2: 4 -> 2 4-bit
+        stream p_b0[2]
+        stream p_b1[2]
+        stream p_b2[2]
+        stream p_b3[2]
+        for j in 0..2 {
+            p_b0[j] = r_b0[2 * j] ^ r_b0[2 * j + 1]
+            stream pc01 = r_b0[2 * j] & r_b0[2 * j + 1]
+            stream pt1 = r_b1[2 * j] ^ r_b1[2 * j + 1]
+            p_b1[j] = pt1 ^ pc01
+            stream pt2 = r_b1[2 * j] & r_b1[2 * j + 1]
+            stream pt3 = pt1 & pc01
+            stream pc12 = pt2 | pt3
+            stream pt4 = r_b2[2 * j] ^ r_b2[2 * j + 1]
+            p_b2[j] = pt4 ^ pc12
+            stream pt5 = r_b2[2 * j] & r_b2[2 * j + 1]
+            stream pt6 = pt4 & pc12
+            p_b3[j] = pt5 | pt6
+        }
+
+        // Layer 3: 2 -> 1 5-bit
+        stream q0 = p_b0[0] ^ p_b0[1]
+        stream qc01 = p_b0[0] & p_b0[1]
+        stream qt1 = p_b1[0] ^ p_b1[1]
+        stream q1 = qt1 ^ qc01
+        stream qt2 = p_b1[0] & p_b1[1]
+        stream qt3 = qt1 & qc01
+        stream qc12 = qt2 | qt3
+        stream qt4 = p_b2[0] ^ p_b2[1]
+        stream q2 = qt4 ^ qc12
+        stream qt5 = p_b2[0] & p_b2[1]
+        stream qt6 = qt4 & qc12
+        stream qc23 = qt5 | qt6
+        stream qt7 = p_b3[0] ^ p_b3[1]
+        stream q3 = qt7 ^ qc23
+        stream qt8 = p_b3[0] & p_b3[1]
+        stream qt9 = qt7 & qc23
+        stream q4 = qt8 | qt9
+
+        // Ripple-add q[0..4] into count[0..B2-1]
+        stream r0_sum = count[0] ^ q0
+        stream r_carry = count[0] & q0
+        count[0] = r0_sum
+        stream r1a = count[1] ^ q1
+        stream r1b = count[1] & q1
+        stream r1_sum = r1a ^ r_carry
+        stream r1c = r1a & r_carry
+        r_carry = r1b | r1c
+        count[1] = r1_sum
+        stream r2a = count[2] ^ q2
+        stream r2b = count[2] & q2
+        stream r2_sum = r2a ^ r_carry
+        stream r2c = r2a & r_carry
+        r_carry = r2b | r2c
+        count[2] = r2_sum
+        stream r3a = count[3] ^ q3
+        stream r3b = count[3] & q3
+        stream r3_sum = r3a ^ r_carry
+        stream r3c = r3a & r_carry
+        r_carry = r3b | r3c
+        count[3] = r3_sum
+        stream r4a = count[4] ^ q4
+        stream r4b = count[4] & q4
+        stream r4_sum = r4a ^ r_carry
+        stream r4c = r4a & r_carry
+        r_carry = r4b | r4c
+        count[4] = r4_sum
+        for b in 5..B2 {
+            stream prop_sum = count[b] ^ r_carry
+            r_carry = count[b] & r_carry
+            count[b] = prop_sum
+        }
+    }
+
+    // Remainder loop: handle (N2 - 16*N2_CHUNKS) leftover inputs
+    for rem in 0..(N2 - 16 * N2_CHUNKS) {
+        int idx = N2_CHUNKS * 16 + rem
+        stream rem_xor = h1[idx] ^ w2[k * N2 + idx]
+        stream rem_match = ~rem_xor
+        stream rem_carry = rem_match
+        for b in 0..B2 {
+            stream rem_sum = count[b] ^ rem_carry
+            rem_carry = count[b] & rem_carry
+            count[b] = rem_sum
+        }
+    }
+
+    // Threshold compare
+    stream gt = ZERO
+    stream eq = ONES
+    for j in 0..B2 {
+        stream a = count[B2 - 1 - j]
+        stream tb = t2[k * B2 + B2 - 1 - j]
+        stream not_tb = ~tb
+        stream a_gt = a & not_tb
+        stream xor_ab = a ^ tb
+        stream a_eq = ~xor_ab
+        stream eq_and_gt = eq & a_gt
+        gt = gt | eq_and_gt
+        eq = eq & a_eq
+    }
+    h2[k] = gt | eq
+}
+
+// =====================================================================
+// Layer 3: h2 -> act   (N3 = K2 inputs, K3 neurons)
+// =====================================================================
+for k in 0..K3 {
+    stream count[B3]
+    for b in 0..B3 {
+        count[b] = ZERO
+    }
+
+    for c in 0..N3_CHUNKS {
+        int base = c * 16
+
+        // 16 XNORs
+        stream m[16]
+        for i in 0..16 {
+            stream xor_xw = h2[base + i] ^ w3[k * N3 + base + i]
+            m[i] = ~xor_xw
+        }
+
+        // Layer 0: 16 -> 8 pairs
+        stream s_l0[8]
+        stream c_l0[8]
+        for j in 0..8 {
+            s_l0[j] = m[2 * j] ^ m[2 * j + 1]
+            c_l0[j] = m[2 * j] & m[2 * j + 1]
+        }
+
+        // Layer 1: 8 -> 4 3-bit
+        stream r_b0[4]
+        stream r_b1[4]
+        stream r_b2[4]
+        for j in 0..4 {
+            r_b0[j] = s_l0[2 * j] ^ s_l0[2 * j + 1]
+            stream c01 = s_l0[2 * j] & s_l0[2 * j + 1]
+            stream t1a = c_l0[2 * j] ^ c_l0[2 * j + 1]
+            r_b1[j] = t1a ^ c01
+            stream t2a = c_l0[2 * j] & c_l0[2 * j + 1]
+            stream t3a = t1a & c01
+            r_b2[j] = t2a | t3a
+        }
+
+        // Layer 2: 4 -> 2 4-bit
+        stream p_b0[2]
+        stream p_b1[2]
+        stream p_b2[2]
+        stream p_b3[2]
+        for j in 0..2 {
+            p_b0[j] = r_b0[2 * j] ^ r_b0[2 * j + 1]
+            stream pc01 = r_b0[2 * j] & r_b0[2 * j + 1]
+            stream pt1 = r_b1[2 * j] ^ r_b1[2 * j + 1]
+            p_b1[j] = pt1 ^ pc01
+            stream pt2 = r_b1[2 * j] & r_b1[2 * j + 1]
+            stream pt3 = pt1 & pc01
+            stream pc12 = pt2 | pt3
+            stream pt4 = r_b2[2 * j] ^ r_b2[2 * j + 1]
+            p_b2[j] = pt4 ^ pc12
+            stream pt5 = r_b2[2 * j] & r_b2[2 * j + 1]
+            stream pt6 = pt4 & pc12
+            p_b3[j] = pt5 | pt6
+        }
+
+        // Layer 3: 2 -> 1 5-bit
+        stream q0 = p_b0[0] ^ p_b0[1]
+        stream qc01 = p_b0[0] & p_b0[1]
+        stream qt1 = p_b1[0] ^ p_b1[1]
+        stream q1 = qt1 ^ qc01
+        stream qt2 = p_b1[0] & p_b1[1]
+        stream qt3 = qt1 & qc01
+        stream qc12 = qt2 | qt3
+        stream qt4 = p_b2[0] ^ p_b2[1]
+        stream q2 = qt4 ^ qc12
+        stream qt5 = p_b2[0] & p_b2[1]
+        stream qt6 = qt4 & qc12
+        stream qc23 = qt5 | qt6
+        stream qt7 = p_b3[0] ^ p_b3[1]
+        stream q3 = qt7 ^ qc23
+        stream qt8 = p_b3[0] & p_b3[1]
+        stream qt9 = qt7 & qc23
+        stream q4 = qt8 | qt9
+
+        // Ripple-add q[0..4] into count[0..B3-1]
+        stream r0_sum = count[0] ^ q0
+        stream r_carry = count[0] & q0
+        count[0] = r0_sum
+        stream r1a = count[1] ^ q1
+        stream r1b = count[1] & q1
+        stream r1_sum = r1a ^ r_carry
+        stream r1c = r1a & r_carry
+        r_carry = r1b | r1c
+        count[1] = r1_sum
+        stream r2a = count[2] ^ q2
+        stream r2b = count[2] & q2
+        stream r2_sum = r2a ^ r_carry
+        stream r2c = r2a & r_carry
+        r_carry = r2b | r2c
+        count[2] = r2_sum
+        stream r3a = count[3] ^ q3
+        stream r3b = count[3] & q3
+        stream r3_sum = r3a ^ r_carry
+        stream r3c = r3a & r_carry
+        r_carry = r3b | r3c
+        count[3] = r3_sum
+        stream r4a = count[4] ^ q4
+        stream r4b = count[4] & q4
+        stream r4_sum = r4a ^ r_carry
+        stream r4c = r4a & r_carry
+        r_carry = r4b | r4c
+        count[4] = r4_sum
+        for b in 5..B3 {
+            stream prop_sum = count[b] ^ r_carry
+            r_carry = count[b] & r_carry
+            count[b] = prop_sum
+        }
+    }
+
+    // Remainder loop: handle (N3 - 16*N3_CHUNKS) leftover inputs
+    for rem in 0..(N3 - 16 * N3_CHUNKS) {
+        int idx = N3_CHUNKS * 16 + rem
+        stream rem_xor = h2[idx] ^ w3[k * N3 + idx]
+        stream rem_match = ~rem_xor
+        stream rem_carry = rem_match
+        for b in 0..B3 {
+            stream rem_sum = count[b] ^ rem_carry
+            rem_carry = count[b] & rem_carry
+            count[b] = rem_sum
+        }
+    }
+
+    // Threshold compare
+    stream gt = ZERO
+    stream eq = ONES
+    for j in 0..B3 {
+        stream a = count[B3 - 1 - j]
+        stream tb = t3[k * B3 + B3 - 1 - j]
+        stream not_tb = ~tb
+        stream a_gt = a & not_tb
+        stream xor_ab = a ^ tb
+        stream a_eq = ~xor_ab
+        stream eq_and_gt = eq & a_gt
+        gt = gt | eq_and_gt
+        eq = eq & a_eq
+    }
+    act[k] = gt | eq
+}

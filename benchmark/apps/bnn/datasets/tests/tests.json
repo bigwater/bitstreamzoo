@@ -1,0 +1,72 @@
+{
+  "bnn_mnist": [
+    {
+      "name": "All match",
+      "bitlength": 1,
+      "data_file": "bnn_all_match.bsdata"
+    },
+    {
+      "name": "No match",
+      "bitlength": 1,
+      "data_file": "bnn_no_match.bsdata"
+    },
+    {
+      "name": "Multi-neuron chain",
+      "bitlength": 4,
+      "data_file": "bnn_multi_neuron.bsdata"
+    },
+    {
+      "name": "Exhaustive N1=8",
+      "bitlength": 256,
+      "data_file": "bnn_exhaustive_n8.bsdata"
+    },
+    {
+      "name": "Random 16-bit x100",
+      "bitlength": 1600,
+      "data_file": "bnn_random_16bit_100.bsdata"
+    },
+    {
+      "name": "Random 64-bit x50",
+      "bitlength": 3200,
+      "data_file": "bnn_random_64bit_50.bsdata"
+    },
+    {
+      "name": "MNIST 100",
+      "bitlength": 100,
+      "data_file": "bnn_mnist_100.bsdata"
+    },
+    {
+      "name": "MNIST 10k",
+      "bitlength": 10000,
+      "data_file": "bnn_mnist_10k.bsdata"
+    },
+    {
+      "name": "Tier small",
+      "bitlength": 3030303,
+      "data_file": "bnn_tier_small.bsdata",
+      "size_bytes": 50025992,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1000,
+        "description": "3-layer BNN with random weights. Architecture: 128->256->256->4. Input x: 128 random bitstreams (3,030,303 bits each). 3,030,303 samples.",
+        "generated_by": "generate_tests.py --tier small",
+        "bsim_md5": "41473dbf17ed84d4f504c9fb1c0b220e",
+        "sha256": "de2b2fabc5c60c98a4c39a5f01f48ac38d12a624c1b959c589e2c02f8b24598a"
+      }
+    },
+    {
+      "name": "Tier medium",
+      "bitlength": 30303030,
+      "data_file": "bnn_tier_medium.bsdata",
+      "size_bytes": 500026064,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1001,
+        "description": "3-layer BNN with random weights. Architecture: 128->256->256->4. Input x: 128 random bitstreams (30,303,030 bits each). 30,303,030 samples.",
+        "generated_by": "generate_tests.py --tier medium",
+        "bsim_md5": "41473dbf17ed84d4f504c9fb1c0b220e",
+        "sha256": "1c77a8234a94e5420a832b69f881cccf6e7248711e4baf9510b3f617768f7a19"
+      }
+    }
+  ]
+}

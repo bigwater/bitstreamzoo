@@ -1,0 +1,148 @@
+// AES S-box (Boyar-Matthews-Peralta / NIST CMT circuit, 113 gates)
+//
+// Each bit position is a different byte being substituted.
+// Input U[8]: 8-bit input (U[0]=MSB, U[7]=LSB).
+// Output S[8]: 8-bit S-box output (S[0]=MSB, S[7]=LSB).
+//
+// Circuit structure (gate basis: each XNOR is one gate):
+//   Top linear transform:    23 XOR                    (y1..y21, t0, t1)
+//   Middle nonlinear:        14 AND + 30 XOR           (t2..t45)
+//   Bottom linear + output:  18 AND + 24 XOR + 4 XNOR  (z0..z17, tc1..tc26, S0..S7)
+//
+// Total gates: 32 AND + 77 XOR + 4 XNOR = 113 gates.
+// IR op count: 32 AND + 81 XOR + 4 NOT  = 117 ops
+//              (each XNOR decomposes into XOR + NOT in the IR).
+//
+// Reference: Boyar, Matthews & Peralta, "Logic Minimization Techniques
+//   with Applications to Cryptology", J. Cryptol. 2013. This is the
+//   NIST CMT-reduced AES-SBOX-FWD-G113 straight-line program:
+//   https://www.cs.yale.edu/homes/peralta/CircuitStuff/SLP_AES_113.txt
+// Verification: exhaustive check against standard AES S-box table (256 entries).
+
+input stream U[8]
+output stream S[8]
+
+// ── Top linear transform (23 XOR) ──────────────────────────────
+stream y14 = U[3] ^ U[5]
+stream y13 = U[0] ^ U[6]
+stream y9 = U[0] ^ U[3]
+stream y8 = U[0] ^ U[5]
+stream t0 = U[1] ^ U[2]
+stream y1 = t0 ^ U[7]
+stream y4 = y1 ^ U[3]
+stream y12 = y13 ^ y14
+stream y2 = y1 ^ U[0]
+stream y5 = y1 ^ U[6]
+stream y3 = y5 ^ y8
+stream t1 = U[4] ^ y12
+stream y15 = t1 ^ U[5]
+stream y20 = t1 ^ U[1]
+stream y6 = y15 ^ U[7]
+stream y10 = y15 ^ t0
+stream y11 = y20 ^ y9
+stream y7 = U[7] ^ y11
+stream y17 = y10 ^ y11
+stream y19 = y10 ^ y8
+stream y16 = t0 ^ y11
+stream y21 = y13 ^ y16
+stream y18 = U[0] ^ y16
+
+// ── Middle nonlinear section (14 AND + 30 XOR) ────────────────
+stream t2 = y12 & y15
+stream t3 = y3 & y6
+stream t4 = t3 ^ t2
+stream t5 = y4 & U[7]
+stream t6 = t5 ^ t2
+stream t7 = y13 & y16
+stream t8 = y5 & y1
+stream t9 = t8 ^ t7
+stream t10 = y2 & y7
+stream t11 = t10 ^ t7
+stream t12 = y9 & y11
+stream t13 = y14 & y17
+stream t14 = t13 ^ t12
+stream t15 = y8 & y10
+stream t16 = t15 ^ t12
+stream t17 = t4 ^ y20
+stream t18 = t6 ^ t16
+stream t19 = t9 ^ t14
+stream t20 = t11 ^ t16
+stream t21 = t17 ^ t14
+stream t22 = t18 ^ y19
+stream t23 = t19 ^ y21
+stream t24 = t20 ^ y18
+stream t25 = t21 ^ t22
+stream t26 = t21 & t23
+stream t27 = t24 ^ t26
+stream t28 = t25 & t27
+stream t29 = t28 ^ t22
+stream t30 = t23 ^ t24
+stream t31 = t22 ^ t26
+stream t32 = t31 & t30
+stream t33 = t32 ^ t24
+stream t34 = t23 ^ t33
+stream t35 = t27 ^ t33
+stream t36 = t24 & t35
+stream t37 = t36 ^ t34
+stream t38 = t27 ^ t36
+stream t39 = t29 & t38
+stream t40 = t25 ^ t39
+stream t41 = t40 ^ t37
+stream t42 = t29 ^ t33
+stream t43 = t29 ^ t40
+stream t44 = t33 ^ t37
+stream t45 = t42 ^ t41
+
+// ── Bottom linear transform (18 AND + 24 XOR + 4 XNOR) ──────
+stream z0 = t44 & y15
+stream z1 = t37 & y6
+stream z2 = t33 & U[7]
+stream z3 = t43 & y16
+stream z4 = t40 & y1
+stream z5 = t29 & y7
+stream z6 = t42 & y11
+stream z7 = t45 & y17
+stream z8 = t41 & y10
+stream z9 = t44 & y12
+stream z10 = t37 & y3
+stream z11 = t33 & y4
+stream z12 = t43 & y13
+stream z13 = t40 & y5
+stream z14 = t29 & y2
+stream z15 = t42 & y9
+stream z16 = t45 & y14
+stream z17 = t41 & y8
+
+stream tc1 = z15 ^ z16
+stream tc2 = z10 ^ tc1
+stream tc3 = z9 ^ tc2
+stream tc4 = z0 ^ z2
+stream tc5 = z1 ^ z0
+stream tc6 = z3 ^ z4
+stream tc7 = z12 ^ tc4
+stream tc8 = z7 ^ tc6
+stream tc9 = z8 ^ tc7
+stream tc10 = tc8 ^ tc9
+stream tc11 = tc6 ^ tc5
+stream tc12 = z3 ^ z5
+stream tc13 = z13 ^ tc1
+stream tc14 = tc4 ^ tc12
+S[3] = tc3 ^ tc11
+stream tc16 = z6 ^ tc8
+stream tc17 = z14 ^ tc10
+stream tc18 = tc13 ^ tc14
+// XNOR gates (NOT of XOR)
+stream _xnor7 = z12 ^ tc18
+S[7] = ~_xnor7
+stream tc20 = z15 ^ tc16
+stream tc21 = tc2 ^ z11
+S[0] = tc3 ^ tc16
+stream _xnor6 = tc10 ^ tc18
+S[6] = ~_xnor6
+S[4] = tc14 ^ S[3]
+stream _xnor1 = S[3] ^ tc16
+S[1] = ~_xnor1
+stream tc26 = tc17 ^ tc20
+stream _xnor2 = tc26 ^ z17
+S[2] = ~_xnor2
+S[5] = tc21 ^ tc17

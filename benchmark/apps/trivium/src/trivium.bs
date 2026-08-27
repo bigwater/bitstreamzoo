@@ -1,0 +1,122 @@
+// Trivium stream cipher (De Canniere & Preneel, 2008)
+//
+// Each bit position is a different (key, IV) pair being encrypted.
+// The 288-bit state is stored as a stream array s[288].
+// Output z[L] is the keystream: z[k] for each clock tick k.
+//
+// Trivium uses three coupled shift registers:
+//   Register 1: s[0..92]   (93 bits)
+//   Register 2: s[93..176] (84 bits)
+//   Register 3: s[177..287] (111 bits)
+//
+// Per-clock operations: 3 AND + 9 XOR = 12 ops (warmup), 3 AND + 11 XOR = 14 ops (gen)
+// Plus 288 state assignments per clock: 285 shift copies (92+83+110) and 3
+// feedback writes (s[0], s[93], s[177]); all free in the op count.
+//
+// Reference: De Canniere & Preneel, "Trivium", in New Stream Cipher
+//   Designs: The eSTREAM Finalists, LNCS 4986, Springer, 2008.
+//   Selected for the eSTREAM Portfolio, Profile 2 (Hardware).
+// Test vectors: ECRYPT Stream Cipher Project.
+
+param int L
+
+input stream key[80]
+input stream iv[80]
+
+output stream z[L]
+
+stream s[288]
+
+// Initialize state from key and IV
+for i in 0..80 {
+    s[i] = key[i]
+}
+// s[80..92] already ZERO
+for i in 0..80 {
+    s[93 + i] = iv[i]
+}
+// s[173..176] already ZERO
+// s[177..284] already ZERO
+s[285] = ONES
+s[286] = ONES
+s[287] = ONES
+
+// Warmup: 1152 blank clocks (4 * 288)
+for k in 0..1152 {
+    stream t1 = s[65] ^ s[92]
+    stream t2 = s[161] ^ s[176]
+    stream t3 = s[242] ^ s[287]
+
+    // Feedback: AND two register taps, XOR into feedback, XOR cross-register tap
+    stream _and1 = s[90] & s[91]
+    stream _xor1 = t1 ^ _and1
+    t1 = _xor1 ^ s[170]
+
+    stream _and2 = s[174] & s[175]
+    stream _xor2 = t2 ^ _and2
+    t2 = _xor2 ^ s[263]
+
+    stream _and3 = s[285] & s[286]
+    stream _xor3 = t3 ^ _and3
+    t3 = _xor3 ^ s[68]
+
+    // Shift register 1: s[92..1] <- s[91..0]
+    for j in 0..92 {
+        s[92 - j] = s[91 - j]
+    }
+    s[0] = t3
+
+    // Shift register 2: s[176..94] <- s[175..93]
+    for j in 0..83 {
+        s[176 - j] = s[175 - j]
+    }
+    s[93] = t1
+
+    // Shift register 3: s[287..178] <- s[286..177]
+    for j in 0..110 {
+        s[287 - j] = s[286 - j]
+    }
+    s[177] = t2
+}
+
+// Generate: L keystream bits
+for k in 0..L {
+    stream t1 = s[65] ^ s[92]
+    stream t2 = s[161] ^ s[176]
+    stream t3 = s[242] ^ s[287]
+
+    // Keystream bit: XOR of three register outputs
+    stream _zxor = t1 ^ t2
+    z[k] = _zxor ^ t3
+
+    // Feedback: AND two register taps, XOR into feedback, XOR cross-register tap
+    stream _and1 = s[90] & s[91]
+    stream _xor1 = t1 ^ _and1
+    t1 = _xor1 ^ s[170]
+
+    stream _and2 = s[174] & s[175]
+    stream _xor2 = t2 ^ _and2
+    t2 = _xor2 ^ s[263]
+
+    stream _and3 = s[285] & s[286]
+    stream _xor3 = t3 ^ _and3
+    t3 = _xor3 ^ s[68]
+
+    // Shift register 1
+    for j in 0..92 {
+        s[92 - j] = s[91 - j]
+    }
+    s[0] = t3
+
+    // Shift register 2
+    for j in 0..83 {
+        s[176 - j] = s[175 - j]
+    }
+    s[93] = t1
+
+    // Shift register 3
+    for j in 0..110 {
+        s[287 - j] = s[286 - j]
+    }
+    s[177] = t2
+}

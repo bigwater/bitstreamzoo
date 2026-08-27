@@ -1,0 +1,673 @@
+// Auto-generated from .bench netlist
+
+input stream G1
+input stream G2
+input stream G3
+input stream G4
+input stream G5
+input stream G6
+input stream G7
+input stream G8
+input stream G9
+input stream G10
+input stream G11
+input stream G12
+input stream G13
+input stream G14
+input stream G15
+input stream G16
+input stream G17
+input stream G18
+input stream G19
+input stream G20
+input stream G21
+input stream G22
+input stream G23
+input stream G24
+input stream G25
+input stream G26
+input stream G27
+input stream G28
+input stream G29
+input stream G30
+input stream G31
+input stream G32
+input stream G33
+input stream G34
+input stream G35
+input stream G36
+input stream G37
+input stream G38
+input stream G39
+input stream G40
+input stream G41
+input stream G42
+input stream G43
+input stream G44
+input stream G45
+input stream G46
+input stream G47
+input stream G48
+input stream G49
+input stream G50
+input stream G51
+input stream G52
+input stream G53
+input stream G54
+input stream G55
+input stream G56
+input stream G57
+input stream G58
+input stream G59
+input stream G60
+
+output stream G855
+output stream G856
+output stream G857
+output stream G858
+output stream G859
+output stream G860
+output stream G861
+output stream G862
+output stream G863
+output stream G864
+output stream G865
+output stream G866
+output stream G867
+output stream G868
+output stream G869
+output stream G870
+output stream G871
+output stream G872
+output stream G873
+output stream G874
+output stream G875
+output stream G876
+output stream G877
+output stream G878
+output stream G879
+output stream G880
+
+stream _c__t_G269_1 = G1 & G2
+stream _c__t_G269_2 = _c__t_G269_1 & G3
+stream _t_G269 = _c__t_G269_2 & G4
+stream G269 = ~_t_G269
+stream _c__t_G270_1 = G1 & G5
+stream _c__t_G270_2 = _c__t_G270_1 & G3
+stream _t_G270 = _c__t_G270_2 & G4
+stream G270 = ~_t_G270
+stream _c_G273_1 = G6 & G7
+stream G273 = _c_G273_1 & G8
+stream _c_G276_1 = G1 & G5
+stream G276 = _c_G276_1 & G9
+stream _c__t_G279_1 = G1 & G2
+stream _c__t_G279_2 = _c__t_G279_1 & G9
+stream _t_G279 = _c__t_G279_2 & G4
+stream G279 = ~_t_G279
+stream _c__t_G280_1 = G1 & G2
+stream _c__t_G280_2 = _c__t_G280_1 & G3
+stream _t_G280 = _c__t_G280_2 & G10
+stream G280 = ~_t_G280
+stream _c__t_G284_1 = G11 & G8
+stream _c__t_G284_2 = _c__t_G284_1 & G12
+stream _t_G284 = _c__t_G284_2 & G13
+stream G284 = ~_t_G284
+stream _t_G285 = G6 & G12
+stream G285 = ~_t_G285
+stream _c__t_G286_1 = G11 & G12
+stream _t_G286 = _c__t_G286_1 & G15
+stream G286 = ~_t_G286
+stream _c_G287_1 = G6 & G16
+stream G287 = _c_G287_1 & G17
+stream _c_G290_1 = G6 & G16
+stream G290 = _c_G290_1 & G8
+stream _c_G291_1 = G6 & G7
+stream G291 = _c_G291_1 & G17
+stream _c_G292_1 = G6 & G7
+stream G292 = _c_G292_1 & G8
+stream _c_G293_1 = G11 & G16
+stream G293 = _c_G293_1 & G17
+stream _c_G294_1 = G11 & G16
+stream G294 = _c_G294_1 & G8
+stream _c_G295_1 = G11 & G7
+stream G295 = _c_G295_1 & G17
+stream _c_G296_1 = G11 & G7
+stream G296 = _c_G296_1 & G8
+stream G297 = G18 & G19
+stream G298 = G20 | G21
+stream _t_G301 = G24 & G25
+stream G301 = ~_t_G301
+stream G302 = G24 | G25
+stream _t_G303 = G26 & G27
+stream G303 = ~_t_G303
+stream G304 = G26 | G27
+stream _t_G305 = G28 & G29
+stream G305 = ~_t_G305
+stream G306 = G28 | G29
+stream _t_G307 = G30 & G31
+stream G307 = ~_t_G307
+stream G308 = G30 | G31
+stream G309 = G2 & G34
+stream G310 = ~G60
+stream G316 = G9 & G34
+stream G317 = G4 & G34
+stream G318 = G38 & G34
+stream _t_G319 = G11 & G40
+stream G319 = ~_t_G319
+stream _t_G322 = G4 | G8
+stream G322 = ~_t_G322
+stream G323 = G4 & G8
+stream _t_G324 = G41 & G42
+stream G324 = ~_t_G324
+stream G325 = G41 | G42
+stream _t_G326 = G43 & G44
+stream G326 = ~_t_G326
+stream G327 = G43 | G44
+stream _t_G328 = G45 & G46
+stream G328 = ~_t_G328
+stream G329 = G45 | G46
+stream _t_G330 = G47 & G48
+stream G330 = ~_t_G330
+stream G331 = G47 | G48
+stream G332 = G50 & G24
+stream G333 = G50 & G25
+stream G334 = G50 & G26
+stream G335 = G50 & G27
+stream G336 = G50 & G28
+stream G337 = G55 & G56
+stream G338 = G50 & G29
+stream G339 = G55 & G57
+stream G340 = G50 & G30
+stream G341 = G55 & G59
+stream G342 = ~G269
+stream G343 = ~G273
+stream G344 = G270 | G273
+stream G345 = ~G276
+stream G346 = ~G276
+stream G347 = ~G279
+stream _t_G348 = G280 | G284
+stream G348 = ~_t_G348
+stream G349 = G280 | G285
+stream G350 = G280 | G286
+stream G351 = ~G293
+stream G352 = ~G294
+stream G353 = ~G295
+stream G354 = ~G296
+stream _t_G355 = G22 & G298
+stream G355 = ~_t_G355
+stream G356 = G23 & G298
+stream _t_G357 = G301 & G302
+stream G357 = ~_t_G357
+stream _t_G360 = G303 & G304
+stream G360 = ~_t_G360
+stream _t_G363 = G305 & G306
+stream G363 = ~_t_G363
+stream _t_G366 = G307 & G308
+stream G366 = ~_t_G366
+stream G369 = ~G310
+stream _t_G375 = G322 | G323
+stream G375 = ~_t_G375
+stream _t_G376 = G324 & G325
+stream G376 = ~_t_G376
+stream _t_G379 = G326 & G327
+stream G379 = ~_t_G379
+stream _t_G382 = G328 & G329
+stream G382 = ~_t_G382
+stream _t_G385 = G330 & G331
+stream G385 = ~_t_G385
+stream G388 = G270 | G343
+stream G389 = ~G345
+stream G395 = ~G346
+stream G396 = G348 & G14
+stream G397 = ~G349
+stream G398 = ~G350
+stream G399 = ~G355
+stream G400 = ~G357
+stream G401 = ~G360
+stream G402 = G357 & G360
+stream G403 = ~G363
+stream G404 = ~G366
+stream G405 = G363 & G366
+stream _t_G406 = G347 & G352
+stream G406 = ~_t_G406
+stream G407 = ~G376
+stream G408 = ~G379
+stream G409 = G376 & G379
+stream G410 = ~G382
+stream G411 = ~G385
+stream G412 = G382 & G385
+stream G413 = G50 & G369
+stream G414 = ~G396
+stream G415 = G400 & G401
+stream G416 = G403 & G404
+stream _c_G417_1 = G319 & G389
+stream G417 = _c_G417_1 & G10
+stream _c_G422_1 = G389 & G4
+stream G422 = _c_G422_1 & G287
+stream _c__t_G427_1 = G389 & G287
+stream _t_G427 = _c__t_G427_1 & G10
+stream G427 = ~_t_G427
+stream _c__t_G432_1 = G375 & G11
+stream _c__t_G432_2 = _c__t_G432_1 & G40
+stream _t_G432 = _c__t_G432_2 & G389
+stream G432 = ~_t_G432
+stream _c__t_G433_1 = G389 & G319
+stream _t_G433 = _c__t_G433_1 & G4
+stream G433 = ~_t_G433
+stream G434 = G407 & G408
+stream G435 = G410 & G411
+stream G436 = ~G414
+stream _t_G445 = G402 | G415
+stream G445 = ~_t_G445
+stream _t_G448 = G405 | G416
+stream G448 = ~_t_G448
+stream _t_G451 = G432 & G406
+stream G451 = ~_t_G451
+stream G460 = G35 & G417
+stream G461 = G310 & G422
+stream G462 = G36 & G417
+stream G463 = G310 & G422
+stream G464 = G37 & G417
+stream G465 = G310 & G422
+stream G466 = G39 & G417
+stream G467 = G310 & G422
+stream _t_G468 = G433 & G1
+stream G468 = ~_t_G468
+stream G473 = G369 | G427
+stream G474 = G369 | G427
+stream G475 = G369 | G427
+stream G476 = G369 | G427
+stream _t_G477 = G409 | G434
+stream G477 = ~_t_G477
+stream _t_G480 = G412 | G435
+stream G480 = ~_t_G480
+stream _t_G483 = G32 & G445
+stream G483 = ~_t_G483
+stream G484 = G32 | G445
+stream _t_G485 = G448 & G33
+stream G485 = ~_t_G485
+stream G486 = G448 | G33
+stream G487 = G24 & G451
+stream _t_G488 = G460 | G461
+stream G488 = ~_t_G488
+stream G489 = G25 & G451
+stream _t_G490 = G462 | G463
+stream G490 = ~_t_G490
+stream G491 = G26 & G451
+stream _t_G492 = G464 | G465
+stream G492 = ~_t_G492
+stream G493 = G27 & G451
+stream _t_G494 = G466 | G467
+stream G494 = ~_t_G494
+stream G495 = G35 & G468
+stream G496 = G28 & G451
+stream G497 = G36 & G468
+stream G498 = G29 & G451
+stream G499 = G37 & G468
+stream G500 = G30 & G451
+stream G501 = G39 & G468
+stream G502 = G31 & G451
+stream _t_G503 = G32 & G477
+stream G503 = ~_t_G503
+stream G504 = G32 | G477
+stream _t_G505 = G480 & G49
+stream G505 = ~_t_G505
+stream G506 = G480 | G49
+stream G507 = G436 & G41
+stream G508 = G436 & G42
+stream G509 = G436 & G43
+stream G510 = G436 & G44
+stream G511 = G436 & G45
+stream _t_G512 = G436 & G46
+stream G512 = ~_t_G512
+stream _t_G513 = G436 & G47
+stream G513 = ~_t_G513
+stream _t_G514 = G436 & G48
+stream G514 = ~_t_G514
+stream _t_G515 = G483 & G484
+stream G515 = ~_t_G515
+stream _t_G518 = G485 & G486
+stream G518 = ~_t_G518
+stream _t_G521 = G309 | G487
+stream G521 = ~_t_G521
+stream _t_G522 = G316 | G489
+stream G522 = ~_t_G522
+stream _t_G523 = G317 | G491
+stream G523 = ~_t_G523
+stream _t_G524 = G318 | G493
+stream G524 = ~_t_G524
+stream _t_G525 = G495 | G496
+stream G525 = ~_t_G525
+stream _t_G526 = G497 | G498
+stream G526 = ~_t_G526
+stream _t_G527 = G499 | G500
+stream G527 = ~_t_G527
+stream _t_G528 = G501 | G502
+stream G528 = ~_t_G528
+stream _t_G529 = G503 & G504
+stream G529 = ~_t_G529
+stream _t_G532 = G505 & G506
+stream G532 = ~_t_G532
+stream G535 = ~G515
+stream G536 = ~G518
+stream G537 = G515 & G518
+stream _t_G538 = G521 & G488
+stream G538 = ~_t_G538
+stream _t_G542 = G522 & G490
+stream G542 = ~_t_G542
+stream _t_G546 = G523 & G492
+stream G546 = ~_t_G546
+stream _t_G550 = G524 & G494
+stream G550 = ~_t_G550
+stream _t_G554 = G473 & G525
+stream G554 = ~_t_G554
+stream _t_G558 = G474 & G526
+stream G558 = ~_t_G558
+stream _t_G562 = G475 & G527
+stream G562 = ~_t_G562
+stream _t_G566 = G476 & G528
+stream G566 = ~_t_G566
+stream G570 = ~G529
+stream G571 = ~G532
+stream G572 = G529 & G532
+stream G573 = G535 & G536
+stream G574 = G570 & G571
+stream _t_G575 = G538 & G41
+stream G575 = ~_t_G575
+stream G578 = G538 | G41
+stream G581 = G54 & G538
+stream _t_G582 = G542 & G42
+stream G582 = ~_t_G582
+stream G585 = G542 | G42
+stream G590 = G54 & G542
+stream _t_G591 = G546 & G43
+stream G591 = ~_t_G591
+stream G594 = G546 | G43
+stream G600 = G54 & G546
+stream _t_G601 = G550 & G44
+stream G601 = ~_t_G601
+stream G604 = G550 | G44
+stream G609 = G54 & G550
+stream _t_G610 = G554 & G45
+stream G610 = ~_t_G610
+stream G613 = G554 | G45
+stream G616 = G54 & G554
+stream _t_G617 = G558 & G46
+stream G617 = ~_t_G617
+stream G620 = G558 | G46
+stream G625 = G54 & G558
+stream _t_G626 = G562 & G47
+stream G626 = ~_t_G626
+stream G629 = G562 | G47
+stream G635 = G54 & G562
+stream _t_G636 = G566 & G48
+stream G636 = ~_t_G636
+stream G639 = G566 | G48
+stream G644 = G54 & G566
+stream _t_G645 = G537 | G573
+stream G645 = ~_t_G645
+stream _t_G646 = G572 | G574
+stream G646 = ~_t_G646
+stream G647 = ~G575
+stream G650 = G578 & G575
+stream _t_G654 = G581 | G507
+stream G654 = ~_t_G654
+stream G655 = ~G582
+stream G658 = G585 & G582
+stream _t_G662 = G590 | G508
+stream G662 = ~_t_G662
+stream G663 = ~G591
+stream G667 = G594 & G591
+stream _t_G671 = G600 | G509
+stream G671 = ~_t_G671
+stream G672 = ~G601
+stream G677 = G604 & G601
+stream _t_G681 = G609 | G510
+stream G681 = ~_t_G681
+stream G682 = ~G610
+stream G685 = G613 & G610
+stream _t_G689 = G616 | G511
+stream G689 = ~_t_G689
+stream G690 = ~G617
+stream G693 = G620 & G617
+stream _t_G697 = G337 | G625
+stream G697 = ~_t_G697
+stream G698 = ~G626
+stream G702 = G629 & G626
+stream _t_G706 = G339 | G635
+stream G706 = ~_t_G706
+stream G707 = ~G636
+stream G712 = G639 & G636
+stream _t_G716 = G341 | G644
+stream G716 = ~_t_G716
+stream _t_G717 = G639 & G58
+stream G717 = ~_t_G717
+stream _c__t_G718_1 = G629 & G639
+stream _t_G718 = _c__t_G718_1 & G58
+stream G718 = ~_t_G718
+stream _c__t_G719_1 = G620 & G629
+stream _c__t_G719_2 = _c__t_G719_1 & G639
+stream _t_G719 = _c__t_G719_2 & G58
+stream G719 = ~_t_G719
+stream G720 = ~G647
+stream G721 = G52 & G650
+stream G722 = G53 & G647
+stream G723 = ~G655
+stream G724 = G52 & G658
+stream G725 = G53 & G655
+stream G726 = ~G663
+stream G727 = G52 & G667
+stream G728 = G53 & G663
+stream G729 = ~G672
+stream G730 = G52 & G677
+stream G731 = G53 & G672
+stream G732 = ~G682
+stream G733 = G52 & G685
+stream G734 = G53 & G682
+stream G735 = ~G690
+stream G736 = G52 & G693
+stream G737 = G53 & G690
+stream G738 = ~G698
+stream G739 = G52 & G702
+stream G740 = G53 & G698
+stream G741 = ~G707
+stream _t_G742 = G712 | G58
+stream G742 = ~_t_G742
+stream G743 = G712 & G58
+stream G744 = G52 & G712
+stream G745 = G53 & G707
+stream _t_G746 = G629 & G707
+stream G746 = ~_t_G746
+stream _t_G747 = G620 & G698
+stream G747 = ~_t_G747
+stream _c__t_G748_1 = G620 & G629
+stream _t_G748 = _c__t_G748_1 & G707
+stream G748 = ~_t_G748
+stream _t_G749 = G594 & G672
+stream G749 = ~_t_G749
+stream _t_G750 = G585 & G663
+stream G750 = ~_t_G750
+stream _c__t_G751_1 = G585 & G594
+stream _t_G751 = _c__t_G751_1 & G672
+stream G751 = ~_t_G751
+stream _t_G752 = G721 | G722
+stream G752 = ~_t_G752
+stream _t_G753 = G724 | G725
+stream G753 = ~_t_G753
+stream _t_G754 = G727 | G728
+stream G754 = ~_t_G754
+stream _t_G755 = G730 | G731
+stream G755 = ~_t_G755
+stream _c__t_G756_1 = G735 & G747
+stream _c__t_G756_2 = _c__t_G756_1 & G748
+stream _t_G756 = _c__t_G756_2 & G719
+stream G756 = ~_t_G756
+stream _t_G760 = G733 | G734
+stream G760 = ~_t_G760
+stream _c__t_G761_1 = G738 & G746
+stream _t_G761 = _c__t_G761_1 & G718
+stream G761 = ~_t_G761
+stream _t_G764 = G736 | G737
+stream G764 = ~_t_G764
+stream _t_G765 = G741 & G717
+stream G765 = ~_t_G765
+stream _t_G768 = G739 | G740
+stream G768 = ~_t_G768
+stream _t_G769 = G742 | G743
+stream G769 = ~_t_G769
+stream _t_G770 = G744 | G745
+stream G770 = ~_t_G770
+stream _t_G771 = G685 | G756
+stream G771 = ~_t_G771
+stream G772 = G685 & G756
+stream _t_G773 = G693 | G761
+stream G773 = ~_t_G773
+stream G774 = G693 & G761
+stream _t_G775 = G702 | G765
+stream G775 = ~_t_G775
+stream G776 = G702 & G765
+stream G777 = G51 & G769
+stream _t_G778 = G613 & G756
+stream G778 = ~_t_G778
+stream _t_G779 = G778 & G732
+stream G779 = ~_t_G779
+stream _t_G785 = G771 | G772
+stream G785 = ~_t_G785
+stream _t_G786 = G773 | G774
+stream G786 = ~_t_G786
+stream _t_G787 = G775 | G776
+stream G787 = ~_t_G787
+stream _t_G788 = G340 | G777
+stream G788 = ~_t_G788
+stream _t_G789 = G677 | G779
+stream G789 = ~_t_G789
+stream G790 = G677 & G779
+stream G791 = G51 & G785
+stream G792 = G51 & G786
+stream G793 = G51 & G787
+stream _c__t_G794_1 = G788 & G770
+stream _c__t_G794_2 = _c__t_G794_1 & G716
+stream _t_G794 = _c__t_G794_2 & G514
+stream G794 = ~_t_G794
+stream _t_G795 = G604 & G779
+stream G795 = ~_t_G795
+stream _c__t_G796_1 = G594 & G604
+stream _t_G796 = _c__t_G796_1 & G779
+stream G796 = ~_t_G796
+stream _c__t_G797_1 = G585 & G594
+stream _c__t_G797_2 = _c__t_G797_1 & G604
+stream _t_G797 = _c__t_G797_2 & G779
+stream G797 = ~_t_G797
+stream _c__t_G798_1 = G723 & G750
+stream _c__t_G798_2 = _c__t_G798_1 & G751
+stream _t_G798 = _c__t_G798_2 & G797
+stream G798 = ~_t_G798
+stream _c__t_G802_1 = G726 & G749
+stream _t_G802 = _c__t_G802_1 & G796
+stream G802 = ~_t_G802
+stream _t_G805 = G729 & G795
+stream G805 = ~_t_G805
+stream _t_G808 = G789 | G790
+stream G808 = ~_t_G808
+stream _t_G809 = G335 | G791
+stream G809 = ~_t_G809
+stream _t_G810 = G336 | G792
+stream G810 = ~_t_G810
+stream _t_G811 = G338 | G793
+stream G811 = ~_t_G811
+stream G812 = ~G794
+stream _t_G813 = G650 | G798
+stream G813 = ~_t_G813
+stream G814 = G650 & G798
+stream _t_G815 = G658 | G802
+stream G815 = ~_t_G815
+stream G816 = G658 & G802
+stream _t_G817 = G667 | G805
+stream G817 = ~_t_G817
+stream G818 = G667 & G805
+stream G819 = G51 & G808
+stream _c__t_G820_1 = G809 & G760
+stream _t_G820 = _c__t_G820_1 & G689
+stream G820 = ~_t_G820
+stream _c__t_G821_1 = G810 & G764
+stream _c__t_G821_2 = _c__t_G821_1 & G697
+stream _t_G821 = _c__t_G821_2 & G512
+stream G821 = ~_t_G821
+stream _c__t_G822_1 = G811 & G768
+stream _c__t_G822_2 = _c__t_G822_1 & G706
+stream _t_G822 = _c__t_G822_2 & G513
+stream G822 = ~_t_G822
+stream G823 = ~G812
+stream _t_G824 = G798 & G578
+stream G824 = ~_t_G824
+stream _t_G825 = G813 | G814
+stream G825 = ~_t_G825
+stream _t_G826 = G815 | G816
+stream G826 = ~_t_G826
+stream _t_G827 = G817 | G818
+stream G827 = ~_t_G827
+stream _t_G828 = G334 | G819
+stream G828 = ~_t_G828
+stream G829 = ~G820
+stream G830 = ~G821
+stream G831 = ~G822
+stream G832 = G720 & G824
+stream G833 = G51 & G825
+stream G834 = G51 & G826
+stream G835 = G51 & G827
+stream _c__t_G836_1 = G828 & G755
+stream _t_G836 = _c__t_G836_1 & G681
+stream G836 = ~_t_G836
+stream G837 = ~G829
+stream G838 = ~G830
+stream G839 = ~G831
+stream G840 = ~G832
+stream _t_G841 = G413 | G833
+stream G841 = ~_t_G841
+stream _t_G842 = G332 | G834
+stream G842 = ~_t_G842
+stream _t_G843 = G333 | G835
+stream G843 = ~_t_G843
+stream G844 = ~G836
+stream _c__t_G845_1 = G841 & G752
+stream _t_G845 = _c__t_G845_1 & G654
+stream G845 = ~_t_G845
+stream _c__t_G846_1 = G842 & G753
+stream _t_G846 = _c__t_G846_1 & G662
+stream G846 = ~_t_G846
+stream _c__t_G847_1 = G843 & G754
+stream _t_G847 = _c__t_G847_1 & G671
+stream G847 = ~_t_G847
+stream G848 = ~G844
+stream G849 = ~G845
+stream G850 = ~G846
+stream G851 = ~G847
+stream G852 = ~G849
+stream G853 = ~G850
+stream G854 = ~G851
+G855 = ~G290
+G856 = ~G291
+G857 = ~G292
+G858 = ~G297
+G859 = ~G342
+G860 = ~G344
+G861 = ~G351
+G862 = ~G353
+G863 = ~G354
+G864 = ~G356
+G865 = ~G388
+G866 = ~G395
+G867 = ~G397
+G868 = ~G398
+G869 = ~G399
+G870 = ~G645
+G871 = ~G646
+G872 = ~G823
+G873 = ~G837
+G874 = ~G838
+G875 = ~G839
+G876 = ~G840
+G877 = ~G848
+G878 = ~G852
+G879 = ~G853
+G880 = ~G854

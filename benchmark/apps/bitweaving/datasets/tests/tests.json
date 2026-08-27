@@ -1,0 +1,104 @@
+[
+  {
+    "name": "All match B=4",
+    "bitlength": 5,
+    "data_file": "bw_all_match_b4.bsdata"
+  },
+  {
+    "name": "No match B=4",
+    "bitlength": 5,
+    "data_file": "bw_no_match_b4.bsdata"
+  },
+  {
+    "name": "Single match B=4",
+    "bitlength": 5,
+    "data_file": "bw_single_match_b4.bsdata"
+  },
+  {
+    "name": "Boundary lo B=4",
+    "bitlength": 5,
+    "data_file": "bw_boundary_lo_b4.bsdata"
+  },
+  {
+    "name": "Boundary hi B=4",
+    "bitlength": 5,
+    "data_file": "bw_boundary_hi_b4.bsdata"
+  },
+  {
+    "name": "Full range B=4",
+    "bitlength": 5,
+    "data_file": "bw_full_range_b4.bsdata"
+  },
+  {
+    "name": "Empty range B=4",
+    "bitlength": 5,
+    "data_file": "bw_empty_range_b4.bsdata"
+  },
+  {
+    "name": "All zeros B=4",
+    "bitlength": 4,
+    "data_file": "bw_all_zeros_b4.bsdata"
+  },
+  {
+    "name": "All max B=4",
+    "bitlength": 4,
+    "data_file": "bw_all_max_b4.bsdata"
+  },
+  {
+    "name": "TPC-H Q6 small",
+    "bitlength": 8,
+    "data_file": "bw_tpc-h_q6_small.bsdata"
+  },
+  {
+    "name": "Random B=8 (50 cases verified, 1 stored)",
+    "bitlength": 64,
+    "data_file": "bw_random_b8_x50.bsdata"
+  },
+  {
+    "name": "Wide 100K TPC-H Q6 (count=46266)",
+    "bitlength": 100000,
+    "data_file": "bw_wide_100k_tpch_q6.bsdata"
+  },
+  {
+    "name": "Tier small (40M rows, TPC-H Q6-style)",
+    "bitlength": 40000000,
+    "data_file": "bitweaving_tier_small.bsdata",
+    "size_bytes": 50000296,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 2000,
+      "description": "BitWeaving-V range scan: 1 <= val <= 23, B=8, 40,000,000 rows. Uniform random bit-planes for synthetic stress testing; not TPC-H-distributed column data.",
+      "generated_by": "generate_tests.py --tier small",
+      "sha256": "24a43437a5e1a726cda081efb7997e1d57d1d03a6b826db345c4ce4963ea6eb5",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier medium (400M rows, TPC-H Q6-style)",
+    "bitlength": 400000000,
+    "data_file": "bitweaving_tier_medium.bsdata",
+    "size_bytes": 500000303,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 2001,
+      "description": "BitWeaving-V range scan: 1 <= val <= 23, B=8, 400,000,000 rows. Uniform random bit-planes for synthetic stress testing; not TPC-H-distributed column data.",
+      "generated_by": "generate_tests.py --tier medium",
+      "sha256": "62fc73d362eae9aa70e60e01de76e40ff7c2804add1e9742e39ea866ea214cf4",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier large (4B rows, TPC-H Q6-style)",
+    "bitlength": 4000000000,
+    "data_file": "bitweaving_tier_large.bsdata",
+    "size_bytes": 5000000310,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 2002,
+      "description": "BitWeaving-V range scan: 1 <= val <= 23, B=8, 4,000,000,000 rows. Uniform random bit-planes for synthetic stress testing; not TPC-H-distributed column data.",
+      "generated_by": "generate_tests.py --tier large",
+      "sha256": "8f0622e633d20f6bc5083a01f085c6e32b1b13969ea27244ba63e6e4d8b6a011",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  }
+]

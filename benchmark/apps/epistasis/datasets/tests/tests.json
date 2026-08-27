@@ -1,0 +1,89 @@
+[
+  {
+    "name": "All 1/1",
+    "bitlength": 8,
+    "data_file": "all_1_1.bsdata"
+  },
+  {
+    "name": "All 1/0",
+    "bitlength": 8,
+    "data_file": "all_1_0.bsdata"
+  },
+  {
+    "name": "Mixed half",
+    "bitlength": 8,
+    "data_file": "mixed_half.bsdata"
+  },
+  {
+    "name": "Missing data",
+    "bitlength": 8,
+    "data_file": "missing_data.bsdata"
+  },
+  {
+    "name": "No valid",
+    "bitlength": 8,
+    "data_file": "no_valid.bsdata"
+  },
+  {
+    "name": "Single individual",
+    "bitlength": 1,
+    "data_file": "single_individual.bsdata"
+  },
+  {
+    "name": "Random 16-bit x100",
+    "bitlength": 100,
+    "data_file": "epistasis_random_16bit_100.bsdata"
+  },
+  {
+    "name": "Random 64-bit x50",
+    "bitlength": 50,
+    "data_file": "epistasis_random_64bit_50.bsdata"
+  },
+  {
+    "name": "Large 1M individuals",
+    "bitlength": 1000000,
+    "data_file": "epistasis_large_1M.bsdata"
+  },
+  {
+    "name": "Tier medium (1.33B individuals)",
+    "bitlength": 1330000000,
+    "data_file": "epistasis_tier_medium.bsdata",
+    "size_bytes": 498750256,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1001,
+      "description": "Random GWAS SNP data: snp_a/snp_b ~50% density (uniform), valid ~94% density (OR of 4 uniform random streams). 1,330,000,000 individuals.",
+      "generated_by": "generate_tests.py --tier medium",
+      "sha256": "90c391dfa2d39b93b39d70dd5f189712eee2797e43c5fe160f1e880ca7671a28",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier small (133M individuals)",
+    "bitlength": 133000000,
+    "data_file": "epistasis_tier_small.bsdata",
+    "size_bytes": 49875246,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1000,
+      "description": "Random GWAS SNP data: snp_a/snp_b ~50% density (uniform), valid ~94% density (OR of 4 uniform random streams). 133,000,000 individuals.",
+      "generated_by": "generate_tests.py --tier small",
+      "sha256": "f7aeea0e5493d5dc8ca42a658d36bd8cef240dcffc9e83acb337c1b36e67f033",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier large (13.3B individuals)",
+    "bitlength": 13300000000,
+    "data_file": "epistasis_tier_large.bsdata",
+    "size_bytes": 4987500266,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1002,
+      "description": "Random GWAS SNP data: snp_a/snp_b ~50% density (uniform), valid ~94% density (OR of 4 uniform random streams). 13,300,000,000 individuals.",
+      "generated_by": "generate_tests.py --tier large",
+      "bsim_md5": "442dcc8ce39717bd0277499fea678c2c",
+      "sha256": "2affff8f5608c885188586a9b3fc2114abd17a8ce73d0cb1533a4021e6eab6f7"
+    }
+  }
+]

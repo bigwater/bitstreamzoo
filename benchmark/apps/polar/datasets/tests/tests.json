@@ -1,0 +1,217 @@
+{
+  "polar_small": [
+    {
+      "name": "All-zero",
+      "data_file": "polar_small_all-zero.bsdata",
+      "bitlength": 1
+    },
+    {
+      "name": "One-hot 64 msgs",
+      "data_file": "polar_small_one-hot_64_msgs.bsdata",
+      "bitlength": 64
+    },
+    {
+      "name": "Random 128 msgs seed42",
+      "data_file": "polar_small_random_128_msgs_seed42.bsdata",
+      "bitlength": 128
+    },
+    {
+      "name": "Wide 100,000 msgs",
+      "category": "generated",
+      "generate": {
+        "type": "random",
+        "N": 64,
+        "W": 100000,
+        "seed": 42
+      },
+      "bitlength": 100000
+    },
+    {
+      "name": "Tier small (3,125,000 vectors, N=64)",
+      "bitlength": 3125000,
+      "data_file": "polar_small_tier_small.bsdata",
+      "size_bytes": 50000155,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 5000,
+        "description": "Random 64-bit messages: 64 input + 64 output streams. Butterfly XOR network, 6 stages, 192 XOR ops. 3,125,000 vectors (messages). 128 total binary streams.",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "06af36d3c951c10753db1ca434a5f8144b6020ff23ea62c1e49d9b90bc77452f",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier medium (31,250,000 vectors, N=64)",
+      "bitlength": 31250000,
+      "data_file": "polar_small_tier_medium.bsdata",
+      "size_bytes": 500000159,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 5001,
+        "description": "Random 64-bit messages: 64 input + 64 output streams. Butterfly XOR network, 6 stages, 192 XOR ops. 31,250,000 vectors (messages). 128 total binary streams.",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "a7e4492b2e22309c47d5f2df294c09512f1499eb58b8cb6396ca2ee06735d725",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier large (312,500,000 vectors, N=64)",
+      "bitlength": 312500000,
+      "data_file": "polar_small_tier_large.bsdata",
+      "size_bytes": 5000000163,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 5002,
+        "description": "Random 64-bit messages: 64 input + 64 output streams. Butterfly XOR network, 6 stages, 192 XOR ops. 312,500,000 vectors (messages). 128 total binary streams.",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "04dd0edd8b607bb3c4e82f870a699d7c97d4577a13d9e5fa0875e538c62eacaa",
+        "bsim_md5": "6972b0d360dfb7d5fe03fcfdd17836eb"
+      }
+    }
+  ],
+  "polar_medium": [
+    {
+      "name": "All-zero",
+      "data_file": "polar_medium_all-zero.bsdata",
+      "bitlength": 1
+    },
+    {
+      "name": "One-hot 256 msgs",
+      "data_file": "polar_medium_one-hot_256_msgs.bsdata",
+      "bitlength": 256
+    },
+    {
+      "name": "Random 128 msgs seed42",
+      "data_file": "polar_medium_random_128_msgs_seed42.bsdata",
+      "bitlength": 128
+    },
+    {
+      "name": "Random 512 msgs seed123",
+      "data_file": "polar_medium_random_512_msgs_seed123.bsdata",
+      "bitlength": 512
+    },
+    {
+      "name": "Wide 100,000 msgs",
+      "category": "generated",
+      "generate": {
+        "type": "random",
+        "N": 256,
+        "W": 100000,
+        "seed": 42
+      },
+      "bitlength": 100000
+    },
+    {
+      "name": "Tier small (781,250 vectors, N=256)",
+      "bitlength": 781250,
+      "data_file": "polar_medium_tier_small.bsdata",
+      "size_bytes": 50000538,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 5000,
+        "description": "Random 256-bit messages: 256 input + 256 output streams. Butterfly XOR network, 8 stages, 1024 XOR ops. 781,250 vectors (messages). 512 total binary streams.",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "2f3e5a900b246fdbf582fee109903fcc56ecc77f6ba4621511cb12fc4374d0bd",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier medium (7,812,500 vectors, N=256)",
+      "bitlength": 7812500,
+      "data_file": "polar_medium_tier_medium.bsdata",
+      "size_bytes": 500000414,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 5001,
+        "description": "Random 256-bit messages: 256 input + 256 output streams. Butterfly XOR network, 8 stages, 1024 XOR ops. 7,812,500 vectors (messages). 512 total binary streams.",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "216674266a33d3f4e31d3aa8e51984ae4384f861a556016b91d4bd91ba11c5b8",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier large (78,125,000 vectors, N=256)",
+      "bitlength": 78125000,
+      "data_file": "polar_medium_tier_large.bsdata",
+      "size_bytes": 5000000162,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 5002,
+        "description": "Random 256-bit messages: 256 input + 256 output streams. Butterfly XOR network, 8 stages, 1024 XOR ops. 78,125,000 vectors (messages). 512 total binary streams.",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "9111855ed39df8d233e921dbdc1ee7fd037f68f82385fcc199f107ec98bedae0",
+        "bsim_md5": "6972b0d360dfb7d5fe03fcfdd17836eb"
+      }
+    }
+  ],
+  "polar_large": [
+    {
+      "name": "All-zero",
+      "data_file": "polar_large_all-zero.bsdata",
+      "bitlength": 1
+    },
+    {
+      "name": "One-hot 64 msgs stride-16",
+      "data_file": "polar_large_one-hot_64_msgs_stride-16.bsdata",
+      "bitlength": 64
+    },
+    {
+      "name": "Random 64 msgs seed42",
+      "data_file": "polar_large_random_64_msgs_seed42.bsdata",
+      "bitlength": 64
+    },
+    {
+      "name": "Wide 10,000 msgs",
+      "category": "generated",
+      "generate": {
+        "type": "random",
+        "N": 1024,
+        "W": 10000,
+        "seed": 42
+      },
+      "bitlength": 10000
+    },
+    {
+      "name": "Tier small (195,312 vectors, N=1024)",
+      "bitlength": 195312,
+      "data_file": "polar_large_tier_small.bsdata",
+      "size_bytes": 50000028,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 5000,
+        "description": "Random 1024-bit messages: 1024 input + 1024 output streams. Butterfly XOR network, 10 stages, 5120 XOR ops. 195,312 vectors (messages). 2048 total binary streams.",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "f2eb6216739e87a20a7852c1a3beef865b779bb0d81e98295a7ba40348b1557e",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier medium (1,953,125 vectors, N=1024)",
+      "bitlength": 1953125,
+      "data_file": "polar_large_tier_medium.bsdata",
+      "size_bytes": 500000928,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 5001,
+        "description": "Random 1024-bit messages: 1024 input + 1024 output streams. Butterfly XOR network, 10 stages, 5120 XOR ops. 1,953,125 vectors (messages). 2048 total binary streams.",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "b3177447dfbc47142369720ac3bbfdbcbe1efef975c2bc483696a936f9867e83",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier large (19,531,250 vectors, N=1024)",
+      "bitlength": 19531250,
+      "data_file": "polar_large_tier_large.bsdata",
+      "size_bytes": 5000001700,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 5002,
+        "description": "Random 1024-bit messages: 1024 input + 1024 output streams. Butterfly XOR network, 10 stages, 5120 XOR ops. 19,531,250 vectors (messages). 2048 total binary streams.",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "311bb1295272882a9bbc08ddc64a7148c0738b0faf3f513b30404415de771161",
+        "bsim_md5": "6972b0d360dfb7d5fe03fcfdd17836eb"
+      }
+    }
+  ]
+}

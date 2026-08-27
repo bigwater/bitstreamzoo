@@ -1,0 +1,173 @@
+// Montgomery Modular Multiplication
+//
+// Computes r = a * b * R^{-1} mod n, where R = 2^K.
+// Core kernel of NTT in post-quantum cryptography (CRYSTALS-Kyber/Dilithium).
+//
+// Each bit position is a different (a, b) pair being multiplied modulo n.
+// The modulus n and its inverse np are broadcast constants (same for all positions).
+//
+// Algorithm (Montgomery 1985):
+//   Step 1: t[2K]  = a * b                     (bit-serial multiply)
+//   Step 2: m[K]   = (t_lo[K] * np[K]) mod 2^K (triangular multiply)
+//   Step 3: u[2K]  = m * n                      (bit-serial multiply)
+//   Step 4: s      = t + u                      (2K-bit addition)
+//   Step 5: r[K]   = s >> K                     (take high K bits)
+//   Step 6: if r >= n: r = r - n                (conditional correction)
+//
+// References:
+//   Montgomery, P. "Modular multiplication without trial division."
+//     Mathematics of Computation, 44(170):519-521, 1985.
+//   Avanzi, R. et al. "CRYSTALS-Kyber Algorithm Specifications." NIST PQC.
+
+param int K
+param int PK
+
+input stream a[K]
+input stream b[K]
+input stream n[K]
+input stream np[K]
+
+output stream r[K]
+
+// Intermediate products
+stream t[PK]
+stream m[K]
+stream u[PK]
+
+// Full-adder temporaries
+stream pp
+stream t1
+stream t2
+stream t3
+stream carry
+
+// Conditional correction temporaries
+stream diff[K]
+stream borrow
+
+// ──────────────────────────────────────────────────────────────
+// Step 1: t = a * b  (bit-serial schoolbook multiply, 2K-bit result)
+// ──────────────────────────────────────────────────────────────
+for p in 0..PK {
+    t[p] = ZERO
+}
+
+for j in 0..K {
+    carry = ZERO
+    for i in 0..K {
+        pp = a[i] & b[j]
+        t1 = t[i + j] ^ pp
+        t2 = t[i + j] & pp
+        t3 = t1 & carry
+        t[i + j] = t1 ^ carry
+        carry = t2 | t3
+    }
+    t[K + j] = carry
+}
+
+// ──────────────────────────────────────────────────────────────
+// Step 2: m = (t_lo * np) mod 2^K
+// Only compute low K bits (triangular: skip positions >= K)
+// ──────────────────────────────────────────────────────────────
+for p in 0..K {
+    m[p] = ZERO
+}
+
+for j in 0..K {
+    carry = ZERO
+    for i in 0..K - j {
+        pp = t[i] & np[j]
+        t1 = m[i + j] ^ pp
+        t2 = m[i + j] & pp
+        t3 = t1 & carry
+        m[i + j] = t1 ^ carry
+        carry = t2 | t3
+    }
+}
+
+// ──────────────────────────────────────────────────────────────
+// Step 3: u = m * n  (full 2K-bit product)
+// ──────────────────────────────────────────────────────────────
+for p in 0..PK {
+    u[p] = ZERO
+}
+
+for j in 0..K {
+    carry = ZERO
+    for i in 0..K {
+        pp = m[i] & n[j]
+        t1 = u[i + j] ^ pp
+        t2 = u[i + j] & pp
+        t3 = t1 & carry
+        u[i + j] = t1 ^ carry
+        carry = t2 | t3
+    }
+    u[K + j] = carry
+}
+
+// ──────────────────────────────────────────────────────────────
+// Steps 4+5: r = (t + u) >> K
+// Add t and u (2K bits), take only the high K bits as result.
+// First propagate carry through low K bits (results discarded),
+// then store high K bits into r[].
+// ──────────────────────────────────────────────────────────────
+carry = ZERO
+
+// Low K bits: propagate carry only
+for i in 0..K {
+    t1 = t[i] ^ u[i]
+    t2 = t[i] & u[i]
+    t3 = t1 & carry
+    stream sink = t1 ^ carry
+    carry = t2 | t3
+}
+
+// High K bits: store into r
+// Note: s can be up to 2K+1 bits, so we must track the carry-out
+// of bit 2K-1 as the (K+1)-th bit of r (stored in 'carry' after loop).
+for i in 0..K {
+    t1 = t[K + i] ^ u[K + i]
+    t2 = t[K + i] & u[K + i]
+    t3 = t1 & carry
+    r[i] = t1 ^ carry
+    carry = t2 | t3
+}
+// carry now holds bit 2K of s (the overflow bit).
+// This becomes r[K] conceptually, but r only has K slots.
+// We handle it in Step 6: if the overflow bit is set, r >= n always,
+// so diff = r - n is used (and the overflow bit is absorbed).
+
+// ──────────────────────────────────────────────────────────────
+// Step 6: Conditional correction: if r >= n then r = r - n
+//
+// Compute diff = r - n via two's complement: r + (~n) + 1
+// carry_in = ONES represents the +1.
+// Final carry-out: ONES if r >= n (no borrow), ZERO if r < n.
+// Use bitwise mux to select per-instance.
+// ──────────────────────────────────────────────────────────────
+// 'carry' from Step 4+5 is the overflow bit (bit 2K of s).
+// If overflow is set, r+2^K was the true high part, so r >= n always.
+// We OR the overflow into the final 'need_subtract' flag.
+stream overflow = carry
+
+borrow = ONES
+for i in 0..K {
+    stream nn = ~n[i]
+    t1 = r[i] ^ nn
+    t2 = r[i] & nn
+    t3 = t1 & borrow
+    diff[i] = t1 ^ borrow
+    borrow = t2 | t3
+}
+
+// borrow = carry-out of (r - n): 1 if r >= n, 0 if r < n
+// OR with overflow: if overflow set, always subtract
+stream need_sub = borrow | overflow
+
+// Bitwise mux: need_sub=1 -> use diff, need_sub=0 -> keep r
+for i in 0..K {
+    stream sel_diff = need_sub & diff[i]
+    stream not_need = ~need_sub
+    stream sel_r = not_need & r[i]
+    r[i] = sel_diff | sel_r
+}

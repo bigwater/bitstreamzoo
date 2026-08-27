@@ -1,0 +1,84 @@
+[
+  {
+    "name": "All-ones rows",
+    "bitlength": 8,
+    "data_file": "bf_all-ones_rows.bsdata"
+  },
+  {
+    "name": "One zero row",
+    "bitlength": 8,
+    "data_file": "bf_one_zero_row.bsdata"
+  },
+  {
+    "name": "No overlap",
+    "bitlength": 8,
+    "data_file": "bf_no_overlap.bsdata"
+  },
+  {
+    "name": "Rank-1 expand",
+    "bitlength": 8,
+    "data_file": "bf_rank-1_expand.bsdata"
+  },
+  {
+    "name": "Rank-2 expand",
+    "bitlength": 8,
+    "data_file": "bf_rank-2_expand.bsdata"
+  },
+  {
+    "name": "Mixed ranks",
+    "bitlength": 16,
+    "data_file": "bf_mixed_ranks.bsdata"
+  },
+  {
+    "name": "Random N=1000",
+    "bitlength": 1000,
+    "data_file": "bf_random_n1000.bsdata"
+  },
+  {
+    "name": "Large N=65536",
+    "bitlength": 65536,
+    "data_file": "bf_large_n65536.bsdata"
+  },
+  {
+    "name": "Tier small (~50M documents)",
+    "bitlength": 50000000,
+    "data_file": "bitfunnel_tier_small.bsdata",
+    "size_bytes": 56250334,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 3000,
+      "description": "Random bit-sliced rows: rank-0 uniform random (d\u22480.5), rank-1 lower-half random, rank-2 lower-quarter random. K0=3, K1=3, K2=2, N=50,000,000 documents.",
+      "generated_by": "generate_tests.py --tier small",
+      "bsim_md5": "41473dbf17ed84d4f504c9fb1c0b220e",
+      "sha256": "59419db3179c86a540b1653d5830f276d567dabf1a2f47c26d16a99e6d818249"
+    }
+  },
+  {
+    "name": "Tier medium (~500M documents)",
+    "bitlength": 500000000,
+    "data_file": "bitfunnel_tier_medium.bsdata",
+    "size_bytes": 562500345,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 3001,
+      "description": "Random bit-sliced rows: rank-0 uniform random (d\u22480.5), rank-1 lower-half random, rank-2 lower-quarter random. K0=3, K1=3, K2=2, N=500,000,000 documents.",
+      "generated_by": "generate_tests.py --tier medium",
+      "bsim_md5": "41473dbf17ed84d4f504c9fb1c0b220e",
+      "sha256": "b1c69cf13de6ef487a842aa08a9ea059b332d87f215ba6b6ebead9e9c6033e52"
+    }
+  },
+  {
+    "name": "Tier large (~5B documents)",
+    "bitlength": 5000000000,
+    "data_file": "bitfunnel_tier_large.bsdata",
+    "size_bytes": 5625000356,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 3002,
+      "description": "Random bit-sliced rows: rank-0 uniform random (d\u22480.5), rank-1 lower-half random, rank-2 lower-quarter random. K0=3, K1=3, K2=2, N=5,000,000,000 documents.",
+      "generated_by": "generate_tests.py --tier large",
+      "bsim_md5": "41473dbf17ed84d4f504c9fb1c0b220e",
+      "sha256": "92b7947bd4f341d4fb9f65a4e60dd71b5c785b5731551fd27caaf51e298b58e3"
+    }
+  }
+]

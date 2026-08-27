@@ -1,0 +1,64 @@
+[
+  {
+    "name": "Known values",
+    "data_file": "known_values.bsdata",
+    "bitlength": 5
+  },
+  {
+    "name": "First 64",
+    "data_file": "first_64.bsdata",
+    "bitlength": 64
+  },
+  {
+    "name": "Exhaustive 256",
+    "data_file": "aes_sbox_exhaustive_256.bsdata",
+    "bitlength": 256
+  },
+  {
+    "name": "Large 1M bytes",
+    "data_file": "aes_sbox_large_1M.bsdata",
+    "bitlength": 1000000
+  },
+  {
+    "name": "Small 25M bytes",
+    "bitlength": 25000000,
+    "data_file": "aes_sbox_small.bsdata",
+    "size_bytes": 50000156,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1000,
+      "description": "8 random streams via getrandbits(25000000), seed=1000; expected via Python interpreter; spot-checked 500 positions (seed=6000)",
+      "generated_by": "generate_tests.py --tier",
+      "sha256": "fb929a928dd02a3cbc6e36640ba72b673ac85ac7fff9395ce656efc597365626",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Medium 250M bytes",
+    "bitlength": 250000000,
+    "data_file": "aes_sbox_medium.bsdata",
+    "size_bytes": 500000160,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1001,
+      "description": "8 random streams via getrandbits(250000000), seed=1001; expected via Python interpreter; spot-checked 500 positions (seed=6001)",
+      "generated_by": "generate_tests.py --tier",
+      "sha256": "8cba4cc590ed18848d7bda14963b863a5124e58eccb338d8785bb632e6a42abd",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Large 2.5B bytes",
+    "bitlength": 2500000000,
+    "data_file": "aes_sbox_large.bsdata",
+    "size_bytes": 5000000164,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1002,
+      "description": "8 random streams via getrandbits(2500000000), seed=1002; expected via Python interpreter; spot-checked 500 positions (seed=6002)",
+      "generated_by": "generate_tests.py --tier",
+      "bsim_md5": "6972b0d360dfb7d5fe03fcfdd17836eb",
+      "sha256": "b2bf5975a5f60fd51972910c1031b4d53a4e54c42dad494c1fcd23965c292f98"
+    }
+  }
+]

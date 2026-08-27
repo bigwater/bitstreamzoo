@@ -1,0 +1,84 @@
+[
+  {
+    "name": "Zero key/IV 64b",
+    "bitlength": 1,
+    "data_file": "zero_key_iv_64b.bsdata"
+  },
+  {
+    "name": "Key index 79 64b",
+    "bitlength": 1,
+    "data_file": "key_index_79_64b.bsdata"
+  },
+  {
+    "name": "IV index 79 64b",
+    "bitlength": 1,
+    "data_file": "iv_index_79_64b.bsdata"
+  },
+  {
+    "name": "3 pairs x 64b",
+    "bitlength": 3,
+    "data_file": "3_pairs_x_64b.bsdata"
+  },
+  {
+    "name": "Zero key/IV 128b",
+    "bitlength": 1,
+    "data_file": "zero_key_iv_128b.bsdata"
+  },
+  {
+    "name": "ECRYPT vector (Key=0, IV=0)",
+    "bitlength": 1,
+    "data_file": "ecrypt_vector_key=0_iv=0.bsdata"
+  },
+  {
+    "name": "Large 1M pairs x 64b",
+    "category": "generated",
+    "bitlength": 1000000,
+    "generate": {
+      "W": 1000000,
+      "length": 64,
+      "seed": 42
+    }
+  },
+  {
+    "name": "Tier large (179M key/IV pairs)",
+    "bitlength": 179000000,
+    "data_file": "trivium_tier_large.bsdata",
+    "size_bytes": 5012000228,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1002,
+      "description": "Random key/IV pairs: 80 key streams + 80 IV streams (uniform random), L=64 output streams. 179,000,000 vectors (key/IV pairs). 224 total binary streams.",
+      "generated_by": "generate_tests.py --tier large",
+      "sha256": "1de79a5069e45e0358f0de4958db16ec2fd84e7e7ee317aab4358ab84b67118a",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier small (1.79M key/IV pairs)",
+    "bitlength": 1790000,
+    "data_file": "trivium_tier_small.bsdata",
+    "size_bytes": 50120216,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1000,
+      "description": "Random key/IV pairs: 80 key streams + 80 IV streams (uniform random), L=64 output streams. 1,790,000 vectors (key/IV pairs). 224 total binary streams.",
+      "generated_by": "generate_tests.py --tier small",
+      "sha256": "1a650bd1f3d2e9de029ec98d543fd69d0275310de7530ac6bcaed1b09ce92ad2",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier medium (17.9M key/IV pairs)",
+    "bitlength": 17900000,
+    "data_file": "trivium_tier_medium.bsdata",
+    "size_bytes": 501200222,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1001,
+      "description": "Random key/IV pairs: 80 key streams + 80 IV streams (uniform random), L=64 output streams. 17,900,000 vectors (key/IV pairs). 224 total binary streams.",
+      "generated_by": "generate_tests.py --tier medium",
+      "sha256": "82807503cfee18c240bfe8e8531440979c8800a62d6796ee70ce18d7a7248e2a",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  }
+]

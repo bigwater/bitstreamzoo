@@ -1,0 +1,112 @@
+[
+  {
+    "name": "Exact match",
+    "data_file": "edit_distance_exact_match.bsdata",
+    "bitlength": 1
+  },
+  {
+    "name": "Single substitution",
+    "data_file": "edit_distance_single_substitution.bsdata",
+    "bitlength": 1
+  },
+  {
+    "name": "Single insertion",
+    "data_file": "edit_distance_single_insertion.bsdata",
+    "bitlength": 1
+  },
+  {
+    "name": "Two substitutions",
+    "data_file": "edit_distance_two_substitutions.bsdata",
+    "bitlength": 1
+  },
+  {
+    "name": "Full mismatch",
+    "data_file": "edit_distance_full_mismatch.bsdata",
+    "bitlength": 1
+  },
+  {
+    "name": "Multi-text batch",
+    "data_file": "edit_distance_multi_text_batch.bsdata",
+    "bitlength": 8
+  },
+  {
+    "name": "Random 16-text x50",
+    "data_file": "edit_distance_random_16text_50.bsdata",
+    "bitlength": 50
+  },
+  {
+    "name": "Wide 1K texts N=8 M=4",
+    "category": "generated",
+    "generate": {
+      "K": 1000,
+      "N": 8,
+      "M": 4,
+      "seed": 42
+    },
+    "bitlength": 1000
+  },
+  {
+    "name": "Wide 10K texts N=6 M=4",
+    "category": "generated",
+    "generate": {
+      "K": 10000,
+      "N": 6,
+      "M": 4,
+      "seed": 43
+    },
+    "bitlength": 10000
+  },
+  {
+    "name": "Large 1M texts N=8 M=4",
+    "category": "generated",
+    "generate": {
+      "K": 1000000,
+      "N": 8,
+      "M": 4,
+      "seed": 44
+    },
+    "bitlength": 1000000
+  },
+  {
+    "name": "Tier small (11.1M texts)",
+    "data_file": "edit_distance_tier_small.bsdata",
+    "size_bytes": 49950419,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1000,
+      "description": "Random DNA texts of length N=8 vs fixed pattern \"ACGT\" (M=4). 32 position streams generated via 2-bit random encoding (uniform 25% per nucleotide). 11,100,000 texts. Expected via Python interpreter; spot-checked 500 positions.",
+      "generated_by": "generate_tests.py --tier small",
+      "sha256": "b8c0e2d06940828da23d2435c2b165f596d65df879d70150bcd2407001b0cf35",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    },
+    "bitlength": 11100000
+  },
+  {
+    "name": "Tier medium (111M texts)",
+    "bitlength": 111000000,
+    "data_file": "edit_distance_tier_medium.bsdata",
+    "size_bytes": 499500429,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1001,
+      "description": "Random DNA texts of length N=8 vs fixed pattern \"ACGT\" (M=4). 32 position streams generated via 2-bit random encoding (uniform 25% per nucleotide). 111,000,000 texts. Expected via Python interpreter; spot-checked 500 positions.",
+      "generated_by": "generate_tests.py --tier medium",
+      "sha256": "a6b42bc1ea4c6db6e3444cc09d7cd0b01ccbb84629507f943d98b01bfa8fb359",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier large (1.11B texts)",
+    "bitlength": 1110000000,
+    "data_file": "edit_distance_tier_large.bsdata",
+    "size_bytes": 4995000439,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1002,
+      "description": "Random DNA texts of length N=8 vs fixed pattern \"ACGT\" (M=4). 32 position streams generated via 2-bit random encoding (uniform 25% per nucleotide). 1,110,000,000 texts. Expected via Python interpreter; spot-checked 500 positions.",
+      "generated_by": "generate_tests.py --tier large",
+      "bsim_md5": "d4d82100c7d0f5937c592e1e3cfabe89",
+      "sha256": "605d7a4e9d831746b3edaee11aa9b04591363996789e085fbfe5ed65d5a7124f"
+    }
+  }
+]

@@ -1,0 +1,132 @@
+// SIMON 32/64 Block Cipher — Bitsliced Implementation
+//
+// SIMON is a lightweight block cipher designed by the NSA (2013).
+// SIMON 32/64: 32-bit block (2x16-bit halves), 64-bit key, 32 rounds.
+//
+// Round function: f(x) = (x<<<1 & x<<<8) ^ x<<<2
+// Feistel: new_L = R ^ f(L) ^ round_key[r]
+//          new_R = L
+//
+// Bitsliced: each bit position = a different plaintext being encrypted.
+// Rotations are free (array index permutation).
+// Per round: 16 AND + 16 XOR (f) + 16 XOR (Feistel) + 16 XOR (key) = 64 ops
+// Total: 32 x 64 = 2048 ops
+//
+// References:
+//   Beaulieu et al., "The SIMON and SPECK Families of Lightweight
+//   Block Ciphers", IACR ePrint 2013/404
+
+input stream plainL[16]
+input stream plainR[16]
+input stream round_key[512]
+
+output stream cipherL[16]
+output stream cipherR[16]
+
+stream L[16]
+stream R[16]
+
+// Initialize from plaintext
+for i in 0..16 {
+    L[i] = plainL[i]
+    R[i] = plainR[i]
+}
+
+// 32 rounds
+for r in 0..32 {
+    // Compute f(L) = (L<<<1 & L<<<8) ^ L<<<2
+    // Rotation by d: bit i -> bit (i+d) mod 16
+    // L<<<1: index i reads from L[(i-1) mod 16]
+    // L<<<8: index i reads from L[(i-8) mod 16]
+    // L<<<2: index i reads from L[(i-2) mod 16]
+
+    stream f[16]
+
+    // Unroll: handle wrap-around explicitly
+    // For L<<<1: rot1[i] = L[(i + 16 - 1) % 16]
+    // For L<<<8: rot8[i] = L[(i + 16 - 8) % 16]
+    // For L<<<2: rot2[i] = L[(i + 16 - 2) % 16]
+
+    // i=0: rot1=L[15], rot8=L[8], rot2=L[14]
+    stream _and_0 = L[15] & L[8]
+    f[0] = _and_0 ^ L[14]
+
+    // i=1: rot1=L[0], rot8=L[9], rot2=L[15]
+    stream _and_1 = L[0] & L[9]
+    f[1] = _and_1 ^ L[15]
+
+    // i=2: rot1=L[1], rot8=L[10], rot2=L[0]
+    stream _and_2 = L[1] & L[10]
+    f[2] = _and_2 ^ L[0]
+
+    // i=3: rot1=L[2], rot8=L[11], rot2=L[1]
+    stream _and_3 = L[2] & L[11]
+    f[3] = _and_3 ^ L[1]
+
+    // i=4: rot1=L[3], rot8=L[12], rot2=L[2]
+    stream _and_4 = L[3] & L[12]
+    f[4] = _and_4 ^ L[2]
+
+    // i=5: rot1=L[4], rot8=L[13], rot2=L[3]
+    stream _and_5 = L[4] & L[13]
+    f[5] = _and_5 ^ L[3]
+
+    // i=6: rot1=L[5], rot8=L[14], rot2=L[4]
+    stream _and_6 = L[5] & L[14]
+    f[6] = _and_6 ^ L[4]
+
+    // i=7: rot1=L[6], rot8=L[15], rot2=L[5]
+    stream _and_7 = L[6] & L[15]
+    f[7] = _and_7 ^ L[5]
+
+    // i=8: rot1=L[7], rot8=L[0], rot2=L[6]
+    stream _and_8 = L[7] & L[0]
+    f[8] = _and_8 ^ L[6]
+
+    // i=9: rot1=L[8], rot8=L[1], rot2=L[7]
+    stream _and_9 = L[8] & L[1]
+    f[9] = _and_9 ^ L[7]
+
+    // i=10: rot1=L[9], rot8=L[2], rot2=L[8]
+    stream _and_10 = L[9] & L[2]
+    f[10] = _and_10 ^ L[8]
+
+    // i=11: rot1=L[10], rot8=L[3], rot2=L[9]
+    stream _and_11 = L[10] & L[3]
+    f[11] = _and_11 ^ L[9]
+
+    // i=12: rot1=L[11], rot8=L[4], rot2=L[10]
+    stream _and_12 = L[11] & L[4]
+    f[12] = _and_12 ^ L[10]
+
+    // i=13: rot1=L[12], rot8=L[5], rot2=L[11]
+    stream _and_13 = L[12] & L[5]
+    f[13] = _and_13 ^ L[11]
+
+    // i=14: rot1=L[13], rot8=L[6], rot2=L[12]
+    stream _and_14 = L[13] & L[6]
+    f[14] = _and_14 ^ L[12]
+
+    // i=15: rot1=L[14], rot8=L[7], rot2=L[13]
+    stream _and_15 = L[14] & L[7]
+    f[15] = _and_15 ^ L[13]
+
+    // Feistel step: new_L = R ^ f(L) ^ round_key
+    // new_R = L
+    stream newL[16]
+    for i in 0..16 {
+        stream _xor_rf = R[i] ^ f[i]
+        newL[i] = _xor_rf ^ round_key[r * 16 + i]
+    }
+
+    for i in 0..16 {
+        R[i] = L[i]
+        L[i] = newL[i]
+    }
+}
+
+// Output ciphertext
+for i in 0..16 {
+    cipherL[i] = L[i]
+    cipherR[i] = R[i]
+}

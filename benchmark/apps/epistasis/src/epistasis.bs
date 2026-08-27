@@ -1,0 +1,51 @@
+// ================================================================
+// Epistasis - GWAS 2x2 Contingency Table (BOOST/GBOOST primitive)
+// ================================================================
+//
+// Computes a 2x2 contingency table for a pair of binary SNP loci.
+// Each bit position is one individual in the cohort. The four
+// popcount outputs count individuals in each (A, B) combination.
+//
+// Key idea: AND + NOT classify individuals into four quadrants,
+// then popcount reduces each bitstream to a scalar count.
+// This is the only domain whose outputs are exclusively popcount-derived
+// integer reductions.
+//
+// Operation count: 2 NOT + 8 AND + 4 popcount = 14 ops (10 bitwise + 4 popcount)
+//
+// Reference: Wan et al., "BOOST", Am. J. Hum. Genet. 2010, and
+//   Yung et al., "GBOOST", Bioinformatics 2011, for Boolean bitwise
+//   contingency-table construction. EpiGPU is related GPU epistasis work.
+// ================================================================
+
+input stream snp_a
+input stream snp_b
+input stream valid
+
+output int n_11
+output int n_10
+output int n_01
+output int n_00
+
+stream not_a = ~snp_a
+stream not_b = ~snp_b
+
+// Quadrant: A=1, B=1
+stream cell_11 = snp_a & snp_b
+stream valid_11 = cell_11 & valid
+n_11 = popcount(valid_11)
+
+// Quadrant: A=1, B=0
+stream cell_10 = snp_a & not_b
+stream valid_10 = cell_10 & valid
+n_10 = popcount(valid_10)
+
+// Quadrant: A=0, B=1
+stream cell_01 = not_a & snp_b
+stream valid_01 = cell_01 & valid
+n_01 = popcount(valid_01)
+
+// Quadrant: A=0, B=0
+stream cell_00 = not_a & not_b
+stream valid_00 = cell_00 & valid
+n_00 = popcount(valid_00)

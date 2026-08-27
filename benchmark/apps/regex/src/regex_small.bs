@@ -1,0 +1,586 @@
+// Multi-pattern regex matcher (Snort IDS rules)
+// Compiled via icgrep Pablo IR (Parabix, Cameron et al., 2014)
+// Source: AutomataZoo snort.regex (Wadden et al., 2018)
+//
+// Input: 8 basis bit-planes b[0..7] (byte decomposition)
+// Patterns: 50
+
+input stream b[8]
+
+stream snort_0054
+stream snort_0671
+stream snort_0703
+stream snort_0733
+stream snort_0736
+stream snort_0740
+stream snort_0788
+stream snort_0810
+stream snort_0827
+stream snort_0837
+stream snort_0840
+stream snort_0842
+stream snort_0846
+stream snort_0905
+stream snort_0906
+stream snort_0917
+stream snort_0957
+stream snort_0958
+stream snort_0974
+stream snort_0981
+stream snort_1230
+stream snort_1273
+stream snort_1310
+stream snort_1357
+stream snort_1363
+stream snort_1366
+stream snort_1418
+stream snort_1431
+stream snort_1433
+stream snort_1442
+stream snort_1446
+stream snort_1524
+stream snort_1548
+stream snort_1578
+stream snort_1719
+stream snort_1722
+stream snort_1791
+stream snort_2225
+stream snort_2327
+stream snort_2394
+stream snort_2395
+stream snort_2396
+stream snort_1655
+stream snort_1587
+stream snort_1229
+stream snort_1288
+stream snort_1097
+stream snort_0084
+stream snort_1199
+stream snort_1228
+
+// -- Pattern: /(\nrcpt to:.*){256}/i --
+stream _snort_0054z1 = ZERO
+stream _snort_0054z2 = ZERO
+snort_0054 = _snort_0054z2
+
+// -- Pattern: />>\nstream\n\x00\x00\x00\x00[\x26\x27]\x00\x00.{4}[\x80-\xFF]/i --
+stream _snort_0671z1 = ZERO
+stream _snort_0671z2 = ZERO
+snort_0671 = _snort_0671z2
+
+// -- Pattern: /Cookie\:\s+[0-9a-f]{12}[^\r\n]+\r\n\x00{4}.{4}/i --
+stream _snort_0703z1 = ZERO
+stream _snort_0703z2 = ZERO
+snort_0703 = _snort_0703z2
+
+// -- Pattern: /HTTP\/1.[01]\r\nUser\x2dAgent\x3a\x20[ -~]+\r\nHost\x3a\x20[a-z0-9\x2d\x2e]+\.info\r\n/ --
+stream _snort_0733z1 = ZERO
+stream _snort_0733z2 = ZERO
+snort_0733 = _snort_0733z2
+
+// -- Pattern: /Hash\x3a\s+?[0-9A-F]{32}\r\n/i --
+stream _snort_0736z1 = ZERO
+stream _snort_0736z2 = ZERO
+snort_0736 = _snort_0736z2
+
+// -- Pattern: /Host\x3a[^\n]+\x3a\d+\r\n/ --
+stream _snort_0740z1 = ZERO
+stream _snort_0740z2 = ZERO
+snort_0740 = _snort_0740z2
+
+// -- Pattern: /REST\s+[0-9]+\n/i --
+stream _snort_0788z1 = ZERO
+stream _snort_0788z2 = ZERO
+snort_0788 = _snort_0788z2
+
+// -- Pattern: /Set-Cookie\x3A\x20tag\x3D[a-f0-9]{16}\r\n/ --
+stream _snort_0810z1 = ZERO
+stream _snort_0810z2 = ZERO
+snort_0810 = _snort_0810z2
+
+// -- Pattern: /Transfer-Encoding\x3a\s*chunked.*\n\r?\n/smi --
+stream _snort_0827z1 = ZERO
+stream _snort_0827z2 = ZERO
+snort_0827 = _snort_0827z2
+
+// -- Pattern: /VERSION\x3d3D\d{3}[^\r\n]*\r\n/i --
+stream _snort_0837z1 = ZERO
+stream _snort_0837z2 = ZERO
+snort_0837 = _snort_0837z2
+
+// -- Pattern: /Visio \x28TM\x29 Drawing\r\n\x00{4}([^\x00]|\x00[^\x00]|\x00\x00[^\x0b]|\x00\x00\x0b[^\x00])/smi --
+stream _snort_0840z1 = ZERO
+stream _snort_0840z2 = ZERO
+snort_0840 = _snort_0840z2
+
+// -- Pattern: /WebAdmin\x2Edll\x3F[^\r\n]*?View=Logon.*?\r\n\r\n[^\r\n\x26]*User=[^\r\n\x26]{100}/smi --
+stream _snort_0842z1 = ZERO
+stream _snort_0842z2 = ZERO
+snort_0842 = _snort_0842z2
+
+// -- Pattern: /X-Forwarded-For: [0:]{3,39}1\r\n/i --
+stream _snort_0846z1 = ZERO
+stream _snort_0846z2 = ZERO
+snort_0846 = _snort_0846z2
+
+// -- Pattern: /\)\r\nHost\x3a\x20[\d\x2e]{7,15}\r\nConnection\x3a\x20Keep\x2dAlive\r\n\r\n$/ --
+stream _snort_0905z1 = ZERO
+stream _snort_0905z2 = ZERO
+snort_0905 = _snort_0905z2
+
+// -- Pattern: /\)\r\nHost\x3a\x20[a-z\d\x2e\x2d]{6,32}\r\nCache\x2dControl\x3a\x20no\x2dcache\r\n\r\n$/ --
+stream _snort_0906z1 = ZERO
+stream _snort_0906z2 = ZERO
+snort_0906 = _snort_0906z2
+
+// -- Pattern: /\.jpg\x20HTTP\/1\.[01]\r\nUser\x2dAgent\x3a\x20[a-z]+\r\nHost\x3a\x20[a-z0-9\x2d\x2e]+\.com\.br\r\n\r\n$/ --
+stream _snort_0917z1 = ZERO
+stream _snort_0917z2 = ZERO
+snort_0917 = _snort_0917z2
+
+// -- Pattern: /\r\n\r\nsession\x3a\d{1,7}$/ --
+stream _snort_0957z1 = ZERO
+stream _snort_0957z2 = ZERO
+snort_0957 = _snort_0957z2
+
+// -- Pattern: /\r\n\w{200,}\x3a.*\r\n/ --
+stream _snort_0958z1 = ZERO
+stream _snort_0958z2 = ZERO
+snort_0958 = _snort_0958z2
+
+// -- Pattern: /\sLOGIN\s\w+\s\{\d+\}[\r]?\n[^\n]*?%/smi --
+stream _snort_0974z1 = ZERO
+stream _snort_0974z2 = ZERO
+snort_0974 = _snort_0974z2
+
+// -- Pattern: /\sSEARCH\s\w+\s\{\d+\}[\r]?\n[^\n]*?%/smi --
+stream _snort_0981z1 = ZERO
+stream _snort_0981z2 = ZERO
+snort_0981 = _snort_0981z2
+
+// -- Pattern: /^.*HTTP.*\r\n(.+\x3a\s+.+\r\n){31,}/ --
+stream _snort_1230z1 = ZERO
+stream _snort_1230z2 = ZERO
+snort_1230 = _snort_1230z2
+
+// -- Pattern: /^<!--\s+[\w]{52,}\s+-->\r\n/smi --
+stream _snort_1273z1 = ZERO
+stream _snort_1273z2 = ZERO
+snort_1273 = _snort_1273z2
+
+// -- Pattern: /^Content-Length:\s*?\d+?\x20*?(\n{2}|\n\r+\n|\r?\n\t|\r?\n\x0b)/im --
+stream _snort_1310z1 = ZERO
+stream _snort_1310z2 = ZERO
+snort_1310 = _snort_1310z2
+
+// -- Pattern: /^GETLIST\s+[^\r\n]*\n/sm --
+stream _snort_1357z1 = ZERO
+stream _snort_1357z2 = ZERO
+snort_1357 = _snort_1357z2
+
+// -- Pattern: /^GET\s\/[a-z]{5}\.php\?id=[A-Z0-9]{18}\sHTTP\/1\.[0-1]\r\n/ --
+stream _snort_1363z1 = ZERO
+stream _snort_1363z2 = ZERO
+snort_1363 = _snort_1363z2
+
+// -- Pattern: /^GET\x20\x2f[a-z]{1,12}\.exe\x20HTTP\x2f1\.1\r\nUser\x2dAgent\x3a\x20Mozilla\x2f[\x20-\x7e]{10,100}\)\r\nHost\x3a\x20[a-z0-9\x2e\x2d]{6,32}\r\nConnection\x3a\x20Keep\x2dAlive\r\n\r\n$/ --
+stream _snort_1366z1 = ZERO
+stream _snort_1366z2 = ZERO
+snort_1366 = _snort_1366z2
+
+// -- Pattern: /^MSG\s+[^\r\n]*\n/sm --
+stream _snort_1418z1 = ZERO
+stream _snort_1418z2 = ZERO
+snort_1418 = _snort_1418z2
+
+// -- Pattern: /^P2P-Dest[^\n]*\n\r?\n/msi --
+stream _snort_1431z1 = ZERO
+stream _snort_1431z2 = ZERO
+snort_1431 = _snort_1431z2
+
+// -- Pattern: /^PASS\s*\n/smi --
+stream _snort_1433z1 = ZERO
+stream _snort_1433z2 = ZERO
+snort_1433 = _snort_1433z2
+
+// -- Pattern: /^POST\x20\x2f[a-z]+\.[a-z]{3}\x20HTTP\x2f1\.1\r\n/ --
+stream _snort_1442z1 = ZERO
+stream _snort_1442z2 = ZERO
+snort_1442 = _snort_1442z2
+
+// -- Pattern: /^PWD\s+[^\r\n]*\n/sm --
+stream _snort_1446z1 = ZERO
+stream _snort_1446z2 = ZERO
+snort_1446 = _snort_1446z2
+
+// -- Pattern: /^Transfer-Encoding\s*\x3a\s*chunked.*\n0*[8-9a-f][0-9a-f]{7}\s*\n/smi --
+stream _snort_1524z1 = ZERO
+stream _snort_1524z2 = ZERO
+snort_1524 = _snort_1524z2
+
+// -- Pattern: /^User\x2dAgent\x3a\s*[^\n]*Safari[^\n]*\r\n/smi --
+stream _snort_1548z1 = ZERO
+stream _snort_1548z2 = ZERO
+snort_1548 = _snort_1548z2
+
+// -- Pattern: /^[0-9a-f]{8}\r\n\r\n$/i --
+stream _snort_1578z1 = ZERO
+stream _snort_1578z2 = ZERO
+snort_1578 = _snort_1578z2
+
+// -- Pattern: /^openbrowser\s+[^\r\n]*\n/sm --
+stream _snort_1719z1 = ZERO
+stream _snort_1719z2 = ZERO
+snort_1719 = _snort_1719z2
+
+// -- Pattern: /^psswd((ok\*\-\*Password\s+OK\r\n)|(error\*\-\*Wrong\s+password\r\n))/smi --
+stream _snort_1722z1 = ZERO
+stream _snort_1722z2 = ZERO
+snort_1722 = _snort_1722z2
+
+// -- Pattern: /coded\r\nUser\x2dAgent\x3a\x20[ -~]+\r\nContent\x2dLength\x3a\x20[2-9][02468]\r\nHost\x3a\x20[a-z0-9\x2d\x2e]+\r\n\r\n[a-zA-Z0-9\x2f\x2b\x3d]{20,}$/ --
+stream _snort_1791z1 = ZERO
+stream _snort_1791z2 = ZERO
+snort_1791 = _snort_1791z2
+
+// -- Pattern: /minicommand\s+fileserver\s+ready\.\r\n/smi --
+stream _snort_2225z1 = ZERO
+stream _snort_2225z2 = ZERO
+snort_2225 = _snort_2225z2
+
+// -- Pattern: /stream\nU3D[^<]*\x31\xff\xff\xff/si --
+stream _snort_2327z1 = ZERO
+stream _snort_2327z2 = ZERO
+snort_2327 = _snort_2327z2
+
+// -- Pattern: /{\\sv\s*2\s*\x3b\s*\w+\s*[^},]*\x3b\s*\w{5}\s*\x3b/ --
+// icgrep emitted a trivial-ONES kernel; substituted ZERO.
+stream _snort_2394z1 = ZERO
+stream _snort_2394z2 = ZERO
+snort_2394 = _snort_2394z2
+
+// -- Pattern: /{\\sv\s*4\s*\x3b\s*\w+\s*[^},]*\x3b\s*\w{7}\s*\x3b/ --
+// icgrep emitted a trivial-ONES kernel; substituted ZERO.
+stream _snort_2395z1 = ZERO
+stream _snort_2395z2 = ZERO
+snort_2395 = _snort_2395z2
+
+// -- Pattern: /{\\sv\s*8\s*\x3b\s*\w+\s*[^},]*\x3b\s*\w{9}\s*\x3b/ --
+// icgrep emitted a trivial-ONES kernel; substituted ZERO.
+stream _snort_2396z1 = ZERO
+stream _snort_2396z2 = ZERO
+snort_2396 = _snort_2396z2
+
+// -- Pattern: /^\x2f/smi --
+stream _snort_1655nb4 = ~b[4]
+stream _snort_1655nb6 = ~b[6]
+stream _snort_1655nb7 = ~b[7]
+stream _snort_1655eq2 = b[0] & b[1]
+stream _snort_1655eq3 = _snort_1655eq2 & b[2]
+stream _snort_1655eq4 = _snort_1655eq3 & b[3]
+stream _snort_1655eq5 = _snort_1655eq4 & _snort_1655nb4
+stream _snort_1655eq6 = _snort_1655eq5 & b[5]
+stream _snort_1655eq7 = _snort_1655eq6 & _snort_1655nb6
+stream _snort_1655eq8 = _snort_1655eq7 & _snort_1655nb7
+stream _snort_1655z1 = ZERO
+stream _snort_1655adv9 = _snort_1655eq8 << 1
+snort_1655 = _snort_1655eq8
+
+// -- Pattern: /^[\x60\x62\x64\x66\x68\x6a\x6c\x6e\x70\x72]{4,5}/ --
+stream _snort_1587z1 = ZERO
+stream _snort_1587nt2 = ~b[0]
+stream _snort_1587nt3 = ~b[7]
+stream _snort_1587t4 = b[6] & _snort_1587nt3
+stream _snort_1587t5 = b[5] & _snort_1587t4
+stream _snort_1587t6 = b[0] | b[1]
+stream _snort_1587t7 = b[2] | b[3]
+stream _snort_1587nt8 = ~_snort_1587t7
+stream _snort_1587nt9 = ~b[4]
+stream _snort_1587t10 = b[4] & _snort_1587t7
+stream _snort_1587nt11 = ~_snort_1587t10
+stream _snort_1587t12 = _snort_1587t5 & _snort_1587nt11
+stream _snort_1587t13 = _snort_1587nt2 & _snort_1587t12
+stream _snort_1587adv14 = _snort_1587t13 << 1
+stream _snort_1587t15 = _snort_1587t13 & _snort_1587adv14
+stream _snort_1587adv16 = _snort_1587t15 << 1
+stream _snort_1587t17 = _snort_1587t15 & _snort_1587adv16
+stream _snort_1587adv18 = _snort_1587t13 << 3
+stream _snort_1587t19 = _snort_1587t17 & _snort_1587adv18
+stream _snort_1587adv20 = _snort_1587t19 << 1
+snort_1587 = _snort_1587t19
+
+// -- Pattern: /^(\x10|\x0d)/s --
+stream _snort_1229nb1 = ~b[1]
+stream _snort_1229nb4 = ~b[4]
+stream _snort_1229nb5 = ~b[5]
+stream _snort_1229nb6 = ~b[6]
+stream _snort_1229nb7 = ~b[7]
+stream _snort_1229eq2 = b[0] & _snort_1229nb1
+stream _snort_1229eq3 = _snort_1229eq2 & b[2]
+stream _snort_1229eq4 = _snort_1229eq3 & b[3]
+stream _snort_1229eq5 = _snort_1229eq4 & _snort_1229nb4
+stream _snort_1229eq6 = _snort_1229eq5 & _snort_1229nb5
+stream _snort_1229eq7 = _snort_1229eq6 & _snort_1229nb6
+stream _snort_1229eq8 = _snort_1229eq7 & _snort_1229nb7
+stream _snort_1229nb0 = ~b[0]
+stream _snort_1229nb2 = ~b[2]
+stream _snort_1229nb3 = ~b[3]
+stream _snort_1229eq9 = _snort_1229nb0 & _snort_1229nb1
+stream _snort_1229eq10 = _snort_1229eq9 & _snort_1229nb2
+stream _snort_1229eq11 = _snort_1229eq10 & _snort_1229nb3
+stream _snort_1229eq12 = _snort_1229eq11 & b[4]
+stream _snort_1229eq13 = _snort_1229eq12 & _snort_1229nb5
+stream _snort_1229eq14 = _snort_1229eq13 & _snort_1229nb6
+stream _snort_1229eq15 = _snort_1229eq14 & _snort_1229nb7
+stream _snort_1229z1 = ZERO
+stream _snort_1229t16 = _snort_1229eq8 | _snort_1229eq15
+stream _snort_1229adv17 = _snort_1229t16 << 1
+snort_1229 = _snort_1229t16
+
+// -- Pattern: /^BM/sm --
+stream _snort_1288nb0 = ~b[0]
+stream _snort_1288nb2 = ~b[2]
+stream _snort_1288nb3 = ~b[3]
+stream _snort_1288nb4 = ~b[4]
+stream _snort_1288nb5 = ~b[5]
+stream _snort_1288nb7 = ~b[7]
+stream _snort_1288eq2 = _snort_1288nb0 & b[1]
+stream _snort_1288eq3 = _snort_1288eq2 & _snort_1288nb2
+stream _snort_1288eq4 = _snort_1288eq3 & _snort_1288nb3
+stream _snort_1288eq5 = _snort_1288eq4 & _snort_1288nb4
+stream _snort_1288eq6 = _snort_1288eq5 & _snort_1288nb5
+stream _snort_1288eq7 = _snort_1288eq6 & b[6]
+stream _snort_1288eq8 = _snort_1288eq7 & _snort_1288nb7
+stream _snort_1288nb1 = ~b[1]
+stream _snort_1288eq10 = b[0] & _snort_1288nb1
+stream _snort_1288eq11 = _snort_1288eq10 & b[2]
+stream _snort_1288eq12 = _snort_1288eq11 & b[3]
+stream _snort_1288eq13 = _snort_1288eq12 & _snort_1288nb4
+stream _snort_1288eq14 = _snort_1288eq13 & _snort_1288nb5
+stream _snort_1288eq15 = _snort_1288eq14 & b[6]
+stream _snort_1288eq16 = _snort_1288eq15 & _snort_1288nb7
+stream _snort_1288z1 = ZERO
+stream _snort_1288adv9 = _snort_1288eq8 << 1
+stream _snort_1288t17 = _snort_1288adv9 & _snort_1288eq16
+stream _snort_1288adv18 = _snort_1288t17 << 1
+snort_1288 = _snort_1288t17
+
+// -- Pattern: /\x2e\x2e[\x2f\x5c]/ --
+stream _snort_1097nb0 = ~b[0]
+stream _snort_1097nb4 = ~b[4]
+stream _snort_1097nb6 = ~b[6]
+stream _snort_1097nb7 = ~b[7]
+stream _snort_1097eq2 = _snort_1097nb0 & b[1]
+stream _snort_1097eq3 = _snort_1097eq2 & b[2]
+stream _snort_1097eq4 = _snort_1097eq3 & b[3]
+stream _snort_1097eq5 = _snort_1097eq4 & _snort_1097nb4
+stream _snort_1097eq6 = _snort_1097eq5 & b[5]
+stream _snort_1097eq7 = _snort_1097eq6 & _snort_1097nb6
+stream _snort_1097eq8 = _snort_1097eq7 & _snort_1097nb7
+stream _snort_1097eq12 = b[0] & b[1]
+stream _snort_1097eq13 = _snort_1097eq12 & b[2]
+stream _snort_1097eq14 = _snort_1097eq13 & b[3]
+stream _snort_1097eq15 = _snort_1097eq14 & _snort_1097nb4
+stream _snort_1097eq16 = _snort_1097eq15 & b[5]
+stream _snort_1097eq17 = _snort_1097eq16 & _snort_1097nb6
+stream _snort_1097eq18 = _snort_1097eq17 & _snort_1097nb7
+stream _snort_1097nb1 = ~b[1]
+stream _snort_1097nb5 = ~b[5]
+stream _snort_1097eq19 = _snort_1097nb0 & _snort_1097nb1
+stream _snort_1097eq20 = _snort_1097eq19 & b[2]
+stream _snort_1097eq21 = _snort_1097eq20 & b[3]
+stream _snort_1097eq22 = _snort_1097eq21 & b[4]
+stream _snort_1097eq23 = _snort_1097eq22 & _snort_1097nb5
+stream _snort_1097eq24 = _snort_1097eq23 & b[6]
+stream _snort_1097eq25 = _snort_1097eq24 & _snort_1097nb7
+stream _snort_1097z1 = ZERO
+stream _snort_1097adv9 = _snort_1097eq8 << 1
+stream _snort_1097t10 = _snort_1097eq8 & _snort_1097adv9
+stream _snort_1097adv11 = _snort_1097t10 << 1
+stream _snort_1097t26 = _snort_1097eq18 | _snort_1097eq25
+stream _snort_1097t27 = _snort_1097adv11 & _snort_1097t26
+stream _snort_1097adv28 = _snort_1097t27 << 1
+snort_1097 = _snort_1097t27
+
+// -- Pattern: /(\x5C\x5C|\x2F\x2F)|(\x2E\x2E[\x2F\x5C]){1,5}/ --
+stream _snort_0084nb0 = ~b[0]
+stream _snort_0084nb1 = ~b[1]
+stream _snort_0084nb5 = ~b[5]
+stream _snort_0084nb7 = ~b[7]
+stream _snort_0084eq2 = _snort_0084nb0 & _snort_0084nb1
+stream _snort_0084eq3 = _snort_0084eq2 & b[2]
+stream _snort_0084eq4 = _snort_0084eq3 & b[3]
+stream _snort_0084eq5 = _snort_0084eq4 & b[4]
+stream _snort_0084eq6 = _snort_0084eq5 & _snort_0084nb5
+stream _snort_0084eq7 = _snort_0084eq6 & b[6]
+stream _snort_0084eq8 = _snort_0084eq7 & _snort_0084nb7
+stream _snort_0084nb4 = ~b[4]
+stream _snort_0084nb6 = ~b[6]
+stream _snort_0084eq11 = b[0] & b[1]
+stream _snort_0084eq12 = _snort_0084eq11 & b[2]
+stream _snort_0084eq13 = _snort_0084eq12 & b[3]
+stream _snort_0084eq14 = _snort_0084eq13 & _snort_0084nb4
+stream _snort_0084eq15 = _snort_0084eq14 & b[5]
+stream _snort_0084eq16 = _snort_0084eq15 & _snort_0084nb6
+stream _snort_0084eq17 = _snort_0084eq16 & _snort_0084nb7
+stream _snort_0084eq21 = _snort_0084nb0 & b[1]
+stream _snort_0084eq22 = _snort_0084eq21 & b[2]
+stream _snort_0084eq23 = _snort_0084eq22 & b[3]
+stream _snort_0084eq24 = _snort_0084eq23 & _snort_0084nb4
+stream _snort_0084eq25 = _snort_0084eq24 & b[5]
+stream _snort_0084eq26 = _snort_0084eq25 & _snort_0084nb6
+stream _snort_0084eq27 = _snort_0084eq26 & _snort_0084nb7
+stream _snort_0084z1 = ZERO
+stream _snort_0084adv9 = _snort_0084eq8 << 1
+stream _snort_0084t10 = _snort_0084eq8 & _snort_0084adv9
+stream _snort_0084adv18 = _snort_0084eq17 << 1
+stream _snort_0084t19 = _snort_0084eq17 & _snort_0084adv18
+stream _snort_0084t20 = _snort_0084t10 | _snort_0084t19
+stream _snort_0084adv28 = _snort_0084eq27 << 1
+stream _snort_0084t29 = _snort_0084eq27 & _snort_0084adv28
+stream _snort_0084adv30 = _snort_0084t29 << 1
+stream _snort_0084t31 = _snort_0084eq8 | _snort_0084eq17
+stream _snort_0084t32 = _snort_0084adv30 & _snort_0084t31
+stream _snort_0084t33 = _snort_0084t20 | _snort_0084t32
+stream _snort_0084adv34 = _snort_0084t33 << 1
+snort_0084 = _snort_0084t33
+
+// -- Pattern: /\xFF\x41$/ --
+stream _snort_1199eq2 = b[0] & b[1]
+stream _snort_1199eq3 = _snort_1199eq2 & b[2]
+stream _snort_1199eq4 = _snort_1199eq3 & b[3]
+stream _snort_1199eq5 = _snort_1199eq4 & b[4]
+stream _snort_1199eq6 = _snort_1199eq5 & b[5]
+stream _snort_1199eq7 = _snort_1199eq6 & b[6]
+stream _snort_1199eq8 = _snort_1199eq7 & b[7]
+stream _snort_1199nb1 = ~b[1]
+stream _snort_1199nb2 = ~b[2]
+stream _snort_1199nb3 = ~b[3]
+stream _snort_1199nb4 = ~b[4]
+stream _snort_1199nb5 = ~b[5]
+stream _snort_1199nb7 = ~b[7]
+stream _snort_1199eq10 = b[0] & _snort_1199nb1
+stream _snort_1199eq11 = _snort_1199eq10 & _snort_1199nb2
+stream _snort_1199eq12 = _snort_1199eq11 & _snort_1199nb3
+stream _snort_1199eq13 = _snort_1199eq12 & _snort_1199nb4
+stream _snort_1199eq14 = _snort_1199eq13 & _snort_1199nb5
+stream _snort_1199eq15 = _snort_1199eq14 & b[6]
+stream _snort_1199eq16 = _snort_1199eq15 & _snort_1199nb7
+stream _snort_1199o19 = ONES
+stream _snort_1199nb0 = ~b[0]
+stream _snort_1199nb6 = ~b[6]
+stream _snort_1199eq23 = _snort_1199nb0 & b[1]
+stream _snort_1199eq24 = _snort_1199eq23 & _snort_1199nb2
+stream _snort_1199eq25 = _snort_1199eq24 & b[3]
+stream _snort_1199eq26 = _snort_1199eq25 & _snort_1199nb4
+stream _snort_1199eq27 = _snort_1199eq26 & _snort_1199nb5
+stream _snort_1199eq28 = _snort_1199eq27 & _snort_1199nb6
+stream _snort_1199eq29 = _snort_1199eq28 & _snort_1199nb7
+stream _snort_1199z1 = ZERO
+stream _snort_1199adv9 = _snort_1199eq8 << 1
+stream _snort_1199t17 = _snort_1199adv9 & _snort_1199eq16
+stream _snort_1199adv18 = _snort_1199t17 << 1
+stream _snort_1199adv20 = _snort_1199o19 << 1
+stream _snort_1199eof21 = ONES
+stream _snort_1199t22 = _snort_1199adv18 & _snort_1199eof21
+stream _snort_1199t30 = _snort_1199adv18 & _snort_1199eq29
+stream _snort_1199t31 = _snort_1199eof21 | _snort_1199eq29
+stream _snort_1199t32 = _snort_1199adv18 & _snort_1199t31
+snort_1199 = _snort_1199t32
+
+// -- Pattern: /^(\x03|\x04|\x05)/s --
+stream _snort_1228lt2 = ZERO
+stream _snort_1228eq3 = ONES
+stream _snort_1228nb7 = ~b[7]
+stream _snort_1228eq4 = _snort_1228eq3 & _snort_1228nb7
+stream _snort_1228nb6 = ~b[6]
+stream _snort_1228eq5 = _snort_1228eq4 & _snort_1228nb6
+stream _snort_1228nb5 = ~b[5]
+stream _snort_1228eq6 = _snort_1228eq5 & _snort_1228nb5
+stream _snort_1228nb4 = ~b[4]
+stream _snort_1228eq7 = _snort_1228eq6 & _snort_1228nb4
+stream _snort_1228nb3 = ~b[3]
+stream _snort_1228eq8 = _snort_1228eq7 & _snort_1228nb3
+stream _snort_1228nb2 = ~b[2]
+stream _snort_1228eq9 = _snort_1228eq8 & _snort_1228nb2
+stream _snort_1228nb1 = ~b[1]
+stream _snort_1228lt10 = _snort_1228eq9 & _snort_1228nb1
+stream _snort_1228lt11 = _snort_1228lt2 | _snort_1228lt10
+stream _snort_1228eq12 = _snort_1228eq9 & b[1]
+stream _snort_1228nb0 = ~b[0]
+stream _snort_1228lt13 = _snort_1228eq12 & _snort_1228nb0
+stream _snort_1228lt14 = _snort_1228lt11 | _snort_1228lt13
+stream _snort_1228eq15 = _snort_1228eq12 & b[0]
+stream _snort_1228lt17 = ZERO
+stream _snort_1228eq18 = ONES
+stream _snort_1228eq19 = _snort_1228eq18 & _snort_1228nb7
+stream _snort_1228eq20 = _snort_1228eq19 & _snort_1228nb6
+stream _snort_1228eq21 = _snort_1228eq20 & _snort_1228nb5
+stream _snort_1228eq22 = _snort_1228eq21 & _snort_1228nb4
+stream _snort_1228eq23 = _snort_1228eq22 & _snort_1228nb3
+stream _snort_1228lt24 = _snort_1228eq23 & _snort_1228nb2
+stream _snort_1228lt25 = _snort_1228lt17 | _snort_1228lt24
+stream _snort_1228eq26 = _snort_1228eq23 & b[2]
+stream _snort_1228lt27 = _snort_1228eq26 & _snort_1228nb1
+stream _snort_1228lt28 = _snort_1228lt25 | _snort_1228lt27
+stream _snort_1228eq29 = _snort_1228eq26 & b[1]
+stream _snort_1228eq30 = _snort_1228eq29 & _snort_1228nb0
+stream _snort_1228z1 = ZERO
+stream _snort_1228nt16 = ~_snort_1228lt14
+stream _snort_1228t31 = _snort_1228lt28 & _snort_1228nt16
+stream _snort_1228adv32 = _snort_1228t31 << 1
+snort_1228 = _snort_1228t31
+
+
+// Final OR of all 50 pattern match streams
+output stream any_match
+any_match = snort_0054
+any_match = any_match | snort_0671
+any_match = any_match | snort_0703
+any_match = any_match | snort_0733
+any_match = any_match | snort_0736
+any_match = any_match | snort_0740
+any_match = any_match | snort_0788
+any_match = any_match | snort_0810
+any_match = any_match | snort_0827
+any_match = any_match | snort_0837
+any_match = any_match | snort_0840
+any_match = any_match | snort_0842
+any_match = any_match | snort_0846
+any_match = any_match | snort_0905
+any_match = any_match | snort_0906
+any_match = any_match | snort_0917
+any_match = any_match | snort_0957
+any_match = any_match | snort_0958
+any_match = any_match | snort_0974
+any_match = any_match | snort_0981
+any_match = any_match | snort_1230
+any_match = any_match | snort_1273
+any_match = any_match | snort_1310
+any_match = any_match | snort_1357
+any_match = any_match | snort_1363
+any_match = any_match | snort_1366
+any_match = any_match | snort_1418
+any_match = any_match | snort_1431
+any_match = any_match | snort_1433
+any_match = any_match | snort_1442
+any_match = any_match | snort_1446
+any_match = any_match | snort_1524
+any_match = any_match | snort_1548
+any_match = any_match | snort_1578
+any_match = any_match | snort_1719
+any_match = any_match | snort_1722
+any_match = any_match | snort_1791
+any_match = any_match | snort_2225
+any_match = any_match | snort_2327
+any_match = any_match | snort_2394
+any_match = any_match | snort_2395
+any_match = any_match | snort_2396
+any_match = any_match | snort_1655
+any_match = any_match | snort_1587
+any_match = any_match | snort_1229
+any_match = any_match | snort_1288
+any_match = any_match | snort_1097
+any_match = any_match | snort_0084
+any_match = any_match | snort_1199
+any_match = any_match | snort_1228

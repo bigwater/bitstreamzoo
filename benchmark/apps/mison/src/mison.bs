@@ -1,0 +1,130 @@
+// Mison/simdjson JSON structural index construction pipeline
+// Sources: Mison (Li et al., VLDB 2017), simdjson (Langdale & Lemire, VLDBJ 2019)
+//
+// 4-stage pipeline:
+//   1. Character classification from Parabix basis bit-planes
+//   2. Escape detection via carry-propagating backslash run analysis
+//   3. String mask computation via prefix XOR
+//   4. Structural character filtering
+//
+// Input: 8 basis bit-planes b[0..7] (Parabix transposition of ASCII text)
+//        even_bits — constant 0x5555... alternating pattern
+// Param: LOG_W — log2 of stream width (for prefix XOR stages)
+// Output: structural — JSON structural chars outside strings
+//         str_mask   — bit positions inside string literals
+//         real_quote — unescaped quote positions
+
+input stream b[8]
+input stream even_bits
+param int LOG_W
+
+output stream structural
+output stream str_mask
+output stream real_quote
+
+// ─── Stage 1: Character classification (~37 ops) ────────────────────
+// Extract JSON structural characters from basis bit-planes.
+// b[0]=LSB .. b[7]=MSB of each byte position.
+
+stream nb0 = ~b[0]
+stream nb1 = ~b[1]
+stream nb2 = ~b[2]
+stream nb3 = ~b[3]
+stream nb4 = ~b[4]
+stream nb5 = ~b[5]
+stream nb6 = ~b[6]
+
+// Shared sub-expressions
+stream b3_b4 = b[3] & b[4]
+stream low = nb6 & b[5]
+stream high = b[6] & b3_b4
+
+// Quote " (0x22 = 00100010)
+stream _q0 = low & nb4
+stream _q1 = _q0 & nb3
+stream _q2 = _q1 & nb2
+stream _q3 = _q2 & b[1]
+stream quote = _q3 & nb0
+
+// Backslash \ (0x5C = 01011100)
+stream _bs0 = high & nb5
+stream _bs1 = _bs0 & b[2]
+stream _bs2 = _bs1 & nb1
+stream backslash = _bs2 & nb0
+
+// Brackets share: b0=1, b3=1, b4=1, b6=1
+stream bracket_base = high & b[0]
+
+// Open brackets ({, [): b1=1, b2=0
+stream _open0 = bracket_base & b[1]
+stream open = _open0 & nb2
+
+// Close brackets (}, ]): b1=0, b2=1
+stream _close0 = bracket_base & nb1
+stream close = _close0 & b[2]
+
+// Split by b5: braces have b5=1, brackets have b5=0
+stream lbrace = open & b[5]
+stream rbrace = close & b[5]
+stream lbracket = open & nb5
+stream rbracket = close & nb5
+
+// Colon : (0x3A = 00111010)
+stream _col0 = low & b3_b4
+stream _col1 = _col0 & nb2
+stream _col2 = _col1 & b[1]
+stream colon = _col2 & nb0
+
+// Comma , (0x2C = 00101100)
+stream _com0 = low & nb4
+stream _com1 = _com0 & b[3]
+stream _com2 = _com1 & b[2]
+stream _com3 = _com2 & nb1
+stream comma = _com3 & nb0
+
+// ─── Stage 2: Escape detection (~16 ops) ────────────────────────────
+// simdjson algorithm: find positions preceded by odd-length backslash runs.
+// Uses stream addition (+) for carry propagation through \ runs.
+
+stream _ones_const = ONES
+stream odd_bits = even_bits ^ _ones_const
+stream bs_shifted = backslash << 1
+stream _not_bs_shifted = ~bs_shifted
+stream bs_starts = backslash & _not_bs_shifted
+stream even_starts = bs_starts & even_bits
+stream odd_starts = bs_starts & odd_bits
+stream nbs = ~backslash
+stream ec_raw = even_starts + backslash
+stream even_carries = ec_raw & nbs
+stream oc_raw = odd_starts + backslash
+stream odd_carries = oc_raw & nbs
+// Odd-length backslash runs end at even_carries on odd bits or odd_carries on even bits
+stream _ec_odd = even_carries & odd_bits
+stream _oc_even = odd_carries & even_bits
+stream odd_ends = _ec_odd | _oc_even
+stream _not_odd_ends = ~odd_ends
+real_quote = quote & _not_odd_ends
+
+// ─── Stage 3: String mask via prefix XOR (2*LOG_W ops) ──────────────
+// Running XOR parity: bits inside strings (between quotes) become 1.
+// Uses inductive doubling: shift by 1, 2, 4, 8, ...
+
+str_mask = real_quote
+int stride = 1
+for i in 0..LOG_W {
+    // Inductive doubling: XOR with shifted self to propagate parity
+    stream _shifted = str_mask << stride
+    str_mask = str_mask ^ _shifted
+    stride = stride * 2
+}
+
+// ─── Stage 4: Structural filtering (~7 ops) ─────────────────────────
+// Structural chars are those outside string regions.
+
+stream not_str = ~str_mask
+stream struct_raw = lbrace | rbrace
+struct_raw = struct_raw | lbracket
+struct_raw = struct_raw | rbracket
+struct_raw = struct_raw | colon
+struct_raw = struct_raw | comma
+structural = struct_raw & not_str

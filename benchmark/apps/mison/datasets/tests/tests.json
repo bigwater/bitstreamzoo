@@ -1,0 +1,124 @@
+[
+  {
+    "name": "Empty object",
+    "bitlength": 2,
+    "data_file": "mison_empty_object.bsdata"
+  },
+  {
+    "name": "Simple KV",
+    "bitlength": 7,
+    "data_file": "mison_simple_kv.bsdata"
+  },
+  {
+    "name": "Nested",
+    "bitlength": 17,
+    "data_file": "mison_nested.bsdata"
+  },
+  {
+    "name": "Escaped quotes",
+    "bitlength": 22,
+    "data_file": "mison_escaped_quotes.bsdata"
+  },
+  {
+    "name": "Escaped backslash",
+    "bitlength": 16,
+    "data_file": "mison_escaped_backslash.bsdata"
+  },
+  {
+    "name": "Mixed escapes",
+    "bitlength": 14,
+    "data_file": "mison_mixed_escapes.bsdata"
+  },
+  {
+    "name": "All structural",
+    "bitlength": 23,
+    "data_file": "mison_all_structural.bsdata"
+  },
+  {
+    "name": "Random 64B JSON x100",
+    "bitlength": 100,
+    "data_file": "mison_random_64b_100.bsdata"
+  },
+  {
+    "name": "Random 256B JSON x50",
+    "bitlength": 50,
+    "data_file": "mison_random_256b_50.bsdata"
+  },
+  {
+    "name": "Large 1M-bit wide",
+    "bitlength": 1000000,
+    "data_file": "mison_large_1m.bsdata"
+  },
+  {
+    "name": "GH Archive 1M",
+    "category": "generated",
+    "optional": true,
+    "bitlength": 1000000,
+    "generate": {
+      "type": "file",
+      "dataset": "gharchive_small"
+    }
+  },
+  {
+    "name": "GH Archive 10M",
+    "category": "generated",
+    "optional": true,
+    "bitlength": 10000000,
+    "generate": {
+      "type": "file",
+      "dataset": "gharchive_medium"
+    }
+  },
+  {
+    "name": "GH Archive 100M",
+    "category": "generated",
+    "optional": true,
+    "bitlength": 100000000,
+    "generate": {
+      "type": "file",
+      "dataset": "gharchive_large"
+    }
+  },
+  {
+    "name": "Tier medium (333M chars)",
+    "bitlength": 333000000,
+    "data_file": "mison_tier_medium.bsdata",
+    "size_bytes": 499500319,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1001,
+      "description": "Random ASCII byte data: b[0..6] uniform random, b[7]=0 (ASCII range). Expected outputs computed via direct bitstream operations (mison_bitstream_reference). 333,000,000 characters.",
+      "generated_by": "generate_tests.py --tier medium",
+      "sha256": "ffa11e130f20584c85b1caec25f254e95dcd967045c83810cf30ae34616672aa",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier small (33.3M chars)",
+    "bitlength": 33300000,
+    "data_file": "mison_tier_small.bsdata",
+    "size_bytes": 49950309,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1000,
+      "description": "Random ASCII byte data: b[0..6] uniform random, b[7]=0 (ASCII range). Expected outputs computed via direct bitstream operations (mison_bitstream_reference). 33,300,000 characters.",
+      "generated_by": "generate_tests.py --tier small",
+      "sha256": "daae0759a55ca787e8397ed0a155c93fcc05e67bdaae498f89b5ddb33bf89fb7",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier large (3.33B chars)",
+    "bitlength": 3330000000,
+    "data_file": "mison_tier_large.bsdata",
+    "size_bytes": 4995000329,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1002,
+      "description": "Random ASCII byte data: b[0..6] uniform random, b[7]=0 (ASCII range). Expected outputs computed via direct bitstream operations (mison_bitstream_reference). 3,330,000,000 characters.",
+      "generated_by": "generate_tests.py --tier large",
+      "bsim_md5": "442dcc8ce39717bd0277499fea678c2c",
+      "sha256": "9475153cd31fbe0018bc3445ba3463132ac8baf5488a0910adbd54cc138b6136"
+    }
+  }
+]

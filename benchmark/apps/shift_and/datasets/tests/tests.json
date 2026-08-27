@@ -1,0 +1,171 @@
+[
+  {
+    "name": "Single char",
+    "bitlength": 8,
+    "data_file": "shift_and_single_char.bsdata"
+  },
+  {
+    "name": "Dinucleotide",
+    "bitlength": 8,
+    "data_file": "shift_and_dinucleotide.bsdata"
+  },
+  {
+    "name": "4-mer match",
+    "bitlength": 12,
+    "data_file": "shift_and_4_mer_match.bsdata"
+  },
+  {
+    "name": "No match",
+    "bitlength": 10,
+    "data_file": "shift_and_no_match.bsdata"
+  },
+  {
+    "name": "Full text match",
+    "bitlength": 4,
+    "data_file": "shift_and_full_text_match.bsdata"
+  },
+  {
+    "name": "Overlapping matches",
+    "bitlength": 7,
+    "data_file": "shift_and_overlapping_matches.bsdata"
+  },
+  {
+    "name": "TATA box",
+    "bitlength": 407,
+    "data_file": "shift_and_tata_box.bsdata"
+  },
+  {
+    "name": "Kozak-like",
+    "bitlength": 207,
+    "data_file": "shift_and_kozak_like.bsdata"
+  },
+  {
+    "name": "Random 4-mer 500bp",
+    "bitlength": 500,
+    "data_file": "shift_and_random_4mer_500bp.bsdata"
+  },
+  {
+    "name": "Random 8-mer 500bp",
+    "bitlength": 500,
+    "data_file": "shift_and_random_8mer_500bp.bsdata"
+  },
+  {
+    "name": "Random 16-mer 1kbp",
+    "bitlength": 1000,
+    "data_file": "shift_and_random_16mer_1kbp.bsdata"
+  },
+  {
+    "name": "Random 4-mer 1kbp",
+    "bitlength": 1000,
+    "data_file": "shift_and_random_4mer_1kbp.bsdata"
+  },
+  {
+    "name": "Large 10Mbp 32-mer",
+    "category": "generated",
+    "bitlength": 10000000,
+    "generate": {
+      "type": "wide",
+      "N": 10000000,
+      "pattern_len": 32,
+      "seed_text": 70,
+      "seed_pat": 71
+    }
+  },
+  {
+    "name": "SARS-CoV-2 TATAAAT",
+    "category": "generated",
+    "optional": true,
+    "bitlength": 29903,
+    "generate": {
+      "type": "file",
+      "dataset": "sars_cov2",
+      "pattern": "TATAAAT"
+    }
+  },
+  {
+    "name": "E. coli GATTACA",
+    "category": "generated",
+    "optional": true,
+    "bitlength": 4641652,
+    "generate": {
+      "type": "file",
+      "dataset": "ecoli_k12",
+      "pattern": "GATTACA"
+    }
+  },
+  {
+    "name": "Human chr1 2M GATTACA",
+    "category": "generated",
+    "optional": true,
+    "bitlength": 2000000,
+    "generate": {
+      "type": "file",
+      "dataset": "hg38_chr1_2m",
+      "pattern": "GATTACA"
+    }
+  },
+  {
+    "name": "Human chr1 20M GATTACA",
+    "category": "generated",
+    "optional": true,
+    "bitlength": 20000000,
+    "generate": {
+      "type": "file",
+      "dataset": "hg38_chr1_20m",
+      "pattern": "GATTACA"
+    }
+  },
+  {
+    "name": "Human chr1 200M GATTACA",
+    "category": "generated",
+    "optional": true,
+    "bitlength": 200000000,
+    "generate": {
+      "type": "file",
+      "dataset": "hg38_chr1_200m",
+      "pattern": "GATTACA"
+    }
+  },
+  {
+    "name": "Tier medium (800M bases)",
+    "bitlength": 800000000,
+    "data_file": "shift_and_tier_medium.bsdata",
+    "size_bytes": 500000404,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1001,
+      "description": "Uniform random DNA (each base ~25% in expectation, not exactly balanced). Basis streams from 2 uniform random streams: is_A=~r0&~r1, is_C=~r0&r1, is_G=r0&~r1, is_T=r0&r1. Pattern: GATTACA (M=7). 800,000,000 bases.",
+      "generated_by": "generate_tests.py --tier medium",
+      "sha256": "952e66ffc807462731195c53e665c210e1b214a23f577dbe69451201c8226505",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier small (80M bases)",
+    "bitlength": 80000000,
+    "data_file": "shift_and_tier_small.bsdata",
+    "size_bytes": 50000394,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1000,
+      "description": "Uniform random DNA (each base ~25% in expectation, not exactly balanced). Basis streams from 2 uniform random streams: is_A=~r0&~r1, is_C=~r0&r1, is_G=r0&~r1, is_T=r0&r1. Pattern: GATTACA (M=7). 80,000,000 bases.",
+      "generated_by": "generate_tests.py --tier small",
+      "sha256": "7b68c6d8e6940d2bcd4d5938b9fe13497a2797d42cac72665994701b63d4a8f2",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  },
+  {
+    "name": "Tier large (8B bases)",
+    "bitlength": 8000000000,
+    "data_file": "shift_and_tier_large.bsdata",
+    "size_bytes": 5000000414,
+    "provenance": {
+      "source": "synthetic",
+      "seed": 1002,
+      "description": "Uniform random DNA (each base ~25% in expectation, not exactly balanced). Basis streams from 2 uniform random streams: is_A=~r0&~r1, is_C=~r0&r1, is_G=r0&~r1, is_T=r0&r1. Pattern: GATTACA (M=7). 8,000,000,000 bases.",
+      "generated_by": "generate_tests.py --tier large",
+      "sha256": "d9c3b1520d79f98c3f378b982de72e1a5d856d2ed6e2e9227cf3fa14eb272cbd",
+      "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+    }
+  }
+]

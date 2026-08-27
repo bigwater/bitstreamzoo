@@ -1,0 +1,38 @@
+// Auto-generated from .bench netlist
+
+input stream a0
+input stream a1
+input stream a2
+input stream a3
+input stream b0
+input stream b1
+input stream b2
+input stream b3
+input stream cin
+
+output stream s0
+output stream s1
+output stream s2
+output stream s3
+output stream cout
+
+stream p0 = a0 ^ b0
+s0 = p0 ^ cin
+stream g0 = a0 & b0
+stream pc0 = p0 & cin
+stream c0 = g0 | pc0
+stream p1 = a1 ^ b1
+s1 = p1 ^ c0
+stream g1 = a1 & b1
+stream pc1 = p1 & c0
+stream c1 = g1 | pc1
+stream p2 = a2 ^ b2
+s2 = p2 ^ c1
+stream g2 = a2 & b2
+stream pc2 = p2 & c1
+stream c2 = g2 | pc2
+stream p3 = a3 ^ b3
+s3 = p3 ^ c2
+stream g3 = a3 & b3
+stream pc3 = p3 & c2
+cout = g3 | pc3

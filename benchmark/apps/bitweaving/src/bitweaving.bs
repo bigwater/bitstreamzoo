@@ -1,0 +1,71 @@
+// ================================================================
+// BitWeaving-V — Range Predicate on Columnar Bit-Planes
+// ================================================================
+//
+// Evaluates: SELECT count(*) FROM T WHERE lo <= val <= hi
+//
+// Vertical bit-plane layout: a column of N unsigned B-bit values
+// stored as B bit-planes.  Bit-plane data[b] holds bit b of all
+// N values.  Each bit position represents one row in the table.
+//
+// Two comparisons (val >= lo, val <= hi) are computed MSB-to-LSB
+// using "definitely less/greater" and "equal so far" accumulators.
+//
+// Operation count: 14*B + 4 bitwise + 1 popcount
+//   B=8:   116 bitwise + 1 popcount = 117 ops
+//   B=16:  228 bitwise + 1 popcount = 229 ops
+//
+// Data: synthetic uniform random bit-planes for stress testing.
+//   Example TPC-H Q6-style predicate: 1 <= val <= 23
+//
+// References:
+//   Li & Patel, "BitWeaving: Fast Scans for Main Memory Data
+//     Processing", SIGMOD 2013.
+//   Seshadri et al. (Ambit), MICRO 2017 — Section 8.2.
+//   Hajinazar et al. (SIMDRAM), ASPLOS 2021 — Section 7.3.
+// ================================================================
+
+param int B
+
+input stream data[B]
+input stream lo_bits[B]
+input stream hi_bits[B]
+input stream valid
+
+output stream result
+output int count
+
+// --- Accumulators ---
+stream lt = ZERO
+stream eq_lo = ONES
+stream gt = ZERO
+stream eq_hi = ONES
+
+// --- MSB-to-LSB scan (both comparisons in one pass) ---
+for i in 0..B {
+
+    // val >= lo: track rows definitely less than lo
+    stream d_xor_l = data[B - 1 - i] ^ lo_bits[B - 1 - i]
+    stream not_d = ~data[B - 1 - i]
+    stream t1 = eq_lo & not_d
+    stream new_lt = t1 & lo_bits[B - 1 - i]
+    lt = lt | new_lt
+    stream not_dxl = ~d_xor_l
+    eq_lo = eq_lo & not_dxl
+
+    // val <= hi: track rows definitely greater than hi
+    stream d_xor_h = data[B - 1 - i] ^ hi_bits[B - 1 - i]
+    stream not_h = ~hi_bits[B - 1 - i]
+    stream t2 = eq_hi & data[B - 1 - i]
+    stream new_gt = t2 & not_h
+    gt = gt | new_gt
+    stream not_dxh = ~d_xor_h
+    eq_hi = eq_hi & not_dxh
+}
+
+// --- Combine: result = (val >= lo) AND (val <= hi) AND valid ---
+stream ge_lo = ~lt
+stream le_hi = ~gt
+stream matched = ge_lo & le_hi
+result = matched & valid
+count = popcount(result)

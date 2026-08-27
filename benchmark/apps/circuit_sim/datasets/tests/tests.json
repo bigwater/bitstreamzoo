@@ -1,0 +1,680 @@
+{
+  "netlist_adder4": [
+    {
+      "name": "Exhaustive 512",
+      "data_file": "netlist_adder4_exhaustive.bsdata",
+      "bitlength": 512
+    },
+    {
+      "name": "Tier small (20,000,000 vectors)",
+      "data_file": "netlist_adder4_small.bsdata",
+      "size_bytes": 35000532,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1000,
+        "description": "Random logic test vectors for adder4: 9 input streams via getrandbits(20000000); expected via Python interpreter (20 ops); spot-checked 500 positions (seed=6000)",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "73892fd3dd4ac4435065e30f990dbe88b176f8992686ba294e246ff4900e5ef8",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      },
+      "bitlength": 20000000
+    },
+    {
+      "name": "Tier medium (200,000,000 vectors)",
+      "bitlength": 200000000,
+      "data_file": "netlist_adder4_medium.bsdata",
+      "size_bytes": 350000560,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 2000,
+        "description": "Random logic test vectors for adder4: 9 input streams via getrandbits(200000000); expected via Python interpreter (20 ops); spot-checked 500 positions (seed=7000)",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "170fe317c48264cdb7ad2043369c3d04ffc5a4064e081864fc8cc99f579c9ecd",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier large (2,000,000,000 vectors)",
+      "bitlength": 2000000000,
+      "data_file": "netlist_adder4_large.bsdata",
+      "size_bytes": 3500000588,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 3000,
+        "description": "Random logic test vectors for adder4: 9 input streams via getrandbits(2000000000); expected via Python interpreter (20 ops); spot-checked 500 positions (seed=8000)",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "a158a1ea84fde4e4874265df62e689c129cae31c7f7911eb7a6195a1b90fe6e9",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    }
+  ],
+  "netlist_c1355": [
+    {
+      "name": "Random 200",
+      "data_file": "netlist_c1355_random.bsdata",
+      "bitlength": 200
+    },
+    {
+      "name": "Large 1M vectors (verify 200)",
+      "category": "generated",
+      "generate": {
+        "seed": 99,
+        "n_verify": 200
+      },
+      "bitlength": 1000000
+    },
+    {
+      "name": "Tier large (548,000,000 vectors)",
+      "bitlength": 548000000,
+      "data_file": "netlist_c1355_large.bsdata",
+      "size_bytes": 5000502810,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 3001,
+        "description": "Random logic test vectors for c1355: 41 input streams via getrandbits(548000000); expected via Python interpreter (1006 ops); spot-checked 500 positions (seed=8001)",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "35e2e38ccb201f31ec841bb628a9ee97f0150b7b36a80c11937a2ed0d1baf746",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier small (5,500,000 vectors)",
+      "data_file": "netlist_c1355_small.bsdata",
+      "size_bytes": 50190018,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1001,
+        "description": "Random logic test vectors for c1355: 41 input streams via getrandbits(5500000); expected via Python interpreter (1006 ops); spot-checked 500 positions (seed=6001)",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "2cf4bbfe055d03351fcb05fcdd6bf0478f4a216c671d1c850805392e9828df44",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      },
+      "bitlength": 5500000
+    },
+    {
+      "name": "Tier medium (54,800,000 vectors)",
+      "bitlength": 54800000,
+      "data_file": "netlist_c1355_medium.bsdata",
+      "size_bytes": 500052664,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 2001,
+        "description": "Random logic test vectors for c1355: 41 input streams via getrandbits(54800000); expected via Python interpreter (1006 ops); spot-checked 500 positions (seed=7001)",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "86ccd313db273a2ed92c43c64f390d001bb50ec73dc7dae42481818a0d8adcb2",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    }
+  ],
+  "netlist_c17": [
+    {
+      "name": "Exhaustive 32",
+      "data_file": "netlist_c17_exhaustive_32.bsdata",
+      "bitlength": 32
+    },
+    {
+      "name": "Tier small (57,000,000 vectors)",
+      "data_file": "netlist_c17_small.bsdata",
+      "size_bytes": 49875302,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1002,
+        "description": "Random logic test vectors for c17: 5 input streams via getrandbits(57000000); expected via Python interpreter (12 ops); spot-checked 500 positions (seed=6002)",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "18820d128c018bbbff99be7b7a791ff2c71c471f5746ad03486724ba55ae73f8",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      },
+      "bitlength": 57000000
+    },
+    {
+      "name": "Tier medium (571,000,000 vectors)",
+      "bitlength": 571000000,
+      "data_file": "netlist_c17_medium.bsdata",
+      "size_bytes": 499625316,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 2002,
+        "description": "Random logic test vectors for c17: 5 input streams via getrandbits(571000000); expected via Python interpreter (12 ops); spot-checked 500 positions (seed=7002)",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "c51330ba430dbef51c3f17b510d12c45c7ac91f34860710e767603fbd41d6cb4",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier large (5,710,000,000 vectors)",
+      "bitlength": 5710000000,
+      "data_file": "netlist_c17_large.bsdata",
+      "size_bytes": 4996250330,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 3002,
+        "description": "Random logic test vectors for c17: 5 input streams via getrandbits(5710000000); expected via Python interpreter (12 ops); spot-checked 500 positions (seed=8002)",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "5e27eb0ffc3dccf74ef7e5d67c606425c676d0d7ad8f79d98cc3f07d520d6dab",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    }
+  ],
+  "netlist_c1908": [
+    {
+      "name": "Random 200",
+      "data_file": "netlist_c1908_random.bsdata",
+      "bitlength": 200
+    },
+    {
+      "name": "Large 1M vectors (verify 200)",
+      "category": "generated",
+      "generate": {
+        "seed": 99,
+        "n_verify": 200
+      },
+      "bitlength": 1000000
+    },
+    {
+      "name": "Tier large (690,000,000 vectors)",
+      "bitlength": 690000000,
+      "data_file": "netlist_c1908_large.bsdata",
+      "size_bytes": 5002502244,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 3003,
+        "description": "Random logic test vectors for c1908: 33 input streams via getrandbits(690000000); expected via Python interpreter (1434 ops); spot-checked 500 positions (seed=8003)",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "c12bf255d87fee9dd07188e8ee05e520da32b2fba6d618b023f5054957d307f5",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier small (6,900,000 vectors)",
+      "data_file": "netlist_c1908_small.bsdata",
+      "size_bytes": 50027012,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1003,
+        "description": "Random logic test vectors for c1908: 33 input streams via getrandbits(6900000); expected via Python interpreter (1434 ops); spot-checked 500 positions (seed=6003)",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "78379f53edee1a1e9af712347ad2695c78faff9ea5bd2156c75805f91c137c18",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      },
+      "bitlength": 6900000
+    },
+    {
+      "name": "Tier medium (69,000,000 vectors)",
+      "bitlength": 69000000,
+      "data_file": "netlist_c1908_medium.bsdata",
+      "size_bytes": 500252128,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 2003,
+        "description": "Random logic test vectors for c1908: 33 input streams via getrandbits(69000000); expected via Python interpreter (1434 ops); spot-checked 500 positions (seed=7003)",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "c6658d96b8b6fd4bec2c5dc78a0e108dc3c16ec25f3b1d6cf4640227b5281cf6",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    }
+  ],
+  "netlist_c2670": [
+    {
+      "name": "Random 200",
+      "data_file": "netlist_c2670_random.bsdata",
+      "bitlength": 200
+    },
+    {
+      "name": "Large 1M vectors (verify 200)",
+      "category": "generated",
+      "generate": {
+        "seed": 99,
+        "n_verify": 200
+      },
+      "bitlength": 1000000
+    },
+    {
+      "name": "Tier large (185,000,000 vectors)",
+      "bitlength": 185000000,
+      "data_file": "netlist_c2670_large.bsdata",
+      "size_bytes": 5087508347,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 3004,
+        "description": "Random logic test vectors for c2670: 157 input streams via getrandbits(185000000); expected via Python interpreter (1666 ops); spot-checked 500 positions (seed=8004)",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "9cf9052f16396397135a47e937f4d2f615d37209a212c49533578a164ff0839f",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier small (1,850,000 vectors)",
+      "data_file": "netlist_c2670_small.bsdata",
+      "size_bytes": 50882467,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1004,
+        "description": "Random logic test vectors for c2670: 157 input streams via getrandbits(1850000); expected via Python interpreter (1666 ops); spot-checked 500 positions (seed=6004)",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "c7955ce3ba8e941ac8254a02856d9a6bf3f45bfe453fa482fe269de117fa9892",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      },
+      "bitlength": 1850000
+    },
+    {
+      "name": "Tier medium (18,500,000 vectors)",
+      "bitlength": 18500000,
+      "data_file": "netlist_c2670_medium.bsdata",
+      "size_bytes": 508757907,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 2004,
+        "description": "Random logic test vectors for c2670: 157 input streams via getrandbits(18500000); expected via Python interpreter (1666 ops); spot-checked 500 positions (seed=7004)",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "2a6c1e7d39b555090df78f88b5f01b9fe8b1f08f199764206c2bc0eded601df4",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    }
+  ],
+  "netlist_c3540": [
+    {
+      "name": "Random 200",
+      "data_file": "netlist_c3540_random.bsdata",
+      "bitlength": 200
+    },
+    {
+      "name": "Large 1M vectors (verify 200)",
+      "category": "generated",
+      "generate": {
+        "seed": 99,
+        "n_verify": 200
+      },
+      "bitlength": 1000000
+    },
+    {
+      "name": "Tier large (556,000,000 vectors)",
+      "bitlength": 556000000,
+      "data_file": "netlist_c3540_large.bsdata",
+      "size_bytes": 5004002753,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 3005,
+        "description": "Random logic test vectors for c3540: 50 input streams via getrandbits(556000000); expected via Python interpreter (2349 ops); spot-checked 500 positions (seed=8005)",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "a7d968d1ce9f43ae932205d4c1a219c0f7db0858324c055fae68676ed551d19f",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier small (5,600,000 vectors)",
+      "data_file": "netlist_c3540_small.bsdata",
+      "size_bytes": 50402465,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1005,
+        "description": "Random logic test vectors for c3540: 50 input streams via getrandbits(5600000); expected via Python interpreter (2349 ops); spot-checked 500 positions (seed=6005)",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "61d122c4059ec665797d0f68dc3d11ea9e2cf238068371ee0b12debe0939d673",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      },
+      "bitlength": 5600000
+    },
+    {
+      "name": "Tier medium (55,600,000 vectors)",
+      "bitlength": 55600000,
+      "data_file": "netlist_c3540_medium.bsdata",
+      "size_bytes": 500402609,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 2005,
+        "description": "Random logic test vectors for c3540: 50 input streams via getrandbits(55600000); expected via Python interpreter (2349 ops); spot-checked 500 positions (seed=7005)",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "4f14e0f76497ad10a34f29cf44315ad7283b42a8694dd9b006c60941b37778cc",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    }
+  ],
+  "netlist_c432": [
+    {
+      "name": "Random 200",
+      "data_file": "netlist_c432_random.bsdata",
+      "bitlength": 200
+    },
+    {
+      "name": "Large 1M vectors (verify 200)",
+      "category": "generated",
+      "generate": {
+        "seed": 99,
+        "n_verify": 200
+      },
+      "bitlength": 1000000
+    },
+    {
+      "name": "Tier large (930,000,000 vectors)",
+      "bitlength": 930000000,
+      "data_file": "netlist_c432_large.bsdata",
+      "size_bytes": 4998751693,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 3006,
+        "description": "Random logic test vectors for c432: 36 input streams via getrandbits(930000000); expected via Python interpreter (440 ops); spot-checked 500 positions (seed=8006)",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "22dff4794e5bbae76f81f3dc4ade33c846656d1596bb46cc52ea5d34c8ea5fe5",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier small (9,300,000 vectors)",
+      "data_file": "netlist_c432_small.bsdata",
+      "size_bytes": 49989021,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1006,
+        "description": "Random logic test vectors for c432: 36 input streams via getrandbits(9300000); expected via Python interpreter (440 ops); spot-checked 500 positions (seed=6006)",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "854e5fd86f76e70e6cd6afa3314c5ae974545e6e55221eec2c0625a39586b619",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      },
+      "bitlength": 9300000
+    },
+    {
+      "name": "Tier medium (93,000,000 vectors)",
+      "bitlength": 93000000,
+      "data_file": "netlist_c432_medium.bsdata",
+      "size_bytes": 499876607,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 2006,
+        "description": "Random logic test vectors for c432: 36 input streams via getrandbits(93000000); expected via Python interpreter (440 ops); spot-checked 500 positions (seed=7006)",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "4d7a88cf444fdec5c7af3e7ec2b5d8ef21bc4b8b16d0ab1f3acfe4d92b720f42",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    }
+  ],
+  "netlist_c499": [
+    {
+      "name": "Random 200",
+      "data_file": "netlist_c499_random.bsdata",
+      "bitlength": 200
+    },
+    {
+      "name": "Large 1M vectors (verify 200)",
+      "category": "generated",
+      "generate": {
+        "seed": 99,
+        "n_verify": 200
+      },
+      "bitlength": 1000000
+    },
+    {
+      "name": "Tier large (548,000,000 vectors)",
+      "bitlength": 548000000,
+      "data_file": "netlist_c499_large.bsdata",
+      "size_bytes": 5000502778,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 3007,
+        "description": "Random logic test vectors for c499: 41 input streams via getrandbits(548000000); expected via Python interpreter (974 ops); spot-checked 500 positions (seed=8007)",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "5fb75196a084e77ac32dceaed3617fa6bf7768c2e8c4c6eea38043a4110659d6",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier small (5,500,000 vectors)",
+      "data_file": "netlist_c499_small.bsdata",
+      "size_bytes": 50189986,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1007,
+        "description": "Random logic test vectors for c499: 41 input streams via getrandbits(5500000); expected via Python interpreter (974 ops); spot-checked 500 positions (seed=6007)",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "ebd46547ac03c6f48659de9ce0f780e7871d9dd829bfddcd64399c793bdda48b",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      },
+      "bitlength": 5500000
+    },
+    {
+      "name": "Tier medium (54,800,000 vectors)",
+      "bitlength": 54800000,
+      "data_file": "netlist_c499_medium.bsdata",
+      "size_bytes": 500052632,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 2007,
+        "description": "Random logic test vectors for c499: 41 input streams via getrandbits(54800000); expected via Python interpreter (974 ops); spot-checked 500 positions (seed=7007)",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "4c24142e3af0c680be0d356de7e8a0591111bbfa195b96917c2da7ddda16a2bd",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    }
+  ],
+  "netlist_c5315": [
+    {
+      "name": "Random 200",
+      "data_file": "netlist_c5315_random.bsdata",
+      "bitlength": 200
+    },
+    {
+      "name": "Large 1M vectors (verify 200)",
+      "category": "generated",
+      "generate": {
+        "seed": 99,
+        "n_verify": 200
+      },
+      "bitlength": 1000000
+    },
+    {
+      "name": "Tier large (139,000,000 vectors)",
+      "bitlength": 139000000,
+      "data_file": "netlist_c5315_large.bsdata",
+      "size_bytes": 5229886460,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 3008,
+        "description": "Random logic test vectors for c5315: 178 input streams via getrandbits(139000000); expected via Python interpreter (3454 ops); spot-checked 500 positions (seed=8008)",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "3ea749e5f6a839423fe71f14fe218d47cca51fd75ef305162d268d53fb615568",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier small (1,390,000 vectors)",
+      "data_file": "netlist_c5315_small.bsdata",
+      "size_bytes": 52309006,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1008,
+        "description": "Random logic test vectors for c5315: 178 input streams via getrandbits(1390000); expected via Python interpreter (3454 ops); spot-checked 500 positions (seed=6008)",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "6e24b292e49ff1acf458f2ea8079449f71abc2bbcd674120e60dd6c0e7e82f34",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      },
+      "bitlength": 1390000
+    },
+    {
+      "name": "Tier medium (13,900,000 vectors)",
+      "bitlength": 13900000,
+      "data_file": "netlist_c5315_medium.bsdata",
+      "size_bytes": 522998358,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 2008,
+        "description": "Random logic test vectors for c5315: 178 input streams via getrandbits(13900000); expected via Python interpreter (3454 ops); spot-checked 500 positions (seed=7008)",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "135d9dcc551491015da5cd1eb1f57ac892247cc26fd312c95fb416b21a14c55d",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    }
+  ],
+  "netlist_c6288": [
+    {
+      "name": "Random 200",
+      "data_file": "netlist_c6288_random.bsdata",
+      "bitlength": 200
+    },
+    {
+      "name": "Large 1M vectors (verify 200)",
+      "category": "generated",
+      "generate": {
+        "seed": 99,
+        "n_verify": 200
+      },
+      "bitlength": 1000000
+    },
+    {
+      "name": "Tier large (625,000,000 vectors)",
+      "bitlength": 625000000,
+      "data_file": "netlist_c6288_large.bsdata",
+      "size_bytes": 5000002479,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 3009,
+        "description": "Random logic test vectors for c6288: 32 input streams via getrandbits(625000000); expected via Python interpreter (4544 ops); spot-checked 500 positions (seed=8009)",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "b55025da8840a260af1ba10d5bcd27e79fb7f61c90c57b1bf9ae2ab670f31388",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier small (6,250,000 vectors)",
+      "data_file": "netlist_c6288_small.bsdata",
+      "size_bytes": 50002223,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1009,
+        "description": "Random logic test vectors for c6288: 32 input streams via getrandbits(6250000); expected via Python interpreter (4544 ops); spot-checked 500 positions (seed=6009)",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "5ee877317b042ccf5833a2bf856fc4801467d708ad3977f38eced07135e80237",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      },
+      "bitlength": 6250000
+    },
+    {
+      "name": "Tier medium (62,500,000 vectors)",
+      "bitlength": 62500000,
+      "data_file": "netlist_c6288_medium.bsdata",
+      "size_bytes": 500002351,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 2009,
+        "description": "Random logic test vectors for c6288: 32 input streams via getrandbits(62500000); expected via Python interpreter (4544 ops); spot-checked 500 positions (seed=7009)",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "fb217bd03fd9a598323eb19aba8aa0127735d877de19507edcad986868642d01",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    }
+  ],
+  "netlist_c7552": [
+    {
+      "name": "Random 200",
+      "data_file": "netlist_c7552_random.bsdata",
+      "bitlength": 200
+    },
+    {
+      "name": "Large 1M vectors (verify 200)",
+      "category": "generated",
+      "generate": {
+        "seed": 99,
+        "n_verify": 200
+      },
+      "bitlength": 1000000
+    },
+    {
+      "name": "Tier large (127,000,000 vectors)",
+      "bitlength": 127000000,
+      "data_file": "netlist_c7552_large.bsdata",
+      "size_bytes": 5000636970,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 3010,
+        "description": "Random logic test vectors for c7552: 207 input streams via getrandbits(127000000); expected via Python interpreter (5124 ops); spot-checked 500 positions (seed=8010)",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "d75f515d734c19efe2ee4271b70fa779643dd287f416b73dd04cf928f2f9cd6d",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier small (1,270,000 vectors)",
+      "data_file": "netlist_c7552_small.bsdata",
+      "size_bytes": 50016960,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1010,
+        "description": "Random logic test vectors for c7552: 207 input streams via getrandbits(1270000); expected via Python interpreter (5124 ops); spot-checked 500 positions (seed=6010)",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "0b54dfe462b9fb79400c4a81bafe23a43158101492aa51e102645c7abfff4478",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      },
+      "bitlength": 1270000
+    },
+    {
+      "name": "Tier medium (12,700,000 vectors)",
+      "bitlength": 12700000,
+      "data_file": "netlist_c7552_medium.bsdata",
+      "size_bytes": 500073840,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 2010,
+        "description": "Random logic test vectors for c7552: 207 input streams via getrandbits(12700000); expected via Python interpreter (5124 ops); spot-checked 500 positions (seed=7010)",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "afc5ccfda2d7ba5ff9a900510ecfc4e98d69635f34641f1771a6264121fc548b",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    }
+  ],
+  "netlist_c880": [
+    {
+      "name": "Random 200",
+      "data_file": "netlist_c880_random.bsdata",
+      "bitlength": 200
+    },
+    {
+      "name": "Large 1M vectors (verify 200)",
+      "category": "generated",
+      "generate": {
+        "seed": 99,
+        "n_verify": 200
+      },
+      "bitlength": 1000000
+    },
+    {
+      "name": "Tier large (465,000,000 vectors)",
+      "bitlength": 465000000,
+      "data_file": "netlist_c880_large.bsdata",
+      "size_bytes": 4998753250,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 3011,
+        "description": "Random logic test vectors for c880: 60 input streams via getrandbits(465000000); expected via Python interpreter (583 ops); spot-checked 500 positions (seed=8011)",
+        "generated_by": "generate_tests.py --tier large",
+        "sha256": "1cd2b6b82c50113f92e95d8cdc5c1f6be3171479dfd789dc9ce3bfbb57ff3d28",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    },
+    {
+      "name": "Tier small (4,650,000 vectors)",
+      "data_file": "netlist_c880_small.bsdata",
+      "size_bytes": 49990406,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 1011,
+        "description": "Random logic test vectors for c880: 60 input streams via getrandbits(4650000); expected via Python interpreter (583 ops); spot-checked 500 positions (seed=6011)",
+        "generated_by": "generate_tests.py --tier small",
+        "sha256": "af433e0220a881e721aa19754415824701a39fbe53c5f8d3393bd3d6c9cd9d70",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      },
+      "bitlength": 4650000
+    },
+    {
+      "name": "Tier medium (46,500,000 vectors)",
+      "bitlength": 46500000,
+      "data_file": "netlist_c880_medium.bsdata",
+      "size_bytes": 499878078,
+      "provenance": {
+        "source": "synthetic",
+        "seed": 2011,
+        "description": "Random logic test vectors for c880: 60 input streams via getrandbits(46500000); expected via Python interpreter (583 ops); spot-checked 500 positions (seed=7011)",
+        "generated_by": "generate_tests.py --tier medium",
+        "sha256": "a1657cb009adcdf145f90e35783434b3a820fad0b13b601c7cfc7b55a5af0111",
+        "bsim_md5": "d2edf0e2122f1741c4b98c4496493682"
+      }
+    }
+  ]
+}
